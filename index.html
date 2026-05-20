@@ -147,43 +147,6 @@ body{
 }
 
 /* ========================= */
-/* FOG */
-/* ========================= */
-
-.fog{
-  position:fixed;
-  inset:0;
-
-  background:
-  url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
-
-  background-size:cover;
-
-  opacity:0.02;
-
-  filter:blur(14px);
-
-  animation:fogMove 90s linear infinite;
-
-  z-index:-7;
-}
-
-@keyframes fogMove{
-
-  0%{
-    transform:scale(1.05) translateX(0);
-  }
-
-  50%{
-    transform:scale(1.08) translateX(-10px);
-  }
-
-  100%{
-    transform:scale(1.05) translateX(0);
-  }
-}
-
-/* ========================= */
 /* PARTICLES */
 /* ========================= */
 
@@ -525,7 +488,7 @@ nav a:hover{
   }
 }
 
-/* GLOWING PARTICLES */
+/* GLOW */
 
 .hero::before{
   content:"";
@@ -780,8 +743,6 @@ nav a:hover{
 
 <div class="red-glow"></div>
 
-<div class="fog"></div>
-
 <div class="particles" id="particles"></div>
 
 <div class="weather"></div>
@@ -823,28 +784,19 @@ nav a:hover{
   <ul>
 
     <li>
-      <a
-        href="https://discord.gg/ryvdWa7SEG"
-        target="_blank"
-      >
+      <a href="https://discord.gg/ryvdWa7SEG" target="_blank">
         Discord
       </a>
     </li>
 
     <li>
-      <a
-        href="https://discord.gg/dseKG8dpWv"
-        target="_blank"
-      >
+      <a href="https://discord.gg/dseKG8dpWv" target="_blank">
         Pulse
       </a>
     </li>
 
     <li>
-      <a
-        href="https://vexsound.base44.app/"
-        target="_blank"
-      >
+      <a href="https://vexsound.base44.app/" target="_blank">
         VexSound
       </a>
     </li>
@@ -901,10 +853,7 @@ nav a:hover{
 
 <!-- MUSIC -->
 
-<audio
-  id="bgMusic"
-  loop
->
+<audio id="bgMusic" loop>
   <source
     src="YOUR-MUSIC.mp3"
     type="audio/mpeg"
@@ -918,7 +867,7 @@ nav a:hover{
   Music
 </button>
 
-<!-- SCRIPTS -->
+<!-- SCRIPT -->
 
 <script>
 
@@ -951,7 +900,7 @@ for(let i = 0; i < 60; i++){
   particles.appendChild(particle);
 }
 
-/* CUSTOM CURSOR */
+/* CURSOR */
 
 const cursor =
 document.querySelector(".cursor");
