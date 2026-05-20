@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Everdusk</title>
 
@@ -16,37 +16,40 @@
     body{
       background:#050505;
       color:white;
-      font-family:Arial, sans-serif;
+      font-family:Arial,sans-serif;
       overflow-x:hidden;
     }
 
-    /* BACKGROUND */
+    /* MAIN BLOODMOON BACKGROUND */
 
     .background{
       position:fixed;
       inset:0;
 
       background:
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)),
-        url('https://cdn.corenexis.com/files/c/3236352720.png');
+      linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.85)
+      ),
+      url('https://cdn.corenexis.com/files/c/3236352720.png');
 
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
 
-      z-index:-5;
+      animation:bgMove 25s ease-in-out infinite;
 
-      animation:bgZoom 30s ease-in-out infinite;
+      z-index:-10;
     }
 
-    @keyframes bgZoom{
+    @keyframes bgMove{
 
       0%{
         transform:scale(1);
       }
 
       50%{
-        transform:scale(1.05);
+        transform:scale(1.08);
       }
 
       100%{
@@ -54,23 +57,56 @@
       }
     }
 
-    /* RED OVERLAY */
+    /* RED GLOW */
 
-    .red-overlay{
+    .red-glow{
       position:fixed;
       inset:0;
 
       background:
       radial-gradient(
         circle at top,
-        rgba(255,0,0,0.18),
+        rgba(255,0,0,0.2),
         transparent 45%
       );
 
-      z-index:-4;
+      z-index:-9;
+
+      animation:redPulse 6s ease-in-out infinite;
     }
 
-    /* FOG */
+    @keyframes redPulse{
+
+      0%{
+        opacity:.5;
+      }
+
+      50%{
+        opacity:1;
+      }
+
+      100%{
+        opacity:.5;
+      }
+    }
+
+    /* DARK VIGNETTE */
+
+    .vignette{
+      position:fixed;
+      inset:0;
+
+      background:
+      radial-gradient(
+        circle,
+        transparent 40%,
+        rgba(0,0,0,0.8) 100%
+      );
+
+      z-index:-8;
+    }
+
+    /* MOVING FOG */
 
     .fog{
       position:fixed;
@@ -87,7 +123,7 @@
 
       animation:fogMove 30s linear infinite;
 
-      z-index:-3;
+      z-index:-7;
     }
 
     @keyframes fogMove{
@@ -105,7 +141,52 @@
       }
     }
 
-    /* WEATHER */
+    /* PARTICLES */
+
+    .particles{
+      position:fixed;
+      inset:0;
+
+      overflow:hidden;
+
+      pointer-events:none;
+
+      z-index:-6;
+    }
+
+    .particles span{
+      position:absolute;
+
+      width:2px;
+      height:2px;
+
+      background:red;
+
+      border-radius:50%;
+
+      opacity:.4;
+
+      animation:floatUp linear infinite;
+    }
+
+    @keyframes floatUp{
+
+      from{
+        transform:translateY(100vh);
+        opacity:0;
+      }
+
+      20%{
+        opacity:.5;
+      }
+
+      to{
+        transform:translateY(-100px);
+        opacity:0;
+      }
+    }
+
+    /* RAIN */
 
     .weather{
       position:fixed;
@@ -115,10 +196,8 @@
 
       pointer-events:none;
 
-      z-index:1;
+      z-index:2;
     }
-
-    /* MAIN RAIN */
 
     .weather::before{
       content:"";
@@ -142,8 +221,6 @@
       opacity:0.75;
     }
 
-    /* RED RAIN */
-
     .weather::after{
       content:"";
 
@@ -154,7 +231,7 @@
       background-image:
       linear-gradient(
         transparent,
-        rgba(255,0,0,0.35)
+        rgba(255,0,0,0.4)
       );
 
       background-size:4px 180px;
@@ -177,14 +254,14 @@
       }
     }
 
-    /* CONTENT ABOVE BACKGROUND */
+    /* CONTENT */
 
     nav,
     .hero,
     section,
     footer{
       position:relative;
-      z-index:10;
+      z-index:100;
     }
 
     /* NAVBAR */
@@ -195,18 +272,16 @@
       padding:20px 40px;
 
       display:flex;
-
       justify-content:space-between;
-
       align-items:center;
 
       position:fixed;
-
       top:0;
 
-      backdrop-filter:blur(10px);
+      backdrop-filter:blur(12px);
 
-      background:rgba(0,0,0,0.25);
+      background:
+      rgba(0,0,0,0.3);
 
       border-bottom:
       1px solid rgba(255,0,0,0.15);
@@ -215,6 +290,9 @@
     nav h2{
       color:#8b0000;
       letter-spacing:3px;
+
+      text-shadow:
+      0 0 10px red;
     }
 
     nav ul{
@@ -225,9 +303,12 @@
 
     nav a{
       color:white;
+
       text-decoration:none;
+
       transition:.3s;
-      position:relative;
+
+      pointer-events:auto;
     }
 
     nav a:hover{
@@ -245,11 +326,9 @@
       height:100vh;
 
       display:flex;
-
       flex-direction:column;
 
       justify-content:center;
-
       align-items:center;
 
       text-align:center;
@@ -260,13 +339,13 @@
     /* FOX LOGO */
 
     .hero img{
-      width:180px;
+      width:200px;
 
       margin-bottom:20px;
 
       filter:
       drop-shadow(0 0 20px rgba(255,0,0,0.8))
-      drop-shadow(0 0 40px rgba(255,0,0,0.4));
+      drop-shadow(0 0 40px rgba(255,0,0,0.5));
 
       animation:logoFloat 5s ease-in-out infinite;
     }
@@ -290,26 +369,26 @@
 
       font-size:5rem;
 
+      letter-spacing:10px;
+
       color:#7a0000;
 
-      letter-spacing:8px;
-
       text-shadow:
-      0 0 20px rgba(255,0,0,0.5),
-      0 0 40px rgba(255,0,0,0.3);
+      0 0 20px rgba(255,0,0,0.7),
+      0 0 40px rgba(255,0,0,0.4);
     }
 
     .hero p{
 
       margin-top:15px;
 
-      color:#cfcfcf;
+      color:#d0d0d0;
 
       font-size:1.2rem;
 
-      max-width:600px;
+      max-width:650px;
 
-      line-height:1.6;
+      line-height:1.7;
     }
 
     /* BUTTONS */
@@ -319,31 +398,33 @@
       margin-top:35px;
 
       display:flex;
-
       gap:20px;
 
       flex-wrap:wrap;
-
       justify-content:center;
     }
 
     .btn{
 
-      padding:14px 28px;
+      padding:14px 30px;
 
-      border:1px solid #7a0000;
+      border:
+      1px solid rgba(255,0,0,0.4);
 
-      background:rgba(122,0,0,0.2);
+      background:
+      rgba(255,0,0,0.12);
 
       color:white;
 
       text-decoration:none;
 
+      border-radius:10px;
+
       transition:.3s;
 
-      border-radius:8px;
+      backdrop-filter:blur(8px);
 
-      backdrop-filter:blur(4px);
+      pointer-events:auto;
     }
 
     .btn:hover{
@@ -352,7 +433,8 @@
 
       color:black;
 
-      box-shadow:0 0 20px #00ff88;
+      box-shadow:
+      0 0 20px #00ff88;
     }
 
     /* SECTIONS */
@@ -364,9 +446,15 @@
     }
 
     .section-title{
+
       font-size:2rem;
-      color:#7a0000;
-      margin-bottom:20px;
+
+      color:#8b0000;
+
+      margin-bottom:25px;
+
+      text-shadow:
+      0 0 10px rgba(255,0,0,0.5);
     }
 
     .card-grid{
@@ -381,28 +469,29 @@
 
     .card{
 
-      background:rgba(255,255,255,0.03);
+      background:
+      rgba(255,255,255,0.03);
 
       border:
-      1px solid rgba(255,0,0,0.1);
+      1px solid rgba(255,0,0,0.12);
 
       padding:25px;
 
-      border-radius:12px;
+      border-radius:14px;
+
+      backdrop-filter:blur(10px);
 
       transition:.3s;
-
-      backdrop-filter:blur(6px);
     }
 
     .card:hover{
 
-      transform:translateY(-5px);
+      transform:translateY(-6px);
 
       border-color:#00ff88;
 
       box-shadow:
-      0 0 20px rgba(0,255,136,0.2);
+      0 0 25px rgba(0,255,136,0.2);
     }
 
     .card h3{
@@ -430,6 +519,10 @@
         font-size:3rem;
       }
 
+      .hero img{
+        width:150px;
+      }
+
       nav{
         padding:15px 20px;
       }
@@ -437,10 +530,6 @@
       nav ul{
         gap:10px;
         font-size:0.9rem;
-      }
-
-      .hero img{
-        width:140px;
       }
     }
 
@@ -453,9 +542,15 @@
 
   <div class="background"></div>
 
-  <div class="red-overlay"></div>
+  <div class="red-glow"></div>
+
+  <div class="vignette"></div>
 
   <div class="fog"></div>
+
+  <!-- RED PARTICLES -->
+
+  <div class="particles" id="particles"></div>
 
   <!-- RAIN -->
 
@@ -520,16 +615,16 @@
 
       <a
         href="https://discord.gg/ryvdWa7SEG"
-        class="btn"
         target="_blank"
+        class="btn"
       >
         Join Discord
       </a>
 
       <a
         href="https://vexsound.base44.app/"
-        class="btn"
         target="_blank"
+        class="btn"
       >
         Open VexSound
       </a>
@@ -564,8 +659,8 @@
         <h3>The Watchers</h3>
 
         <p>
-          Unknown entities seen in deep forests
-          during server events.
+          Unknown entities seen deep within
+          Everdusk forests during events.
         </p>
 
       </div>
@@ -600,8 +695,8 @@
         <h3>Discord</h3>
 
         <p>
-          Join the Everdusk community and
-          survive the darkness together.
+          Join the Everdusk community
+          and survive the darkness together.
         </p>
 
       </div>
@@ -637,6 +732,39 @@
   <footer>
     © 2026 Everdusk — The night remembers.
   </footer>
+
+  <!-- PARTICLES SCRIPT -->
+
+  <script>
+
+    const particles =
+      document.getElementById("particles");
+
+    for(let i = 0; i < 60; i++){
+
+      const particle =
+        document.createElement("span");
+
+      particle.style.left =
+        Math.random() * 100 + "vw";
+
+      particle.style.animationDuration =
+        5 + Math.random() * 10 + "s";
+
+      particle.style.animationDelay =
+        Math.random() * 5 + "s";
+
+      particle.style.opacity =
+        Math.random();
+
+      particle.style.width =
+        particle.style.height =
+        Math.random() * 3 + 1 + "px";
+
+      particles.appendChild(particle);
+    }
+
+  </script>
 
 </body>
 </html>
