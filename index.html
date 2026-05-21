@@ -38,8 +38,8 @@ body{
 
   background:
   linear-gradient(
-    rgba(0,0,0,0.7),
-    rgba(0,0,0,0.85)
+    rgba(0,0,0,0.72),
+    rgba(0,0,0,0.88)
   ),
   url('https://cdn.corenexis.com/files/c/3236352720.png');
 
@@ -66,6 +66,7 @@ body{
 }
 
 .rain::before{
+
   content:"";
 
   position:absolute;
@@ -105,7 +106,9 @@ body{
 /* ========================= */
 
 .topbar{
+
   position:fixed;
+
   top:0;
   left:0;
 
@@ -128,8 +131,11 @@ body{
 }
 
 .logo-text{
+
   color:#a40000;
+
   font-size:2rem;
+
   letter-spacing:5px;
 }
 
@@ -151,17 +157,23 @@ body{
 }
 
 .links{
+
   display:flex;
+
   gap:20px;
 }
 
 .links a{
+
   color:white;
+
   text-decoration:none;
+
   transition:.3s;
 }
 
 .links a:hover{
+
   color:#00ff88;
 }
 
@@ -170,6 +182,7 @@ body{
 /* ========================= */
 
 .hero{
+
   min-height:100vh;
 
   display:flex;
@@ -184,21 +197,26 @@ body{
 }
 
 .hero img{
+
   width:180px;
 
   margin-bottom:20px;
 
   filter:
-  drop-shadow(0 0 20px rgba(255,0,0,0.3));
+  drop-shadow(0 0 20px rgba(255,0,0,0.35));
 }
 
 .hero h1{
+
   font-size:5rem;
+
   letter-spacing:12px;
+
   color:white;
 }
 
 .hero p{
+
   margin-top:15px;
 
   max-width:700px;
@@ -244,8 +262,11 @@ body{
 }
 
 .news-track span{
+
   color:#ff4a4a;
+
   letter-spacing:1px;
+
   font-size:.95rem;
 }
 
@@ -261,7 +282,7 @@ body{
 }
 
 /* ========================= */
-/* MAIN CONTENT */
+/* MAIN */
 /* ========================= */
 
 .main-content{
@@ -307,56 +328,24 @@ body{
   0 0 30px rgba(255,0,0,0.12);
 }
 
-.panel.large{
-  grid-column:span 2;
-}
-
 .panel h2{
+
   color:#ff3b3b;
+
   margin-bottom:18px;
+
   letter-spacing:2px;
 }
 
 .panel p{
+
   color:#cfcfcf;
+
   line-height:1.7;
 }
 
-.status-box{
-
-  margin-top:25px;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  background:
-  rgba(255,255,255,0.03);
-
-  padding:16px;
-
-  border-radius:10px;
-}
-
-.dot{
-
-  width:10px;
-  height:10px;
-
-  background:#00ff88;
-
-  border-radius:50%;
-
-  display:inline-block;
-
-  margin-right:8px;
-
-  box-shadow:
-  0 0 10px #00ff88;
-}
-
 /* ========================= */
-/* VIDEO SECTION */
+/* VIDEO */
 /* ========================= */
 
 .media-section{
@@ -412,16 +401,60 @@ body{
 }
 
 .video-player iframe{
+
   width:100%;
   height:100%;
 }
+
+/* ========================= */
+/* AUDIO BUTTON */
+/* ========================= */
+
+.unmute-wrap{
+
+  display:flex;
+  justify-content:center;
+
+  margin-top:20px;
+}
+
+#unmuteBtn{
+
+  padding:14px 30px;
+
+  background:#8b0000;
+
+  border:none;
+
+  color:white;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  font-size:1rem;
+
+  transition:.3s;
+}
+
+#unmuteBtn:hover{
+
+  background:red;
+
+  box-shadow:
+  0 0 20px rgba(255,0,0,0.5);
+}
+
+/* ========================= */
+/* YOUTUBE BUTTON */
+/* ========================= */
 
 .youtube-button-wrap{
 
   display:flex;
   justify-content:center;
 
-  margin-top:30px;
+  margin-top:20px;
 }
 
 .youtube-btn{
@@ -441,8 +474,6 @@ body{
   border-radius:14px;
 
   font-size:1rem;
-
-  letter-spacing:1px;
 
   transition:.3s;
 }
@@ -481,7 +512,9 @@ footer{
 @media(max-width:900px){
 
   .topbar{
+
     flex-direction:column;
+
     gap:15px;
   }
 
@@ -598,38 +631,35 @@ footer{
 
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 
 <section class="main-content">
 
-  <div class="panel large">
+  <div class="panel">
 
     <h2>ABOUT EVERDUSK</h2>
 
     <p>
-      Everdusk is a dark Minecraft experience built
-      around horror storytelling, exploration,
-      corrupted dimensions, and cinematic survival.
+      Everdusk is a dark Minecraft horror experience
+      filled with corrupted dimensions, cinematic lore,
+      and mysterious entities hidden beneath the night.
     </p>
 
-    <div class="status-box">
+  </div>
 
-      <div>
-        <span class="dot"></span>
-        Network Online
-      </div>
+  <div class="panel">
 
-      <div>
-        24/7 Active
-      </div>
+    <h2>LIVE STATUS</h2>
 
-    </div>
+    <p>
+      Network Online • 24/7 Active
+    </p>
 
   </div>
 
 </section>
 
-<!-- VIDEO SECTION -->
+<!-- VIDEO -->
 
 <section class="media-section">
 
@@ -645,9 +675,10 @@ footer{
 
   <div class="video-player">
 
-    <!-- REPLACE dQw4w9WgXcQ WITH YOUR VIDEO ID -->
+    <!-- REPLACE VIDEO ID -->
 
     <iframe
+      id="ytplayer"
       src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&rel=0"
       title="Everdusk Video"
       frameborder="0"
@@ -656,6 +687,18 @@ footer{
     </iframe>
 
   </div>
+
+  <!-- AUDIO BUTTON -->
+
+  <div class="unmute-wrap">
+
+    <button id="unmuteBtn">
+      ENABLE AUDIO
+    </button>
+
+  </div>
+
+  <!-- YOUTUBE BUTTON -->
 
   <div class="youtube-button-wrap">
 
@@ -676,6 +719,26 @@ footer{
 <footer>
   © 2026 Everdusk — The night remembers.
 </footer>
+
+<script>
+
+const player =
+document.getElementById("ytplayer");
+
+const button =
+document.getElementById("unmuteBtn");
+
+button.onclick = () => {
+
+  player.src =
+  "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&rel=0";
+
+  button.innerHTML =
+  "AUDIO ENABLED";
+
+};
+
+</script>
 
 </body>
 </html>
