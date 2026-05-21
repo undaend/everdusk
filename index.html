@@ -1,562 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Everdusk</title>
+<!-- ====================================================== -->
+<!-- ADD THIS RIGHT BELOW <body> -->
+<!-- ====================================================== -->
+
+<!-- WORLD FEED -->
+
+<div class="world-feed">
+
+  <div class="feed-header">
+    LIVE WORLD EVENTS
+  </div>
+
+  <div class="feed-messages" id="feedMessages">
+
+    <div>⚠ ENTITY DETECTED NEAR BLACK HOLLOW</div>
+
+  </div>
+
+</div>
+
+<!-- CORRUPTION -->
+
+<div class="corruption-wrap">
+
+  <div class="corruption-title">
+    GLOBAL CORRUPTION
+  </div>
+
+  <div class="corruption-bar">
+
+    <div class="corruption-fill" id="corruptionFill"></div>
+
+  </div>
+
+  <span id="corruptionText">
+    72%
+  </span>
+
+</div>
+
+<!-- ENTITY FLASH -->
+
+<div class="entity-flash" id="entityFlash">
+
+  <img src="https://i.imgur.com/jxWqIBf.png">
+
+</div>
+
+<!-- ACHIEVEMENT -->
+
+<div class="achievement-popup" id="achievementPopup">
+
+  <h3>NEW ACHIEVEMENT</h3>
+
+  <p>
+    “THE WATCHER SEES YOU”
+  </p>
+
+</div>
+
+<!-- SECRET ZONE -->
+
+<div class="secret-zone" id="secretZone"></div>
+
+<!-- PLAYER FEED -->
+
+<div class="player-feed">
+
+  <div class="feed-header">
+    PLAYER ACTIVITY
+  </div>
+
+  <div class="player-messages" id="playerMessages">
+
+    <div>ShadowFox joined Everdusk...</div>
+
+  </div>
+
+</div>
+
+<!-- WEATHER -->
+
+<div class="weather-status" id="weatherStatus">
+
+  WEATHER: BLOOD STORM
+
+</div>
+
+<!-- ====================================================== -->
+<!-- ADD THIS TO YOUR CSS -->
+<!-- ====================================================== -->
 
 <style>
 
-/* ========================= */
-/* RESET */
-/* ========================= */
+/* ====================================== */
+/* WORLD FEED */
+/* ====================================== */
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+.world-feed{
 
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:#050505;
-  color:white;
-  font-family:Arial,sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* ========================= */
-/* CUSTOM SCROLLBAR */
-/* ========================= */
-
-::-webkit-scrollbar{
-  width:12px;
-}
-
-::-webkit-scrollbar-track{
-  background:black;
-}
-
-::-webkit-scrollbar-thumb{
-  background:red;
-  border-radius:20px;
-}
-
-/* ========================= */
-/* INTRO CUTSCENE */
-/* ========================= */
-
-#intro-cutscene{
   position:fixed;
-  inset:0;
-  background:black;
-  z-index:9999999;
-  overflow:hidden;
-}
 
-#introVideo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+  top:140px;
+  right:20px;
 
-.intro-overlay{
-  position:absolute;
-  inset:0;
-
-  display:flex;
-  flex-direction:column;
-
-  justify-content:center;
-  align-items:center;
-
-  background:rgba(0,0,0,.55);
-
-  animation:introFade 3s infinite alternate;
-}
-
-@keyframes introFade{
-  from{
-    background:rgba(0,0,0,.45);
-  }
-
-  to{
-    background:rgba(0,0,0,.65);
-  }
-}
-
-.intro-overlay h1{
-  font-size:6rem;
-  letter-spacing:14px;
-  text-shadow:0 0 40px red;
-}
-
-.intro-overlay p{
-  margin-top:20px;
-  color:#ccc;
-  letter-spacing:5px;
-}
-
-#enterBtn{
-  margin-top:40px;
-  padding:18px 45px;
-  background:red;
-  border:none;
-  border-radius:16px;
-  color:white;
-  font-size:1rem;
-  cursor:pointer;
-  transition:.3s;
-}
-
-#enterBtn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 40px red;
-}
-
-/* ========================= */
-/* BACKGROUND */
-/* ========================= */
-
-.background{
-  position:fixed;
-  inset:0;
+  width:340px;
 
   background:
-  linear-gradient(
-    rgba(0,0,0,.72),
-    rgba(0,0,0,.88)
-  ),
-  url('https://cdn.corenexis.com/files/c/3236352720.png');
-
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-
-  z-index:-10;
-}
-
-/* ========================= */
-/* BLOOD MOON */
-/* ========================= */
-
-.bloodmoon{
-  position:fixed;
-
-  top:120px;
-  right:100px;
-
-  width:180px;
-  height:180px;
-
-  border-radius:50%;
-
-  background:
-  radial-gradient(
-    circle,
-    #ff2a2a 0%,
-    #8b0000 60%,
-    rgba(255,0,0,.08) 100%
-  );
-
-  box-shadow:
-  0 0 80px rgba(255,0,0,.45),
-  0 0 140px rgba(255,0,0,.2);
-
-  z-index:-5;
-
-  animation:moonPulse 8s infinite alternate;
-}
-
-@keyframes moonPulse{
-  from{
-    transform:scale(1);
-  }
-
-  to{
-    transform:scale(1.08);
-  }
-}
-
-/* ========================= */
-/* RAIN */
-/* ========================= */
-
-.rain{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:5;
-  overflow:hidden;
-}
-
-.rain::before{
-  content:"";
-
-  position:absolute;
-  width:100%;
-  height:100%;
-
-  background-image:
-  repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.08) 0px,
-    rgba(255,255,255,.08) 2px,
-    transparent 10px,
-    transparent 22px
-  );
-
-  background-size:2px 120px;
-
-  animation:rainMove .5s linear infinite;
-
-  opacity:.15;
-}
-
-@keyframes rainMove{
-  from{
-    transform:translateY(-120px);
-  }
-
-  to{
-    transform:translateY(120px);
-  }
-}
-
-/* ========================= */
-/* LIGHTNING */
-/* ========================= */
-
-.lightning{
-  position:fixed;
-  inset:0;
-  background:white;
-  opacity:0;
-  z-index:99999;
-  pointer-events:none;
-  animation:lightningFlash 14s infinite;
-}
-
-@keyframes lightningFlash{
-
-  0%,94%,100%{
-    opacity:0;
-  }
-
-  95%{
-    opacity:.14;
-  }
-
-  96%{
-    opacity:0;
-  }
-
-  97%{
-    opacity:.08;
-  }
-
-  98%{
-    opacity:0;
-  }
-}
-
-/* ========================= */
-/* FOG */
-/* ========================= */
-
-.floating-fog{
-  position:fixed;
-  inset:0;
-
-  background:
-  radial-gradient(
-    circle at 20% 50%,
-    rgba(255,0,0,.04),
-    transparent 30%
-  ),
-  radial-gradient(
-    circle at 80% 70%,
-    rgba(255,255,255,.03),
-    transparent 30%
-  );
-
-  animation:fogMove 18s infinite alternate;
-
-  z-index:-4;
-}
-
-@keyframes fogMove{
-
-  from{
-    transform:translateX(-20px);
-  }
-
-  to{
-    transform:translateX(20px);
-  }
-}
-
-/* ========================= */
-/* SCANLINES */
-/* ========================= */
-
-.scanlines{
-  position:fixed;
-  inset:0;
-
-  background:
-  repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.02),
-    rgba(255,255,255,.02) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-
-  pointer-events:none;
-
-  z-index:999;
-}
-
-/* ========================= */
-/* CURSOR */
-/* ========================= */
-
-.cursor-glow{
-  width:18px;
-  height:18px;
-
-  border-radius:50%;
-
-  background:red;
-
-  position:fixed;
-
-  pointer-events:none;
-
-  z-index:999999;
-
-  box-shadow:
-  0 0 20px red,
-  0 0 40px red;
-
-  transform:translate(-50%,-50%);
-}
-
-/* ========================= */
-/* TOPBAR */
-/* ========================= */
-
-.topbar{
-  position:fixed;
-
-  top:0;
-  left:0;
-
-  width:100%;
-
-  padding:20px 40px;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  background:rgba(0,0,0,.35);
-
-  backdrop-filter:blur(12px);
-
-  border-bottom:
-  1px solid rgba(255,255,255,.06);
-
-  z-index:9999;
-}
-
-.logo-text{
-  color:#ff2a2a;
-  font-size:2rem;
-  letter-spacing:5px;
-}
-
-.server-box{
-  background:
-  rgba(255,255,255,.03);
-
-  padding:12px 20px;
-
-  border-radius:14px;
-
-  border:
-  1px solid rgba(255,255,255,.05);
-}
-
-.server-box strong{
-  color:#00ff88;
-}
-
-.links{
-  display:flex;
-  gap:20px;
-}
-
-.links a{
-  color:white;
-  text-decoration:none;
-  transition:.3s;
-}
-
-.links a:hover{
-  color:#ff2a2a;
-}
-
-/* ========================= */
-/* HERO */
-/* ========================= */
-
-.hero{
-  min-height:100vh;
-
-  display:flex;
-  flex-direction:column;
-
-  justify-content:center;
-  align-items:center;
-
-  text-align:center;
-
-  padding:120px 20px 80px;
-}
-
-.hero img{
-  width:190px;
-
-  filter:
-  drop-shadow(0 0 25px rgba(255,0,0,.45));
-
-  animation:logoFloat 5s infinite ease-in-out;
-}
-
-@keyframes logoFloat{
-
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-10px);
-  }
-}
-
-.hero h1{
-  font-size:5rem;
-
-  letter-spacing:12px;
-
-  margin-top:20px;
-
-  text-shadow:
-  0 0 30px rgba(255,0,0,.45);
-
-  animation:glitch 6s infinite;
-}
-
-@keyframes glitch{
-
-  0%,100%{
-    transform:translateX(0);
-  }
-
-  20%{
-    transform:translateX(-2px);
-  }
-
-  21%{
-    transform:translateX(2px);
-  }
-
-  22%{
-    transform:translateX(0);
-  }
-}
-
-.hero p{
-  margin-top:20px;
-
-  max-width:700px;
-
-  color:#bbb;
-
-  line-height:1.8;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-
-  margin-top:40px;
-}
-
-.hero-buttons a{
-  padding:15px 35px;
-
-  background:
-  rgba(120,0,0,.35);
-
-  border:
-  1px solid rgba(255,0,0,.25);
-
-  border-radius:14px;
-
-  color:white;
-
-  text-decoration:none;
-
-  transition:.35s;
-}
-
-.hero-buttons a:hover{
-  transform:
-  translateY(-5px);
-
-  background:red;
-
-  box-shadow:
-  0 0 30px rgba(255,0,0,.4);
-}
-
-/* ========================= */
-/* TERMINAL */
-/* ========================= */
-
-.terminal-window{
-  width:90%;
-  max-width:1100px;
-  height:420px;
-
-  margin:60px auto;
-
-  background:
-  rgba(0,0,0,.65);
+  rgba(0,0,0,.55);
 
   border:
   1px solid rgba(255,0,0,.2);
 
-  border-radius:20px;
+  border-radius:18px;
 
   overflow:hidden;
+
+  z-index:9999;
 
   backdrop-filter:blur(10px);
 
   box-shadow:
-  0 0 40px rgba(255,0,0,.12);
+  0 0 30px rgba(255,0,0,.12);
 }
 
-.terminal-top{
-  height:60px;
+.feed-header{
+
+  padding:14px 18px;
 
   background:
   rgba(255,0,0,.08);
@@ -564,144 +133,96 @@ body{
   border-bottom:
   1px solid rgba(255,0,0,.15);
 
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  padding:0 25px;
-
-  color:#ff3b3b;
-}
-
-.terminal-dots{
-  display:flex;
-  gap:10px;
-}
-
-.terminal-dots div{
-  width:12px;
-  height:12px;
-
-  border-radius:50%;
-
-  background:red;
-}
-
-.terminal-scroll{
-  height:calc(100% - 60px);
-
-  overflow-y:auto;
-
-  padding:30px;
-
-  color:#00ff88;
-
-  font-family:monospace;
-
-  line-height:2;
-}
-
-/* ========================= */
-/* QUOTE */
-/* ========================= */
-
-.quote-rotator{
-  position:fixed;
-
-  top:100px;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  background:
-  rgba(0,0,0,.45);
-
-  border:
-  1px solid rgba(255,0,0,.15);
-
-  border-radius:20px;
-
-  padding:14px 28px;
-
-  z-index:999;
-
-  color:#ddd;
-}
-
-/* ========================= */
-/* RADAR */
-/* ========================= */
-
-.radar{
-  position:fixed;
-
-  bottom:30px;
-  left:30px;
-
-  width:160px;
-  height:160px;
-
-  border-radius:50%;
-
-  border:
-  2px solid rgba(255,0,0,.25);
-
-  overflow:hidden;
-
-  z-index:999;
-}
-
-.radar::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-  conic-gradient(
-    transparent,
-    rgba(255,0,0,.5)
-  );
-
-  animation:radarSpin 3s linear infinite;
-}
-
-@keyframes radarSpin{
-
-  from{
-    transform:rotate(0deg);
-  }
-
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-/* ========================= */
-/* XP */
-/* ========================= */
-
-.xp-bar-wrap{
-  position:fixed;
-
-  bottom:30px;
-  right:30px;
-
-  width:280px;
-
-  z-index:999;
-}
-
-.xp-text{
-  margin-bottom:10px;
-
   color:#ff3b3b;
 
   letter-spacing:2px;
 }
 
-.xp-bar{
-  height:14px;
+.feed-messages,
+.player-messages{
+
+  height:220px;
+
+  overflow-y:auto;
+
+  padding:16px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:12px;
+
+  font-size:.9rem;
+
+  color:#ccc;
+}
+
+/* ====================================== */
+/* PLAYER FEED */
+/* ====================================== */
+
+.player-feed{
+
+  position:fixed;
+
+  top:420px;
+  right:20px;
+
+  width:340px;
+
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.2);
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  z-index:9999;
+
+  backdrop-filter:blur(10px);
+}
+
+/* ====================================== */
+/* CORRUPTION */
+/* ====================================== */
+
+.corruption-wrap{
+
+  position:fixed;
+
+  top:100px;
+  left:20px;
+
+  width:300px;
+
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.15);
+
+  border-radius:16px;
+
+  padding:20px;
+
+  z-index:999;
+}
+
+.corruption-title{
+
+  color:#ff3b3b;
+
+  margin-bottom:15px;
+
+  letter-spacing:2px;
+}
+
+.corruption-bar{
+
+  height:16px;
 
   background:#111;
 
@@ -710,7 +231,8 @@ body{
   overflow:hidden;
 }
 
-.xp-fill{
+.corruption-fill{
+
   width:72%;
   height:100%;
 
@@ -721,74 +243,127 @@ body{
     red
   );
 
-  animation:xpPulse 3s infinite;
+  transition:1s;
 }
 
-@keyframes xpPulse{
-  0%,100%{
-    opacity:1;
-  }
+#corruptionText{
 
-  50%{
-    opacity:.7;
-  }
+  display:block;
+
+  margin-top:12px;
+
+  color:#ccc;
 }
 
-/* ========================= */
-/* POPUP */
-/* ========================= */
+/* ====================================== */
+/* ENTITY FLASH */
+/* ====================================== */
 
-.hacking-popup{
+.entity-flash{
+
   position:fixed;
-
-  bottom:30px;
-  left:220px;
-
-  width:320px;
+  inset:0;
 
   background:black;
 
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  z-index:999999;
+
+  transition:.2s;
+}
+
+.entity-flash img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+/* ====================================== */
+/* ACHIEVEMENT */
+/* ====================================== */
+
+.achievement-popup{
+
+  position:fixed;
+
+  bottom:-200px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  width:340px;
+
+  background:
+  rgba(0,0,0,.8);
+
   border:
-  1px solid red;
+  1px solid rgba(255,0,0,.25);
 
-  z-index:9999;
+  border-radius:20px;
 
-  box-shadow:
-  0 0 30px rgba(255,0,0,.3);
+  padding:25px;
+
+  text-align:center;
+
+  z-index:999999;
+
+  transition:.7s;
 }
 
-.popup-top{
-  background:red;
-  padding:10px;
-  font-weight:bold;
+.achievement-popup h3{
+
+  color:#ff3b3b;
+
+  margin-bottom:12px;
 }
 
-.popup-body{
-  padding:20px;
+.achievement-popup p{
 
-  color:#00ff88;
-
-  font-family:monospace;
-
-  line-height:1.8;
+  color:#ccc;
 }
 
-/* ========================= */
-/* LORE BOOKS */
-/* ========================= */
+/* ====================================== */
+/* SECRET ZONE */
+/* ====================================== */
 
-.lore-books{
-  display:grid;
+.secret-zone{
 
-  grid-template-columns:
-  repeat(auto-fit,minmax(280px,1fr));
+  position:fixed;
 
-  gap:30px;
+  top:60%;
+  left:15%;
 
-  padding:100px 40px;
+  width:80px;
+  height:80px;
+
+  z-index:2;
+
+  opacity:0;
 }
 
-.lore-book{
+/* ====================================== */
+/* WEATHER */
+/* ====================================== */
+
+.weather-status{
+
+  position:fixed;
+
+  bottom:30px;
+  left:50%;
+
+  transform:translateX(-50%);
+
   background:
   rgba(0,0,0,.55);
 
@@ -797,523 +372,256 @@ body{
 
   border-radius:20px;
 
-  padding:30px;
+  padding:14px 28px;
 
-  transition:.35s;
-}
+  z-index:999;
 
-.lore-book:hover{
-  transform:
-  translateY(-8px);
-
-  box-shadow:
-  0 0 35px rgba(255,0,0,.2);
-}
-
-.lore-book h2{
   color:#ff3b3b;
-  margin-bottom:15px;
+
+  letter-spacing:2px;
 }
 
-.lore-book p{
-  color:#ccc;
-  line-height:1.7;
+/* ====================================== */
+/* TERMINAL FIX */
+/* ====================================== */
+
+.terminal-window{
+
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
 }
 
-/* ========================= */
-/* GALLERY */
-/* ========================= */
+.terminal-scroll{
 
-.gallery{
-  padding:100px 40px;
+  flex:1;
+
+  overflow-y:auto;
+
+  overflow-x:hidden;
+
+  height:auto;
+
+  max-height:none;
+
+  scrollbar-width:thin;
+
+  scrollbar-color:red black;
 }
 
-.gallery h2{
-  text-align:center;
-  color:#ff3b3b;
-  margin-bottom:40px;
+.terminal-scroll::-webkit-scrollbar{
+
+  width:10px;
 }
 
-.gallery-grid{
-  display:grid;
+.terminal-scroll::-webkit-scrollbar-track{
 
-  grid-template-columns:
-  repeat(auto-fit,minmax(320px,1fr));
-
-  gap:25px;
+  background:#050505;
 }
 
-.gallery-grid img{
-  width:100%;
+.terminal-scroll::-webkit-scrollbar-thumb{
 
-  border-radius:18px;
+  background:red;
 
-  transition:.35s;
-}
-
-.gallery-grid img:hover{
-  transform:scale(1.03);
-
-  box-shadow:
-  0 0 40px rgba(255,0,0,.25);
-}
-
-/* ========================= */
-/* STAFF */
-/* ========================= */
-
-.staff-section{
-  padding:100px 40px;
-}
-
-.staff-section h2{
-  text-align:center;
-  color:#ff3b3b;
-  margin-bottom:40px;
-}
-
-.staff-grid{
-  display:grid;
-
-  grid-template-columns:
-  repeat(auto-fit,minmax(260px,1fr));
-
-  gap:25px;
-}
-
-.staff-card{
-  background:
-  rgba(0,0,0,.45);
-
-  border:
-  1px solid rgba(255,0,0,.12);
-
-  border-radius:18px;
-
-  padding:35px;
-
-  text-align:center;
-
-  transition:.35s;
-}
-
-.staff-card:hover{
-  transform:translateY(-8px);
-
-  box-shadow:
-  0 0 35px rgba(255,0,0,.18);
-}
-
-.staff-card h3{
-  color:#ff3b3b;
-  margin-bottom:10px;
-}
-
-.staff-card p{
-  color:#ccc;
-}
-
-/* ========================= */
-/* MOBILE */
-/* ========================= */
-
-@media(max-width:900px){
-
-  .topbar{
-    flex-direction:column;
-    gap:15px;
-  }
-
-  .hero h1{
-    font-size:3rem;
-  }
-
-  .hero img{
-    width:140px;
-  }
-
-  .bloodmoon{
-    width:120px;
-    height:120px;
-    right:20px;
-  }
-
+  border-radius:20px;
 }
 
 </style>
-</head>
 
-<body>
-
-<!-- INTRO -->
-
-<div id="intro-cutscene">
-
-  <video autoplay muted loop playsinline id="introVideo">
-
-    <source src="https://cdn.coverr.co/videos/coverr-dark-clouds-1560084474706?download=1080p" type="video/mp4">
-
-  </video>
-
-  <div class="intro-overlay">
-
-    <h1>EVERDUSK</h1>
-
-    <p>ENTER THE DARKNESS</p>
-
-    <button id="enterBtn">
-      ENTER
-    </button>
-
-  </div>
-
-</div>
-
-<!-- EFFECTS -->
-
-<div class="background"></div>
-
-<div class="bloodmoon"></div>
-
-<div class="rain"></div>
-
-<div class="lightning"></div>
-
-<div class="floating-fog"></div>
-
-<div class="scanlines"></div>
-
-<div class="cursor-glow"></div>
-
-<!-- QUOTE -->
-
-<div class="quote-rotator" id="quoteRotator">
-
-  “The night remembers.”
-
-</div>
-
-<!-- RADAR -->
-
-<div class="radar"></div>
-
-<!-- XP -->
-
-<div class="xp-bar-wrap">
-
-  <div class="xp-text">
-    DARKNESS LEVEL 27
-  </div>
-
-  <div class="xp-bar">
-
-    <div class="xp-fill"></div>
-
-  </div>
-
-</div>
-
-<!-- POPUP -->
-
-<div class="hacking-popup">
-
-  <div class="popup-top">
-    ENTITY SCAN
-  </div>
-
-  <div class="popup-body">
-
-    SIGNAL DETECTED...<br>
-    CORRUPTION LEVEL: 92%<br>
-    UNKNOWN PRESENCE FOUND
-
-  </div>
-
-</div>
-
-<!-- TOPBAR -->
-
-<div class="topbar">
-
-  <div class="logo-text">
-    EVERDUSK
-  </div>
-
-  <div class="server-box">
-
-    Eagler:
-    <strong>everdusk.xyz</strong>
-
-    &nbsp;&nbsp;&nbsp;
-
-    Java:
-    <strong>java.everdusk.xyz</strong>
-
-  </div>
-
-  <div class="links">
-
-    <a href="https://discord.gg/ryvdWa7SEG" target="_blank">
-      Discord
-    </a>
-
-    <a href="https://discord.gg/dseKG8dpWv" target="_blank">
-      Pulse
-    </a>
-
-    <a href="https://vexsound.base44.app/" target="_blank">
-      VexSound
-    </a>
-
-    <a href="https://www.youtube.com/@Everduskofficial" target="_blank">
-      YouTube
-    </a>
-
-  </div>
-
-</div>
-
-<!-- HERO -->
-
-<div class="hero">
-
-  <img
-    src="https://cdn.corenexis.com/files/c/8547675720.png"
-    alt="Everdusk Logo"
-  >
-
-  <h1>EVERDUSK</h1>
-
-  <p>
-    A cinematic Minecraft horror universe where
-    forgotten realms, corrupted entities, and endless
-    night consume everything.
-  </p>
-
-  <div class="hero-buttons">
-
-    <a href="https://discord.gg/ryvdWa7SEG" target="_blank">
-      JOIN DISCORD
-    </a>
-
-    <a href="https://discord.gg/dseKG8dpWv" target="_blank">
-      PULSE
-    </a>
-
-    <a href="https://vexsound.base44.app/" target="_blank">
-      VEXSOUND
-    </a>
-
-  </div>
-
-</div>
-
-<!-- TERMINAL -->
-
-<section class="terminal-window">
-
-  <div class="terminal-top">
-
-    <span>EVERDUSK TERMINAL</span>
-
-    <div class="terminal-dots">
-
-      <div></div>
-      <div></div>
-      <div></div>
-
-    </div>
-
-  </div>
-
-  <div class="terminal-scroll" id="terminal">
-
-    > CONNECTING TO EVERDUSK...<br>
-    > ACCESSING CORRUPTED ARCHIVES...<br>
-    > WARNING: ENTITY SIGNAL DETECTED...<br>
-    > SYSTEM ONLINE...<br>
-
-  </div>
-
-</section>
-
-<!-- LORE -->
-
-<section class="lore-books">
-
-  <div class="lore-book">
-
-    <h2>BLACK HOLLOW</h2>
-
-    <p>
-      A cursed realm where players vanish after midnight.
-    </p>
-
-  </div>
-
-  <div class="lore-book">
-
-    <h2>THE WATCHERS</h2>
-
-    <p>
-      Unknown eyes seen within corrupted forests.
-    </p>
-
-  </div>
-
-  <div class="lore-book">
-
-    <h2>THE SIGNAL</h2>
-
-    <p>
-      A mysterious transmission from beneath Everdusk.
-    </p>
-
-  </div>
-
-</section>
-
-<!-- GALLERY -->
-
-<section class="gallery">
-
-  <h2>COMMUNITY SCREENSHOTS</h2>
-
-  <div class="gallery-grid">
-
-    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop">
-
-    <img src="https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=1200&auto=format&fit=crop">
-
-    <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop">
-
-  </div>
-
-</section>
-
-<!-- STAFF -->
-
-<section class="staff-section">
-
-  <h2>STAFF TEAM</h2>
-
-  <div class="staff-grid">
-
-    <div class="staff-card">
-
-      <h3>OWNER</h3>
-
-      <p>Everdusk Founder</p>
-
-    </div>
-
-    <div class="staff-card">
-
-      <h3>LORE TEAM</h3>
-
-      <p>Archive Keepers</p>
-
-    </div>
-
-    <div class="staff-card">
-
-      <h3>ENTITY HUNTERS</h3>
-
-      <p>Corruption Response</p>
-
-    </div>
-
-  </div>
-
-</section>
+<!-- ====================================================== -->
+<!-- ADD THIS TO YOUR SCRIPT -->
+<!-- ====================================================== -->
 
 <script>
 
-/* INTRO */
+/* ====================================== */
+/* WORLD EVENTS */
+/* ====================================== */
+
+const feed =
+document.getElementById("feedMessages");
+
+const worldEvents = [
+
+  "⚠ Entity movement detected near The Watchers",
+  "⚠ Pulse Network corruption increased",
+  "⚠ Black Hollow signal amplified",
+  "⚠ Unknown whispers recorded",
+  "⚠ Eclipse storm approaching",
+  "⚠ Red fog spreading through Everdusk",
+  "⚠ Emergency lockdown initiated"
+
+];
+
+setInterval(() => {
+
+  const item =
+  document.createElement("div");
+
+  item.innerHTML =
+  worldEvents[
+    Math.floor(Math.random()*worldEvents.length)
+  ];
+
+  feed.prepend(item);
+
+  if(feed.children.length > 12){
+
+    feed.removeChild(feed.lastChild);
+
+  }
+
+},5000);
+
+/* ====================================== */
+/* PLAYER FEED */
+/* ====================================== */
+
+const playerFeed =
+document.getElementById("playerMessages");
+
+const playerEvents = [
+
+  "ShadowFox joined Everdusk...",
+  "VoidWalker entered Black Hollow...",
+  "Unknown player disconnected...",
+  "Watcher_01 was consumed...",
+  "SignalHunter unlocked ARCHIVE-7...",
+  "Entity activity increased...",
+  "NightCrawler found hidden files..."
+
+];
+
+setInterval(() => {
+
+  const item =
+  document.createElement("div");
+
+  item.innerHTML =
+  playerEvents[
+    Math.floor(Math.random()*playerEvents.length)
+  ];
+
+  playerFeed.prepend(item);
+
+  if(playerFeed.children.length > 12){
+
+    playerFeed.removeChild(playerFeed.lastChild);
+
+  }
+
+},4000);
+
+/* ====================================== */
+/* CORRUPTION */
+/* ====================================== */
+
+const corruptionFill =
+document.getElementById("corruptionFill");
+
+const corruptionText =
+document.getElementById("corruptionText");
+
+let corruption = 72;
+
+setInterval(() => {
+
+  corruption +=
+  Math.floor(Math.random()*6)-2;
+
+  if(corruption < 40)
+    corruption = 40;
+
+  if(corruption > 100)
+    corruption = 100;
+
+  corruptionFill.style.width =
+  corruption + "%";
+
+  corruptionText.innerHTML =
+  corruption + "%";
+
+},6000);
+
+/* ====================================== */
+/* ENTITY FLASH */
+/* ====================================== */
+
+setInterval(() => {
+
+  const flash =
+  document.getElementById("entityFlash");
+
+  flash.style.opacity = "1";
+
+  setTimeout(() => {
+
+    flash.style.opacity = "0";
+
+  },120);
+
+},45000);
+
+/* ====================================== */
+/* SECRET ACHIEVEMENT */
+/* ====================================== */
 
 document
-.getElementById("enterBtn")
+.getElementById("secretZone")
 .onclick = () => {
 
-  document
-  .getElementById("intro-cutscene")
-  .style.display = "none";
+  const achievement =
+  document.getElementById("achievementPopup");
+
+  achievement.style.bottom = "30px";
+
+  setTimeout(() => {
+
+    achievement.style.bottom = "-200px";
+
+  },5000);
 
 };
 
-/* CURSOR */
+/* ====================================== */
+/* WEATHER SYSTEM */
+/* ====================================== */
 
-const cursor =
-document.querySelector(".cursor-glow");
+const weatherText =
+document.getElementById("weatherStatus");
 
-document.addEventListener("mousemove", e => {
+const weatherStates = [
 
-  cursor.style.left =
-  e.clientX + "px";
+  "WEATHER: BLOOD STORM",
+  "WEATHER: RED FOG",
+  "WEATHER: THUNDER EVENT",
+  "WEATHER: ENTITY RAIN",
+  "WEATHER: SIGNAL DISTORTION"
 
-  cursor.style.top =
-  e.clientY + "px";
+];
 
-});
+setInterval(() => {
 
-/* TERMINAL */
+  weatherText.innerHTML =
+  weatherStates[
+    Math.floor(Math.random()*weatherStates.length)
+  ];
+
+},12000);
+
+/* ====================================== */
+/* TERMINAL AUTO SCROLL */
+/* ====================================== */
 
 const terminal =
 document.getElementById("terminal");
 
-const lines = [
-
-  "> Connecting to Everdusk nodes...",
-  "> Searching corrupted archives...",
-  "> Unknown signal detected...",
-  "> Entity movement confirmed...",
-  "> Pulse systems online...",
-  "> Accessing forbidden files...",
-  "> Distorted whispers detected...",
-  "> Network corruption spreading...",
-  "> Black Hollow gateway opened...",
-  "> VexSound synchronization complete..."
-
-];
-
 setInterval(() => {
-
-  const line =
-  document.createElement("div");
-
-  line.innerHTML =
-  lines[Math.floor(Math.random()*lines.length)];
-
-  terminal.appendChild(line);
 
   terminal.scrollTop =
   terminal.scrollHeight;
 
-},2500);
-
-/* QUOTES */
-
-const quotes = [
-
-  "The night remembers.",
-  "They are watching.",
-  "Do not trust the whispers.",
-  "The corruption spreads.",
-  "Everdusk never sleeps."
-
-];
-
-const quoteBox =
-document.getElementById("quoteRotator");
-
-setInterval(() => {
-
-  quoteBox.innerHTML =
-  quotes[Math.floor(Math.random()*quotes.length)];
-
-},5000);
+},500);
 
 </script>
-
-</body>
-</html>
