@@ -452,6 +452,119 @@ body{
 }
 
 /* ========================= */
+/* MEDIA SECTION */
+/* ========================= */
+
+.media-section{
+
+  width:100%;
+
+  padding:80px 40px;
+}
+
+.media-header{
+
+  text-align:center;
+
+  margin-bottom:40px;
+}
+
+.media-header h2{
+
+  color:#ff3b3b;
+
+  font-size:2rem;
+
+  letter-spacing:4px;
+
+  margin-bottom:12px;
+}
+
+.media-header p{
+
+  color:#aaa;
+}
+
+/* ========================= */
+/* VIDEO PLAYER */
+/* ========================= */
+
+.video-player{
+
+  width:100%;
+
+  max-width:1200px;
+
+  height:700px;
+
+  margin:auto;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  background:black;
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,0.12);
+}
+
+.video-player iframe{
+
+  width:100%;
+  height:100%;
+}
+
+/* ========================= */
+/* YOUTUBE BUTTON */
+/* ========================= */
+
+.youtube-button-wrap{
+
+  display:flex;
+  justify-content:center;
+
+  margin-top:30px;
+}
+
+.youtube-btn{
+
+  padding:16px 36px;
+
+  background:
+  rgba(120,0,0,0.35);
+
+  border:
+  1px solid rgba(255,0,0,0.25);
+
+  color:white;
+
+  text-decoration:none;
+
+  border-radius:14px;
+
+  font-size:1rem;
+
+  letter-spacing:1px;
+
+  transition:.3s;
+}
+
+.youtube-btn:hover{
+
+  background:#ff0000;
+
+  transform:
+  translateY(-3px);
+
+  box-shadow:
+  0 0 30px rgba(255,0,0,0.4);
+}
+
+/* ========================= */
 /* FOOTER */
 /* ========================= */
 
@@ -493,6 +606,14 @@ footer{
   .main-content{
     padding:50px 20px;
   }
+
+  .media-section{
+    padding:50px 20px;
+  }
+
+  .video-player{
+    height:320px;
+  }
 }
 
 </style>
@@ -504,9 +625,7 @@ footer{
 
 <div class="rain"></div>
 
-<!-- ========================= -->
 <!-- TOPBAR -->
-<!-- ========================= -->
 
 <div class="topbar">
 
@@ -528,34 +647,27 @@ footer{
 
   <div class="links">
 
-    <a
-      href="https://discord.gg/ryvdWa7SEG"
-      target="_blank"
-    >
+    <a href="https://discord.gg/ryvdWa7SEG" target="_blank">
       Discord
     </a>
 
-    <a
-      href="https://discord.gg/dseKG8dpWv"
-      target="_blank"
-    >
+    <a href="https://discord.gg/dseKG8dpWv" target="_blank">
       Pulse
     </a>
 
-    <a
-      href="https://vexsound.base44.app/"
-      target="_blank"
-    >
+    <a href="https://vexsound.base44.app/" target="_blank">
       VexSound
+    </a>
+
+    <a href="https://www.youtube.com/@Everduskofficial" target="_blank">
+      YouTube
     </a>
 
   </div>
 
 </div>
 
-<!-- ========================= -->
 <!-- HERO -->
-<!-- ========================= -->
 
 <div class="hero">
 
@@ -574,9 +686,7 @@ footer{
 
 </div>
 
-<!-- ========================= -->
 <!-- NEWS -->
-<!-- ========================= -->
 
 <div class="news-wrapper">
 
@@ -610,13 +720,9 @@ footer{
 
 </div>
 
-<!-- ========================= -->
 <!-- MAIN CONTENT -->
-<!-- ========================= -->
 
 <section class="main-content">
-
-  <!-- ABOUT -->
 
   <div class="panel large">
 
@@ -644,8 +750,6 @@ footer{
 
   </div>
 
-  <!-- STATUS -->
-
   <div class="panel">
 
     <h2>LIVE STATUS</h2>
@@ -666,8 +770,6 @@ footer{
     </div>
 
   </div>
-
-  <!-- REALMS -->
 
   <div class="panel">
 
@@ -695,26 +797,64 @@ footer{
 
   </div>
 
-  <!-- QUOTE -->
-
   <div class="panel large quote-panel">
 
     <h2>SYSTEM MESSAGE</h2>
 
     <p class="quote">
-      “I LOVE YOU BUT THIS IS A STILL IN WORK SITE.”
+      “If you hear footsteps behind you,
+      do not turn around.”
     </p>
 
   </div>
 
 </section>
 
-<!-- ========================= -->
+<!-- YOUTUBE SECTION -->
+
+<section class="media-section">
+
+  <div class="media-header">
+
+    <h2>EVERDUSK BROADCAST</h2>
+
+    <p>
+      Latest transmissions from the Everdusk network.
+    </p>
+
+  </div>
+
+  <div class="video-player">
+
+    <iframe
+      id="ytplayer"
+      src="https://www.youtube.com/embed?listType=user_uploads&list=Everduskofficial&autoplay=0&rel=0&modestbranding=1"
+      title="Everdusk Videos"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+
+  </div>
+
+  <div class="youtube-button-wrap">
+
+    <a
+      href="https://www.youtube.com/@Everduskofficial"
+      target="_blank"
+      class="youtube-btn"
+    >
+      Visit The Everdusk Channel
+    </a>
+
+  </div>
+
+</section>
+
 <!-- FOOTER -->
-<!-- ========================= -->
 
 <footer>
-  © 2026 Everdusk.
+  © 2026 Everdusk — The night remembers.
 </footer>
 
 </body>
