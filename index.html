@@ -7,17 +7,25 @@
 
 <style>
 
+/* ========================= */
+/* RESET */
+/* ========================= */
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
-  background:black;
+  background:#050505;
   color:white;
   font-family:Arial,sans-serif;
-  overflow:hidden;
+  overflow-x:hidden;
 }
 
 /* ========================= */
@@ -30,8 +38,8 @@ body{
 
   background:
   linear-gradient(
-    rgba(0,0,0,0.65),
-    rgba(0,0,0,0.8)
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0.85)
   ),
   url('https://cdn.corenexis.com/files/c/3236352720.png');
 
@@ -43,18 +51,18 @@ body{
 }
 
 /* ========================= */
-/* SOFT RAIN */
+/* RAIN */
 /* ========================= */
 
 .rain{
   position:fixed;
   inset:0;
 
-  overflow:hidden;
-
   pointer-events:none;
 
   z-index:5;
+
+  overflow:hidden;
 }
 
 .rain::before{
@@ -68,15 +76,15 @@ body{
   background-image:
   repeating-linear-gradient(
     to bottom,
-    rgba(255,255,255,0.10) 0px,
-    rgba(255,255,255,0.10) 2px,
-    transparent 8px,
-    transparent 18px
+    rgba(255,255,255,0.08) 0px,
+    rgba(255,255,255,0.08) 2px,
+    transparent 10px,
+    transparent 22px
   );
 
   background-size:2px 120px;
 
-  animation:rainMove .45s linear infinite;
+  animation:rainMove .5s linear infinite;
 
   opacity:.18;
 }
@@ -93,7 +101,7 @@ body{
 }
 
 /* ========================= */
-/* TOP BAR */
+/* NAVBAR */
 /* ========================= */
 
 .topbar{
@@ -114,7 +122,10 @@ body{
 
   backdrop-filter:blur(10px);
 
-  z-index:100;
+  border-bottom:
+  1px solid rgba(255,255,255,0.06);
+
+  z-index:999;
 }
 
 .logo-text{
@@ -126,13 +137,16 @@ body{
 }
 
 .server-box{
-  background:rgba(0,0,0,0.45);
+
+  background:
+  rgba(255,255,255,0.03);
 
   padding:12px 20px;
 
   border-radius:12px;
 
-  color:white;
+  border:
+  1px solid rgba(255,255,255,0.05);
 }
 
 .server-box strong{
@@ -146,6 +160,7 @@ body{
 
 .links a{
   color:white;
+
   text-decoration:none;
 
   transition:.3s;
@@ -160,7 +175,7 @@ body{
 /* ========================= */
 
 .hero{
-  height:100vh;
+  min-height:100vh;
 
   display:flex;
   flex-direction:column;
@@ -170,17 +185,17 @@ body{
 
   text-align:center;
 
-  padding:20px;
+  padding:120px 20px 80px;
 }
-
-/* LOGO */
 
 .hero img{
   width:180px;
-  margin-bottom:20px;
-}
 
-/* TITLE */
+  margin-bottom:20px;
+
+  filter:
+  drop-shadow(0 0 20px rgba(255,0,0,0.3));
+}
 
 .hero h1{
   font-size:5rem;
@@ -190,37 +205,293 @@ body{
   color:white;
 }
 
-/* TEXT */
-
 .hero p{
   margin-top:15px;
 
-  max-width:650px;
+  max-width:700px;
 
-  color:#999;
+  color:#b0b0b0;
+
+  line-height:1.8;
 
   font-size:1.1rem;
+}
+
+/* ========================= */
+/* NEWS TICKER */
+/* ========================= */
+
+.news-wrapper{
+
+  width:100%;
+
+  overflow:hidden;
+
+  background:
+  rgba(120,0,0,0.2);
+
+  border-top:
+  1px solid rgba(255,0,0,0.15);
+
+  border-bottom:
+  1px solid rgba(255,0,0,0.15);
+
+  padding:14px 0;
+}
+
+.news-track{
+
+  display:flex;
+
+  gap:80px;
+
+  white-space:nowrap;
+
+  animation:scrollNews 28s linear infinite;
+}
+
+.news-track span{
+
+  color:#ff4a4a;
+
+  letter-spacing:1px;
+
+  font-size:.95rem;
+}
+
+@keyframes scrollNews{
+
+  from{
+    transform:translateX(100%);
+  }
+
+  to{
+    transform:translateX(-100%);
+  }
+}
+
+/* ========================= */
+/* MAIN CONTENT */
+/* ========================= */
+
+.main-content{
+
+  width:100%;
+
+  padding:80px 40px;
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(320px,1fr));
+
+  gap:30px;
+}
+
+/* ========================= */
+/* PANELS */
+/* ========================= */
+
+.panel{
+
+  background:
+  rgba(0,0,0,0.45);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  border-radius:18px;
+
+  padding:30px;
+
+  backdrop-filter:blur(10px);
+
+  transition:.35s;
+}
+
+.panel:hover{
+
+  transform:
+  translateY(-6px);
+
+  border-color:
+  rgba(255,0,0,0.4);
+
+  box-shadow:
+  0 0 30px rgba(255,0,0,0.12);
+}
+
+.panel.large{
+  grid-column:span 2;
+}
+
+.panel h2{
+
+  color:#ff3b3b;
+
+  margin-bottom:18px;
+
+  letter-spacing:2px;
+}
+
+.panel p{
+
+  color:#cfcfcf;
 
   line-height:1.7;
+}
+
+/* ========================= */
+/* STATUS */
+/* ========================= */
+
+.status-box{
+
+  margin-top:25px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  background:
+  rgba(255,255,255,0.03);
+
+  padding:16px;
+
+  border-radius:10px;
+}
+
+.dot{
+
+  width:10px;
+  height:10px;
+
+  background:#00ff88;
+
+  border-radius:50%;
+
+  display:inline-block;
+
+  margin-right:8px;
+
+  box-shadow:
+  0 0 10px #00ff88;
+}
+
+/* ========================= */
+/* MINI STATS */
+/* ========================= */
+
+.mini-stat{
+
+  display:flex;
+  justify-content:space-between;
+
+  margin-bottom:16px;
+
+  padding-bottom:12px;
+
+  border-bottom:
+  1px solid rgba(255,255,255,0.05);
+}
+
+.green{
+  color:#00ff88;
+}
+
+/* ========================= */
+/* REALMS */
+/* ========================= */
+
+.realm-list{
+
+  display:flex;
+  flex-direction:column;
+
+  gap:15px;
+}
+
+.realm{
+
+  background:
+  rgba(255,255,255,0.03);
+
+  padding:14px 18px;
+
+  border-radius:10px;
+
+  transition:.3s;
+}
+
+.realm:hover{
+
+  background:
+  rgba(255,0,0,0.12);
+
+  transform:
+  translateX(5px);
+}
+
+/* ========================= */
+/* QUOTE */
+/* ========================= */
+
+.quote-panel{
+  text-align:center;
+}
+
+.quote{
+
+  font-size:1.3rem;
+
+  color:#aaa;
+
+  font-style:italic;
+
+  line-height:1.8;
+}
+
+/* ========================= */
+/* FOOTER */
+/* ========================= */
+
+footer{
+
+  padding:40px;
+
+  text-align:center;
+
+  color:#777;
+
+  border-top:
+  1px solid rgba(255,255,255,0.06);
 }
 
 /* ========================= */
 /* MOBILE */
 /* ========================= */
 
-@media(max-width:768px){
+@media(max-width:900px){
+
+  .topbar{
+    flex-direction:column;
+    gap:15px;
+  }
 
   .hero h1{
     font-size:3rem;
   }
 
   .hero img{
-    width:130px;
+    width:140px;
   }
 
-  .topbar{
-    flex-direction:column;
-    gap:15px;
+  .panel.large{
+    grid-column:span 1;
+  }
+
+  .main-content{
+    padding:50px 20px;
   }
 }
 
@@ -233,7 +504,9 @@ body{
 
 <div class="rain"></div>
 
+<!-- ========================= -->
 <!-- TOPBAR -->
+<!-- ========================= -->
 
 <div class="topbar">
 
@@ -280,7 +553,9 @@ body{
 
 </div>
 
+<!-- ========================= -->
 <!-- HERO -->
+<!-- ========================= -->
 
 <div class="hero">
 
@@ -292,10 +567,156 @@ body{
   <h1>EVERDUSK</h1>
 
   <p>
-    The signal never ends.
+    A cinematic Minecraft horror universe where
+    forgotten realms, corrupted entities, and endless
+    night consume everything.
   </p>
 
 </div>
+
+<!-- ========================= -->
+<!-- NEWS -->
+<!-- ========================= -->
+
+<div class="news-wrapper">
+
+  <div class="news-track">
+
+    <span>
+      ⚠ New corrupted zones discovered beneath Mythfall...
+    </span>
+
+    <span>
+      ⚠ Pulse systems are now active...
+    </span>
+
+    <span>
+      ⚠ Unknown entities detected in the Everdusk forests...
+    </span>
+
+    <span>
+      ⚠ Java Server: java.mythfall.xyz
+    </span>
+
+    <span>
+      ⚠ Eagler Server: mythfall.xyz
+    </span>
+
+    <span>
+      ⚠ VexSound integration online...
+    </span>
+
+  </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- MAIN CONTENT -->
+<!-- ========================= -->
+
+<section class="main-content">
+
+  <!-- ABOUT -->
+
+  <div class="panel large">
+
+    <h2>ABOUT EVERDUSK</h2>
+
+    <p>
+      Everdusk is a dark Minecraft experience built
+      around horror storytelling, exploration,
+      corrupted dimensions, and cinematic survival.
+      Every realm hides secrets beneath the darkness.
+    </p>
+
+    <div class="status-box">
+
+      <div>
+        <span class="dot"></span>
+        Network Online
+      </div>
+
+      <div>
+        24/7 Active
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- STATUS -->
+
+  <div class="panel">
+
+    <h2>LIVE STATUS</h2>
+
+    <div class="mini-stat">
+      <strong>Players:</strong>
+      <span>127 Online</span>
+    </div>
+
+    <div class="mini-stat">
+      <strong>Ping:</strong>
+      <span>24ms</span>
+    </div>
+
+    <div class="mini-stat">
+      <strong>Status:</strong>
+      <span class="green">Operational</span>
+    </div>
+
+  </div>
+
+  <!-- REALMS -->
+
+  <div class="panel">
+
+    <h2>FEATURED REALMS</h2>
+
+    <div class="realm-list">
+
+      <div class="realm">
+        Black Hollow
+      </div>
+
+      <div class="realm">
+        Crimson Forest
+      </div>
+
+      <div class="realm">
+        The Watchers
+      </div>
+
+      <div class="realm">
+        Forgotten Depths
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- QUOTE -->
+
+  <div class="panel large quote-panel">
+
+    <h2>SYSTEM MESSAGE</h2>
+
+    <p class="quote">
+      “If you hear footsteps behind you,
+      do not turn around.”
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- FOOTER -->
+<!-- ========================= -->
+
+<footer>
+  © 2026 Everdusk — The night remembers.
+</footer>
 
 </body>
 </html>
