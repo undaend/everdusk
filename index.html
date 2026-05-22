@@ -56,147 +56,12 @@ body{
   background:black;
   z-index:9999999;
   overflow:hidden;
-  cursor:none;
 }
 
 #introVideo{
   width:100%;
   height:100%;
   object-fit:cover;
-}
-
-/* ========================= */
-/* LOADING */
-/* ========================= */
-
-.loading-sequence{
-
-  position:absolute;
-  inset:0;
-
-  display:flex;
-  flex-direction:column;
-
-  justify-content:center;
-  align-items:center;
-
-  background:
-  rgba(0,0,0,.78);
-
-  z-index:99999999;
-}
-
-.loading-logo{
-
-  width:170px;
-
-  animation:
-  pulseLogo 3s infinite;
-
-  filter:
-  drop-shadow(0 0 30px red);
-}
-
-@keyframes pulseLogo{
-
-  0%,100%{
-    transform:scale(1);
-  }
-
-  50%{
-    transform:scale(1.08);
-  }
-}
-
-.loading-title{
-
-  margin-top:25px;
-
-  font-size:3rem;
-
-  letter-spacing:10px;
-
-  color:#ff2a2a;
-
-  text-shadow:
-  0 0 25px red;
-}
-
-.loading-console{
-
-  width:700px;
-  max-width:90%;
-
-  height:180px;
-
-  overflow:hidden;
-
-  margin-top:35px;
-
-  padding:20px;
-
-  background:
-  rgba(0,0,0,.55);
-
-  border:
-  1px solid rgba(255,0,0,.2);
-
-  border-radius:18px;
-
-  color:#00ff88;
-
-  font-family:monospace;
-
-  line-height:1.9;
-
-  box-shadow:
-  0 0 30px rgba(255,0,0,.12);
-}
-
-.loading-bar-wrap{
-
-  width:700px;
-  max-width:90%;
-
-  height:16px;
-
-  background:#111;
-
-  border-radius:30px;
-
-  overflow:hidden;
-
-  margin-top:30px;
-
-  border:
-  1px solid rgba(255,0,0,.2);
-}
-
-.loading-bar-fill{
-
-  width:0%;
-
-  height:100%;
-
-  background:
-  linear-gradient(
-    to right,
-    darkred,
-    red
-  );
-
-  box-shadow:
-  0 0 25px red;
-
-  transition:width .3s;
-}
-
-/* ========================= */
-/* ACCESS TERMINAL */
-/* ========================= */
-
-.hidden-intro{
-  display:none;
 }
 
 .intro-overlay{
@@ -209,78 +74,38 @@ body{
   justify-content:center;
   align-items:center;
 
-  background:rgba(0,0,0,.65);
+  background:rgba(0,0,0,.7);
 }
 
-.intro-overlay h1{
-  font-size:6rem;
-  letter-spacing:14px;
-  text-shadow:0 0 40px red;
-}
+/* ========================= */
+/* ACCESS TERMINAL */
+/* ========================= */
 
-.intro-overlay p{
-  margin-top:20px;
-  color:#ccc;
-  letter-spacing:5px;
-}
+.access-terminal{
 
-.terminal-hint-box{
+  width:90%;
 
-  width:420px;
-  max-width:90%;
-
-  margin-top:30px;
+  max-width:720px;
 
   background:
-  rgba(0,0,0,.45);
+  rgba(0,0,0,.72);
 
   border:
-  1px solid rgba(255,0,0,.18);
-
-  border-radius:18px;
-
-  padding:22px;
-
-  color:#ccc;
-
-  line-height:2;
-
-  text-align:left;
-}
-
-.hint-title{
-
-  color:#ff2a2a;
-
-  margin-bottom:15px;
-
-  letter-spacing:3px;
-}
-
-.access-terminal-box{
-
-  width:520px;
-  max-width:90%;
-
-  margin-top:35px;
-
-  background:
-  rgba(0,0,0,.65);
-
-  border:
-  1px solid rgba(255,0,0,.25);
+  1px solid rgba(255,0,0,.2);
 
   border-radius:20px;
 
   overflow:hidden;
 
+  backdrop-filter:blur(14px);
+
   box-shadow:
-  0 0 40px rgba(255,0,0,.18);
+  0 0 40px rgba(255,0,0,.2);
 }
 
-.access-header{
+.access-top{
 
-  padding:18px;
+  padding:18px 25px;
 
   background:
   rgba(255,0,0,.08);
@@ -288,57 +113,114 @@ body{
   border-bottom:
   1px solid rgba(255,0,0,.15);
 
+  color:#ff3b3b;
+
   letter-spacing:3px;
 
-  color:#ff2a2a;
+  font-family:monospace;
 }
 
-.access-screen{
+.access-loading{
 
-  padding:35px;
-
-  display:flex;
-  flex-direction:column;
-
-  gap:20px;
-}
-
-.access-line{
+  padding:25px;
 
   color:#00ff88;
 
   font-family:monospace;
 
+  line-height:2;
+}
+
+.loading-line{
+
+  opacity:0;
+
+  animation:loadText .8s forwards;
+}
+
+.loading-line:nth-child(1){
+  animation-delay:.3s;
+}
+
+.loading-line:nth-child(2){
+  animation-delay:1.2s;
+}
+
+.loading-line:nth-child(3){
+  animation-delay:2s;
+}
+
+.loading-line:nth-child(4){
+  animation-delay:2.8s;
+}
+
+@keyframes loadText{
+
+  to{
+    opacity:1;
+  }
+}
+
+.hint-box{
+
+  padding:0 25px 20px;
+
+  color:#888;
+
+  font-size:.9rem;
+
   letter-spacing:2px;
+
+  opacity:0;
+
+  animation:showHints 1s forwards;
+
+  animation-delay:4s;
+}
+
+@keyframes showHints{
+
+  to{
+    opacity:1;
+  }
+}
+
+.code-area{
+
+  padding:0 25px 30px;
+
+  display:none;
+
+  flex-direction:column;
+
+  gap:18px;
 }
 
 #accessCode{
 
-  width:100%;
-
-  padding:18px;
-
   background:black;
 
   border:
-  1px solid rgba(255,0,0,.2);
+  1px solid rgba(255,0,0,.25);
 
   border-radius:14px;
 
+  padding:18px;
+
   color:#00ff88;
 
-  font-size:1.2rem;
+  font-family:monospace;
 
-  letter-spacing:10px;
-
-  text-align:center;
+  font-size:1rem;
 
   outline:none;
+
+  cursor:none;
 }
 
-#submitCode{
+#unlockBtn{
 
-  padding:18px;
+  padding:16px;
 
   background:red;
 
@@ -350,56 +232,26 @@ body{
 
   font-size:1rem;
 
-  cursor:pointer;
-
   transition:.3s;
+
+  cursor:none;
 }
 
-#submitCode:hover{
+#unlockBtn:hover{
 
   transform:translateY(-4px);
 
   box-shadow:
-  0 0 30px rgba(255,0,0,.4);
+  0 0 30px rgba(255,0,0,.45);
 }
 
 #accessMessage{
 
-  color:#999;
+  color:#ff3b3b;
 
-  text-align:center;
+  font-family:monospace;
 
-  margin-top:5px;
-
-  min-height:24px;
-}
-
-.wrong-code{
-
-  animation:shake .3s;
-}
-
-@keyframes shake{
-
-  0%{
-    transform:translateX(0);
-  }
-
-  25%{
-    transform:translateX(-5px);
-  }
-
-  50%{
-    transform:translateX(5px);
-  }
-
-  75%{
-    transform:translateX(-5px);
-  }
-
-  100%{
-    transform:translateX(0);
-  }
+  min-height:20px;
 }
 
 /* ========================= */
@@ -585,28 +437,6 @@ body{
 }
 
 /* ========================= */
-/* SCANLINES */
-/* ========================= */
-
-.scanlines{
-  position:fixed;
-  inset:0;
-
-  background:
-  repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.02),
-    rgba(255,255,255,.02) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-
-  pointer-events:none;
-
-  z-index:999;
-}
-
-/* ========================= */
 /* CURSOR */
 /* ========================= */
 
@@ -663,6 +493,37 @@ body{
   color:#ff2a2a;
   font-size:2rem;
   letter-spacing:5px;
+}
+
+.server-box{
+  background:
+  rgba(255,255,255,.03);
+
+  padding:12px 20px;
+
+  border-radius:14px;
+
+  border:
+  1px solid rgba(255,255,255,.05);
+}
+
+.server-box strong{
+  color:#00ff88;
+}
+
+.links{
+  display:flex;
+  gap:20px;
+}
+
+.links a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.links a:hover{
+  color:#ff2a2a;
 }
 
 /* ========================= */
@@ -724,11 +585,161 @@ body{
   line-height:1.8;
 }
 
+.hero-buttons{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+
+  margin-top:40px;
+}
+
+.hero-buttons a{
+  padding:15px 35px;
+
+  background:
+  rgba(120,0,0,.35);
+
+  border:
+  1px solid rgba(255,0,0,.25);
+
+  border-radius:14px;
+
+  color:white;
+
+  text-decoration:none;
+
+  transition:.35s;
+}
+
+.hero-buttons a:hover{
+  transform:
+  translateY(-5px);
+
+  background:red;
+
+  box-shadow:
+  0 0 30px rgba(255,0,0,.4);
+}
+
+/* NETWORK BUTTONS */
+
+.network-buttons{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:20px;
+
+  justify-content:center;
+
+  margin-top:50px;
+}
+
+.network-btn{
+
+  padding:16px 30px;
+
+  background:
+  rgba(120,0,0,.35);
+
+  border:
+  1px solid rgba(255,0,0,.25);
+
+  border-radius:16px;
+
+  color:white;
+
+  text-decoration:none;
+
+  letter-spacing:2px;
+
+  transition:.35s;
+}
+
+.network-btn:hover{
+
+  transform:
+  translateY(-5px);
+
+  background:red;
+
+  box-shadow:
+  0 0 35px rgba(255,0,0,.4);
+}
+
+/* SERVER STATUS */
+
+.server-status-panel{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(320px,1fr));
+
+  gap:25px;
+
+  width:90%;
+
+  max-width:1000px;
+
+  margin:40px auto 100px;
+}
+
+.server-card{
+
+  background:
+  rgba(0,0,0,.45);
+
+  border:
+  1px solid rgba(255,0,0,.15);
+
+  border-radius:20px;
+
+  padding:40px;
+
+  text-align:center;
+
+  transition:.35s;
+}
+
+.server-card:hover{
+
+  transform:
+  translateY(-8px);
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,.2);
+}
+
+.server-card h2{
+
+  color:#ff3b3b;
+
+  margin-bottom:18px;
+
+  letter-spacing:3px;
+}
+
+.server-card p{
+
+  color:#00ff88;
+
+  font-family:monospace;
+
+  font-size:1.1rem;
+}
+
 /* ========================= */
 /* MOBILE */
 /* ========================= */
 
 @media(max-width:900px){
+
+  .topbar{
+    flex-direction:column;
+    gap:15px;
+  }
 
   .hero h1{
     font-size:3rem;
@@ -761,92 +772,55 @@ body{
 
   </video>
 
-  <!-- LOADING -->
+  <div class="intro-overlay">
 
-  <div class="loading-sequence" id="loadingSequence">
+    <div class="access-terminal">
 
-    <img
-      src="https://cdn.corenexis.com/files/c/8547675720.png"
-      class="loading-logo"
-    >
-
-    <h1 class="loading-title">
-      EVERDUSK NETWORK
-    </h1>
-
-    <div class="loading-console" id="loadingConsole">
-
-      <div>> Booting Everdusk systems...</div>
-
-    </div>
-
-    <div class="loading-bar-wrap">
-
-      <div class="loading-bar-fill" id="loadingFill"></div>
-
-    </div>
-
-  </div>
-
-  <!-- ACCESS -->
-
-  <div class="intro-overlay hidden-intro" id="accessTerminal">
-
-    <h1>EVERDUSK</h1>
-
-    <p>
-      RESTRICTED ACCESS TERMINAL
-    </p>
-
-    <div class="terminal-hint-box">
-
-      <div class="hint-title">
-        ACCESS HINTS
+      <div class="access-top">
+        EVERDUSK ACCESS TERMINAL
       </div>
 
-      <div id="hintText">
+      <div class="access-loading">
 
-        • The code contains 6 numbers<br>
-        • The darkness watches first<br>
-        • Archived file: 438***
-
-      </div>
-
-    </div>
-
-    <div class="access-terminal-box">
-
-      <div class="access-header">
-
-        SECURE AUTHORIZATION REQUIRED
-
-      </div>
-
-      <div class="access-screen">
-
-        <div class="access-line">
-          ENTER ACCESS CODE:
+        <div class="loading-line">
+          > CONNECTING TO ARCHIVE...
         </div>
+
+        <div class="loading-line">
+          > VERIFYING SIGNAL...
+        </div>
+
+        <div class="loading-line">
+          > SEARCHING FOR ENTITY KEY...
+        </div>
+
+        <div class="loading-line">
+          > ACCESS LEVEL REQUIRED
+        </div>
+
+      </div>
+
+      <div class="hint-box" id="hintBox">
+
+        HINT:
+        THE CODE HAS 6 DIGITS
+
+      </div>
+
+      <div class="code-area" id="codeArea">
 
         <input
           type="password"
           id="accessCode"
-          maxlength="6"
+          placeholder="ENTER ACCESS CODE"
           autocomplete="off"
-          placeholder="######"
         >
 
-        <button id="submitCode">
-
-          AUTHORIZE ACCESS
-
+        <button id="unlockBtn">
+          UNLOCK
         </button>
 
-        <div id="accessMessage">
-
-          Awaiting authorization...
-
-        </div>
+        <div id="accessMessage"></div>
 
       </div>
 
@@ -868,9 +842,49 @@ body{
 
 <div class="floating-fog"></div>
 
-<div class="scanlines"></div>
-
 <div class="cursor-glow"></div>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+  <div class="logo-text">
+    EVERDUSK
+  </div>
+
+  <div class="server-box">
+
+    Eagler:
+    <strong>everdusk.xyz</strong>
+
+    &nbsp;&nbsp;&nbsp;
+
+    Java:
+    <strong>java.everdusk.xyz</strong>
+
+  </div>
+
+  <div class="links">
+
+    <a href="https://discord.gg/5Xdkuq7h9h" target="_blank">
+      Discord
+    </a>
+
+    <a href="https://discord.gg/r68g9MN6bx" target="_blank">
+      Pulse
+    </a>
+
+    <a href="https://www.youtube.com/@Everduskofficial" target="_blank">
+      YouTube
+    </a>
+
+    <a href="https://vexsound.base44.app/" target="_blank">
+      VexSound
+    </a>
+
+  </div>
+
+</div>
 
 <!-- HERO -->
 
@@ -887,7 +901,79 @@ body{
     A cinematic Minecraft horror universe where forgotten realms consume everything.
   </p>
 
+  <div class="hero-buttons">
+
+    <a href="https://discord.gg/5Xdkuq7h9h" target="_blank">
+      JOIN DISCORD
+    </a>
+
+    <a href="https://www.youtube.com/@Everduskofficial" target="_blank">
+      WATCH ARCHIVES
+    </a>
+
+    <a href="https://vexsound.base44.app/" target="_blank">
+      VEXSOUND
+    </a>
+
+  </div>
+
+  <div class="network-buttons">
+
+    <a
+      href="https://discord.gg/5Xdkuq7h9h"
+      target="_blank"
+      class="network-btn"
+    >
+      EVERDUSK DISCORD
+    </a>
+
+    <a
+      href="https://discord.gg/r68g9MN6bx"
+      target="_blank"
+      class="network-btn"
+    >
+      PULSE NETWORK
+    </a>
+
+    <a
+      href="https://www.youtube.com/@Everduskofficial"
+      target="_blank"
+      class="network-btn"
+    >
+      YOUTUBE ARCHIVES
+    </a>
+
+    <a
+      href="https://vexsound.base44.app/"
+      target="_blank"
+      class="network-btn"
+    >
+      VEXSOUND
+    </a>
+
+  </div>
+
 </div>
+
+<section class="server-status-panel">
+
+  <div class="server-card">
+
+    <h2>EAGLER SERVER</h2>
+
+    <p>everdusk.xyz</p>
+
+  </div>
+
+  <div class="server-card">
+
+    <h2>JAVA SERVER</h2>
+
+    <p>java.everdusk.xyz</p>
+
+  </div>
+
+</section>
 
 <script>
 
@@ -906,104 +992,37 @@ document.addEventListener("mousemove", e => {
 
 });
 
-/* LOADING */
+/* SHOW CODE INPUT */
 
-const loadingConsole =
-document.getElementById("loadingConsole");
+setTimeout(() => {
 
-const loadingFill =
-document.getElementById("loadingFill");
+  document
+  .getElementById("codeArea")
+  .style.display = "flex";
 
-const loadingSequence =
-document.getElementById("loadingSequence");
+},5000);
 
-const accessTerminal =
-document.getElementById("accessTerminal");
+/* ACCESS SYSTEM */
 
-const loadingLines = [
-
-  "> Connecting to Everdusk nodes...",
-  "> Restoring corrupted archives...",
-  "> Searching entity database...",
-  "> Scanning underground signals...",
-  "> Corruption level rising...",
-  "> Shadow movement detected...",
-  "> Decrypting forbidden files...",
-  "> Watchers are active...",
-  "> Initializing darkness engine...",
-  "> Secure terminal loading...",
-  "> ACCESS TERMINAL READY"
-
-];
-
-let progress = 0;
-let lineIndex = 0;
-
-const loadingInterval =
-setInterval(() => {
-
-  if(lineIndex < loadingLines.length){
-
-    const line =
-    document.createElement("div");
-
-    line.innerHTML =
-    loadingLines[lineIndex];
-
-    loadingConsole.appendChild(line);
-
-    loadingConsole.scrollTop =
-    loadingConsole.scrollHeight;
-
-    lineIndex++;
-
-  }
-
-  progress += 10;
-
-  loadingFill.style.width =
-  progress + "%";
-
-  if(progress >= 100){
-
-    clearInterval(loadingInterval);
-
-    setTimeout(() => {
-
-      loadingSequence.style.display =
-      "none";
-
-      accessTerminal.style.display =
-      "flex";
-
-    },1200);
-
-  }
-
-},900);
-
-/* ACCESS */
-
-const accessCode =
+const accessInput =
 document.getElementById("accessCode");
 
-const submitCode =
-document.getElementById("submitCode");
+const unlockBtn =
+document.getElementById("unlockBtn");
 
-const accessMessage =
+const accessMsg =
 document.getElementById("accessMessage");
 
-submitCode.onclick = () => {
+unlockBtn.onclick = () => {
 
-  const value =
-  accessCode.value.trim();
+  if(
+    accessInput.value === "438542"
+  ){
 
-  if(value === "438542"){
-
-    accessMessage.innerHTML =
+    accessMsg.innerHTML =
     "ACCESS GRANTED";
 
-    accessMessage.style.color =
+    accessMsg.style.color =
     "#00ff88";
 
     setTimeout(() => {
@@ -1014,25 +1033,13 @@ submitCode.onclick = () => {
 
     },1200);
 
-  } else {
+  }else{
 
-    accessMessage.innerHTML =
+    accessMsg.innerHTML =
     "ACCESS DENIED";
 
-    accessMessage.style.color =
-    "red";
-
-    accessCode.classList.add(
-      "wrong-code"
-    );
-
-    setTimeout(() => {
-
-      accessCode.classList.remove(
-        "wrong-code"
-      );
-
-    },400);
+    accessMsg.style.color =
+    "#ff3b3b";
 
   }
 
@@ -1040,32 +1047,28 @@ submitCode.onclick = () => {
 
 /* ENTER KEY */
 
-accessCode.addEventListener(
+accessInput.addEventListener(
 "keydown",
 e => {
 
   if(e.key === "Enter"){
 
-    submitCode.click();
+    unlockBtn.click();
 
   }
 
 });
 
-/* HINTS */
+/* HARDER HINTS */
 
 const hints = [
 
-  "• The code contains 6 numbers<br>• The darkness watches first<br>• Archived file: 438***",
-
-  "• Access log recovered<br>• The first 3 digits are 438<br>• Entity file ends in 542",
-
-  "• Watcher archives unlocked<br>• Corruption key identified<br>• 438542"
+  "HINT: THE CODE HAS 6 DIGITS",
+  "HINT: IT STARTS WITH 43",
+  "HINT: THE THIRD NUMBER IS 8",
+  "HINT: THE LAST NUMBER IS 2"
 
 ];
-
-const hintText =
-document.getElementById("hintText");
 
 let hintIndex = 0;
 
@@ -1073,16 +1076,16 @@ setInterval(() => {
 
   hintIndex++;
 
-  if(hintIndex >= hints.length){
+  if(hintIndex < hints.length){
 
-    hintIndex = 0;
+    document
+    .getElementById("hintBox")
+    .innerHTML =
+    hints[hintIndex];
 
   }
 
-  hintText.innerHTML =
-  hints[hintIndex];
-
-},7000);
+},9000);
 
 </script>
 
