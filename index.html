@@ -15,7 +15,6 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  cursor:none !important;
 }
 
 html{
@@ -27,7 +26,7 @@ body{
   color:white;
   font-family:Arial,sans-serif;
   overflow-x:hidden;
-  cursor:none !important;
+  cursor:none;
 }
 
 /* ========================= */
@@ -57,13 +56,147 @@ body{
   background:black;
   z-index:9999999;
   overflow:hidden;
-  cursor:none !important;
+  cursor:none;
 }
 
 #introVideo{
   width:100%;
   height:100%;
   object-fit:cover;
+}
+
+/* ========================= */
+/* LOADING */
+/* ========================= */
+
+.loading-sequence{
+
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  flex-direction:column;
+
+  justify-content:center;
+  align-items:center;
+
+  background:
+  rgba(0,0,0,.78);
+
+  z-index:99999999;
+}
+
+.loading-logo{
+
+  width:170px;
+
+  animation:
+  pulseLogo 3s infinite;
+
+  filter:
+  drop-shadow(0 0 30px red);
+}
+
+@keyframes pulseLogo{
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.08);
+  }
+}
+
+.loading-title{
+
+  margin-top:25px;
+
+  font-size:3rem;
+
+  letter-spacing:10px;
+
+  color:#ff2a2a;
+
+  text-shadow:
+  0 0 25px red;
+}
+
+.loading-console{
+
+  width:700px;
+  max-width:90%;
+
+  height:180px;
+
+  overflow:hidden;
+
+  margin-top:35px;
+
+  padding:20px;
+
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.2);
+
+  border-radius:18px;
+
+  color:#00ff88;
+
+  font-family:monospace;
+
+  line-height:1.9;
+
+  box-shadow:
+  0 0 30px rgba(255,0,0,.12);
+}
+
+.loading-bar-wrap{
+
+  width:700px;
+  max-width:90%;
+
+  height:16px;
+
+  background:#111;
+
+  border-radius:30px;
+
+  overflow:hidden;
+
+  margin-top:30px;
+
+  border:
+  1px solid rgba(255,0,0,.2);
+}
+
+.loading-bar-fill{
+
+  width:0%;
+
+  height:100%;
+
+  background:
+  linear-gradient(
+    to right,
+    darkred,
+    red
+  );
+
+  box-shadow:
+  0 0 25px red;
+
+  transition:width .3s;
+}
+
+/* ========================= */
+/* ACCESS TERMINAL */
+/* ========================= */
+
+.hidden-intro{
+  display:none;
 }
 
 .intro-overlay{
@@ -76,7 +209,7 @@ body{
   justify-content:center;
   align-items:center;
 
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,.65);
 }
 
 .intro-overlay h1{
@@ -91,146 +224,177 @@ body{
   letter-spacing:5px;
 }
 
-/* ========================= */
-/* ACCESS TERMINAL */
-/* ========================= */
-
-.lock-terminal{
-  margin-top:35px;
+.terminal-hint-box{
 
   width:420px;
-
   max-width:90%;
 
+  margin-top:30px;
+
   background:
-  rgba(0,0,0,.75);
-
-  border:
-  1px solid rgba(255,0,0,.3);
-
-  border-radius:18px;
-
-  padding:25px;
-
-  backdrop-filter:blur(12px);
-
-  box-shadow:
-  0 0 35px rgba(255,0,0,.18);
-}
-
-.lock-terminal-title{
-
-  color:#ff2a2a;
-
-  font-family:monospace;
-
-  letter-spacing:3px;
-
-  margin-bottom:18px;
-
-  text-align:center;
-}
-
-.lock-screen-output{
-
-  height:140px;
-
-  overflow-y:auto;
-
-  background:black;
+  rgba(0,0,0,.45);
 
   border:
   1px solid rgba(255,0,0,.18);
 
-  border-radius:14px;
+  border-radius:18px;
+
+  padding:22px;
+
+  color:#ccc;
+
+  line-height:2;
+
+  text-align:left;
+}
+
+.hint-title{
+
+  color:#ff2a2a;
+
+  margin-bottom:15px;
+
+  letter-spacing:3px;
+}
+
+.access-terminal-box{
+
+  width:520px;
+  max-width:90%;
+
+  margin-top:35px;
+
+  background:
+  rgba(0,0,0,.65);
+
+  border:
+  1px solid rgba(255,0,0,.25);
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,.18);
+}
+
+.access-header{
 
   padding:18px;
+
+  background:
+  rgba(255,0,0,.08);
+
+  border-bottom:
+  1px solid rgba(255,0,0,.15);
+
+  letter-spacing:3px;
+
+  color:#ff2a2a;
+}
+
+.access-screen{
+
+  padding:35px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:20px;
+}
+
+.access-line{
 
   color:#00ff88;
 
   font-family:monospace;
 
-  line-height:1.8;
-
-  margin-bottom:18px;
+  letter-spacing:2px;
 }
 
-.lock-input-wrap{
+#accessCode{
 
-  display:flex;
+  width:100%;
 
-  gap:12px;
-
-  align-items:center;
-}
-
-.lock-input-wrap span{
-
-  color:#ff2a2a;
-
-  font-family:monospace;
-}
-
-#accessInput{
-
-  flex:1;
+  padding:18px;
 
   background:black;
 
   border:
   1px solid rgba(255,0,0,.2);
 
-  border-radius:12px;
-
-  padding:14px;
+  border-radius:14px;
 
   color:#00ff88;
 
-  font-family:monospace;
+  font-size:1.2rem;
+
+  letter-spacing:10px;
+
+  text-align:center;
 
   outline:none;
 }
 
-#unlockBtn{
+#submitCode{
 
-  padding:14px 20px;
+  padding:18px;
 
   background:red;
 
   border:none;
 
-  border-radius:12px;
+  border-radius:14px;
 
   color:white;
+
+  font-size:1rem;
+
+  cursor:pointer;
 
   transition:.3s;
 }
 
-#unlockBtn:hover{
+#submitCode:hover{
 
-  transform:translateY(-2px);
+  transform:translateY(-4px);
 
   box-shadow:
-  0 0 20px rgba(255,0,0,.35);
+  0 0 30px rgba(255,0,0,.4);
 }
 
-.access-denied{
+#accessMessage{
 
-  animation:deniedFlash .3s 3;
+  color:#999;
+
+  text-align:center;
+
+  margin-top:5px;
+
+  min-height:24px;
 }
 
-@keyframes deniedFlash{
+.wrong-code{
+
+  animation:shake .3s;
+}
+
+@keyframes shake{
 
   0%{
     transform:translateX(0);
   }
 
   25%{
-    transform:translateX(-6px);
+    transform:translateX(-5px);
   }
 
   50%{
-    transform:translateX(6px);
+    transform:translateX(5px);
+  }
+
+  75%{
+    transform:translateX(-5px);
   }
 
   100%{
@@ -443,7 +607,7 @@ body{
 }
 
 /* ========================= */
-/* CUSTOM CURSOR */
+/* CURSOR */
 /* ========================= */
 
 .cursor-glow{
@@ -458,7 +622,7 @@ body{
 
   pointer-events:none;
 
-  z-index:999999999;
+  z-index:999999;
 
   box-shadow:
   0 0 20px red,
@@ -499,37 +663,6 @@ body{
   color:#ff2a2a;
   font-size:2rem;
   letter-spacing:5px;
-}
-
-.server-box{
-  background:
-  rgba(255,255,255,.03);
-
-  padding:12px 20px;
-
-  border-radius:14px;
-
-  border:
-  1px solid rgba(255,255,255,.05);
-}
-
-.server-box strong{
-  color:#00ff88;
-}
-
-.links{
-  display:flex;
-  gap:20px;
-}
-
-.links a{
-  color:white;
-  text-decoration:none;
-  transition:.3s;
-}
-
-.links a:hover{
-  color:#ff2a2a;
 }
 
 /* ========================= */
@@ -592,8 +725,26 @@ body{
 }
 
 /* ========================= */
-/* CURSOR HTML */
+/* MOBILE */
 /* ========================= */
+
+@media(max-width:900px){
+
+  .hero h1{
+    font-size:3rem;
+  }
+
+  .hero img{
+    width:140px;
+  }
+
+  .bloodmoon{
+    width:120px;
+    height:120px;
+    right:20px;
+  }
+
+}
 
 </style>
 </head>
@@ -610,51 +761,92 @@ body{
 
   </video>
 
-  <div class="intro-overlay">
+  <!-- LOADING -->
+
+  <div class="loading-sequence" id="loadingSequence">
+
+    <img
+      src="https://cdn.corenexis.com/files/c/8547675720.png"
+      class="loading-logo"
+    >
+
+    <h1 class="loading-title">
+      EVERDUSK NETWORK
+    </h1>
+
+    <div class="loading-console" id="loadingConsole">
+
+      <div>> Booting Everdusk systems...</div>
+
+    </div>
+
+    <div class="loading-bar-wrap">
+
+      <div class="loading-bar-fill" id="loadingFill"></div>
+
+    </div>
+
+  </div>
+
+  <!-- ACCESS -->
+
+  <div class="intro-overlay hidden-intro" id="accessTerminal">
 
     <h1>EVERDUSK</h1>
 
-    <p>SECURE ACCESS TERMINAL</p>
+    <p>
+      RESTRICTED ACCESS TERMINAL
+    </p>
 
-    <div class="lock-terminal">
+    <div class="terminal-hint-box">
 
-      <div class="lock-terminal-title">
+      <div class="hint-title">
+        ACCESS HINTS
+      </div>
 
-        AUTHORIZATION REQUIRED
+      <div id="hintText">
+
+        • The code contains 6 numbers<br>
+        • The darkness watches first<br>
+        • Archived file: 438***
 
       </div>
 
-      <div
-        class="lock-screen-output"
-        id="lockOutput"
-      >
+    </div>
 
-        <div>> EVERDUSK NETWORK DETECTED</div>
+    <div class="access-terminal-box">
 
-        <div>> ACCESS LEVEL: RESTRICTED</div>
+      <div class="access-header">
 
-        <div>> ENTER SECURITY CODE</div>
-
-        <div>> ONLY AUTHORIZED USERS MAY ENTER</div>
+        SECURE AUTHORIZATION REQUIRED
 
       </div>
 
-      <div class="lock-input-wrap">
+      <div class="access-screen">
 
-        <span>>></span>
+        <div class="access-line">
+          ENTER ACCESS CODE:
+        </div>
 
         <input
           type="password"
-          id="accessInput"
-          placeholder="ENTER ACCESS CODE..."
+          id="accessCode"
+          maxlength="6"
           autocomplete="off"
+          placeholder="######"
         >
 
-        <button id="unlockBtn">
+        <button id="submitCode">
 
-          UNLOCK
+          AUTHORIZE ACCESS
 
         </button>
+
+        <div id="accessMessage">
+
+          Awaiting authorization...
+
+        </div>
 
       </div>
 
@@ -680,9 +872,26 @@ body{
 
 <div class="cursor-glow"></div>
 
+<!-- HERO -->
+
+<div class="hero">
+
+  <img
+    src="https://cdn.corenexis.com/files/c/8547675720.png"
+    alt="Everdusk Logo"
+  >
+
+  <h1>EVERDUSK</h1>
+
+  <p>
+    A cinematic Minecraft horror universe where forgotten realms consume everything.
+  </p>
+
+</div>
+
 <script>
 
-/* CUSTOM CURSOR */
+/* CURSOR */
 
 const cursor =
 document.querySelector(".cursor-glow");
@@ -697,107 +906,183 @@ document.addEventListener("mousemove", e => {
 
 });
 
-/* ACCESS SYSTEM */
+/* LOADING */
 
-const accessInput =
-document.getElementById("accessInput");
+const loadingConsole =
+document.getElementById("loadingConsole");
 
-const unlockBtn =
-document.getElementById("unlockBtn");
+const loadingFill =
+document.getElementById("loadingFill");
 
-const intro =
-document.getElementById("intro-cutscene");
+const loadingSequence =
+document.getElementById("loadingSequence");
 
-const lockOutput =
-document.getElementById("lockOutput");
+const accessTerminal =
+document.getElementById("accessTerminal");
 
-function unlockSite(){
+const loadingLines = [
 
-  const code =
-  accessInput.value.trim();
+  "> Connecting to Everdusk nodes...",
+  "> Restoring corrupted archives...",
+  "> Searching entity database...",
+  "> Scanning underground signals...",
+  "> Corruption level rising...",
+  "> Shadow movement detected...",
+  "> Decrypting forbidden files...",
+  "> Watchers are active...",
+  "> Initializing darkness engine...",
+  "> Secure terminal loading...",
+  "> ACCESS TERMINAL READY"
 
-  const line =
-  document.createElement("div");
+];
 
-  line.innerHTML =
-  "> ACCESS CODE: " + code;
+let progress = 0;
+let lineIndex = 0;
 
-  lockOutput.appendChild(line);
+const loadingInterval =
+setInterval(() => {
 
-  if(code === "438542"){
+  if(lineIndex < loadingLines.length){
 
-    const granted =
+    const line =
     document.createElement("div");
 
-    granted.innerHTML =
-    "> ACCESS GRANTED";
+    line.innerHTML =
+    loadingLines[lineIndex];
 
-    lockOutput.appendChild(granted);
+    loadingConsole.appendChild(line);
 
-    setTimeout(() => {
+    loadingConsole.scrollTop =
+    loadingConsole.scrollHeight;
 
-      intro.style.opacity = "0";
-
-      intro.style.transition =
-      "1.2s";
-
-      setTimeout(() => {
-
-        intro.style.display = "none";
-
-      },1200);
-
-    },900);
+    lineIndex++;
 
   }
 
-  else{
+  progress += 10;
 
-    const denied =
-    document.createElement("div");
+  loadingFill.style.width =
+  progress + "%";
 
-    denied.innerHTML =
-    "> ACCESS DENIED";
+  if(progress >= 100){
 
-    denied.style.color =
-    "#ff2a2a";
+    clearInterval(loadingInterval);
 
-    lockOutput.appendChild(denied);
+    setTimeout(() => {
 
-    accessInput.value = "";
+      loadingSequence.style.display =
+      "none";
 
-    document
-    .querySelector(".lock-terminal")
-    .classList.add("access-denied");
+      accessTerminal.style.display =
+      "flex";
+
+    },1200);
+
+  }
+
+},900);
+
+/* ACCESS */
+
+const accessCode =
+document.getElementById("accessCode");
+
+const submitCode =
+document.getElementById("submitCode");
+
+const accessMessage =
+document.getElementById("accessMessage");
+
+submitCode.onclick = () => {
+
+  const value =
+  accessCode.value.trim();
+
+  if(value === "438542"){
+
+    accessMessage.innerHTML =
+    "ACCESS GRANTED";
+
+    accessMessage.style.color =
+    "#00ff88";
 
     setTimeout(() => {
 
       document
-      .querySelector(".lock-terminal")
-      .classList.remove("access-denied");
+      .getElementById("intro-cutscene")
+      .style.display = "none";
 
-    },900);
+    },1200);
+
+  } else {
+
+    accessMessage.innerHTML =
+    "ACCESS DENIED";
+
+    accessMessage.style.color =
+    "red";
+
+    accessCode.classList.add(
+      "wrong-code"
+    );
+
+    setTimeout(() => {
+
+      accessCode.classList.remove(
+        "wrong-code"
+      );
+
+    },400);
 
   }
 
-  lockOutput.scrollTop =
-  lockOutput.scrollHeight;
+};
 
-}
+/* ENTER KEY */
 
-unlockBtn.onclick =
-unlockSite;
-
-accessInput
-.addEventListener("keydown", e => {
+accessCode.addEventListener(
+"keydown",
+e => {
 
   if(e.key === "Enter"){
 
-    unlockSite();
+    submitCode.click();
 
   }
 
 });
+
+/* HINTS */
+
+const hints = [
+
+  "• The code contains 6 numbers<br>• The darkness watches first<br>• Archived file: 438***",
+
+  "• Access log recovered<br>• The first 3 digits are 438<br>• Entity file ends in 542",
+
+  "• Watcher archives unlocked<br>• Corruption key identified<br>• 438542"
+
+];
+
+const hintText =
+document.getElementById("hintText");
+
+let hintIndex = 0;
+
+setInterval(() => {
+
+  hintIndex++;
+
+  if(hintIndex >= hints.length){
+
+    hintIndex = 0;
+
+  }
+
+  hintText.innerHTML =
+  hints[hintIndex];
+
+},7000);
 
 </script>
 
