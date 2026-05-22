@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>EVERDUSK — The World Never Sleeps</title>
+<title>EVERDUSK — THE WORLD NEVER SLEEPS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -22,8 +22,8 @@ html{
 
 body{
     background:#000;
-    overflow-x:hidden;
     color:white;
+    overflow-x:hidden;
     font-family:'Orbitron',sans-serif;
     cursor:none;
 }
@@ -35,17 +35,16 @@ body{
 .cursor{
     width:20px;
     height:20px;
-    border:2px solid #ff0000;
+    border:2px solid red;
     border-radius:50%;
     position:fixed;
     pointer-events:none;
     z-index:999999;
     transform:translate(-50%,-50%);
     box-shadow:
-        0 0 10px #ff0000,
-        0 0 20px #ff0000,
-        0 0 40px #ff0000;
-    mix-blend-mode:screen;
+        0 0 10px red,
+        0 0 20px red,
+        0 0 40px red;
 }
 
 /* ========================= */
@@ -56,9 +55,9 @@ body{
     position:fixed;
     inset:0;
     background:
-        radial-gradient(circle at center, rgba(120,0,0,0.25), transparent 60%),
-        linear-gradient(to bottom, #050505 0%, #000 100%);
-    z-index:-5;
+        radial-gradient(circle at center, rgba(255,0,0,.15), transparent 60%),
+        linear-gradient(to bottom,#050505,#000);
+    z-index:-10;
 }
 
 .fog{
@@ -67,37 +66,36 @@ body{
     background:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1974&auto=format&fit=crop');
     background-size:cover;
     opacity:.08;
-    mix-blend-mode:screen;
-    animation:fogMove 60s linear infinite;
     filter:blur(6px);
+    animation:fog 60s linear infinite;
+    z-index:-9;
 }
 
-@keyframes fogMove{
-    0%{transform:scale(1.1) translateX(0);}
-    50%{transform:scale(1.2) translateX(-60px);}
-    100%{transform:scale(1.1) translateX(0);}
+@keyframes fog{
+    0%{
+        transform:scale(1.1) translateX(0);
+    }
+    50%{
+        transform:scale(1.2) translateX(-50px);
+    }
+    100%{
+        transform:scale(1.1) translateX(0);
+    }
 }
 
 .scanlines{
     position:fixed;
     inset:0;
+    pointer-events:none;
     background:
     repeating-linear-gradient(
         to bottom,
-        rgba(255,255,255,0.02),
-        rgba(255,255,255,0.02) 1px,
+        rgba(255,255,255,.02),
+        rgba(255,255,255,.02) 1px,
         transparent 1px,
         transparent 3px
     );
-    pointer-events:none;
     z-index:999;
-    animation:flicker .15s infinite;
-}
-
-@keyframes flicker{
-    0%{opacity:.7;}
-    50%{opacity:.9;}
-    100%{opacity:.7;}
 }
 
 /* ========================= */
@@ -117,47 +115,44 @@ body{
 .hero::before{
     content:'';
     position:absolute;
-    width:800px;
-    height:800px;
-    background:radial-gradient(circle, rgba(255,0,0,.2), transparent 70%);
+    width:900px;
+    height:900px;
+    background:radial-gradient(circle, rgba(255,0,0,.15), transparent 70%);
     border-radius:50%;
-    filter:blur(100px);
+    filter:blur(80px);
     animation:pulse 8s infinite;
 }
 
 @keyframes pulse{
     0%{transform:scale(1);}
-    50%{transform:scale(1.2);}
+    50%{transform:scale(1.15);}
     100%{transform:scale(1);}
 }
 
 .hero-content{
     position:relative;
-    z-index:5;
-    max-width:1000px;
+    z-index:2;
     padding:20px;
+    max-width:1200px;
 }
 
-.small-text{
-    color:#ff1b1b;
+.small{
+    color:#ff2b2b;
     letter-spacing:8px;
-    margin-bottom:20px;
     font-size:14px;
-    text-transform:uppercase;
+    margin-bottom:20px;
     animation:glitch 2s infinite;
 }
 
-.main-title{
+.title{
     font-size:120px;
     font-weight:900;
     line-height:1;
-    text-transform:uppercase;
-    color:white;
-    text-shadow:
-        0 0 10px #ff0000,
-        0 0 30px #ff0000,
-        0 0 80px #ff0000;
     margin-bottom:30px;
+    text-shadow:
+        0 0 10px red,
+        0 0 40px red,
+        0 0 90px red;
 }
 
 @keyframes glitch{
@@ -170,40 +165,44 @@ body{
 }
 
 .desc{
-    max-width:700px;
+    max-width:750px;
     margin:auto;
-    color:#aaa;
     line-height:1.8;
+    color:#999;
     font-family:'IBM Plex Mono',monospace;
     margin-bottom:40px;
 }
 
+/* ========================= */
+/* BUTTONS */
+/* ========================= */
+
 .buttons{
     display:flex;
+    flex-wrap:wrap;
     gap:20px;
     justify-content:center;
-    flex-wrap:wrap;
 }
 
 .btn{
-    padding:18px 38px;
-    border:1px solid rgba(255,0,0,.4);
+    padding:18px 35px;
+    text-decoration:none;
+    color:white;
+    border:1px solid rgba(255,0,0,.3);
     background:rgba(255,0,0,.08);
     backdrop-filter:blur(10px);
-    color:white;
-    text-decoration:none;
-    letter-spacing:3px;
     transition:.4s;
+    letter-spacing:2px;
     position:relative;
     overflow:hidden;
 }
 
 .btn:hover{
     transform:translateY(-4px);
-    background:#ff0000;
+    background:red;
     box-shadow:
-        0 0 20px #ff0000,
-        0 0 60px #ff0000;
+        0 0 20px red,
+        0 0 60px red;
 }
 
 /* ========================= */
@@ -213,14 +212,25 @@ body{
 .ip-box{
     margin-top:50px;
     display:inline-block;
-    border:1px solid rgba(255,0,0,.3);
     padding:20px 35px;
+    border:1px solid rgba(255,0,0,.25);
     background:rgba(0,0,0,.5);
     backdrop-filter:blur(10px);
     font-family:'IBM Plex Mono',monospace;
     color:#ff4d4d;
     line-height:2;
-    box-shadow:0 0 30px rgba(255,0,0,.2);
+}
+
+.ip-box span{
+    cursor:pointer;
+    transition:.3s;
+}
+
+.ip-box span:hover{
+    color:white;
+    text-shadow:
+        0 0 10px red,
+        0 0 20px red;
 }
 
 /* ========================= */
@@ -231,14 +241,14 @@ body{
     width:90%;
     max-width:1200px;
     margin:100px auto;
-    border:1px solid rgba(255,0,0,.2);
-    background:rgba(10,0,0,.5);
     padding:30px;
-    backdrop-filter:blur(20px);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,0,0,.15);
+    backdrop-filter:blur(15px);
 }
 
-.feed-title{
-    color:#ff1b1b;
+.feed h2{
+    color:#ff2b2b;
     margin-bottom:20px;
     letter-spacing:4px;
 }
@@ -247,19 +257,7 @@ body{
     padding:14px 0;
     border-bottom:1px solid rgba(255,255,255,.05);
     font-family:'IBM Plex Mono',monospace;
-    color:#aaa;
-    animation:fadeIn 1s forwards;
-}
-
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+    color:#999;
 }
 
 /* ========================= */
@@ -269,27 +267,26 @@ body{
 .section{
     width:90%;
     max-width:1200px;
-    margin:160px auto;
+    margin:140px auto;
 }
 
 .section-title{
     font-size:50px;
-    margin-bottom:40px;
-    color:white;
+    margin-bottom:50px;
     text-shadow:0 0 20px red;
 }
 
-.lore{
+.grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:40px;
+    gap:30px;
 }
 
 .card{
     padding:40px;
     background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,0,0,.15);
-    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,0,0,.12);
+    backdrop-filter:blur(10px);
     transition:.4s;
 }
 
@@ -323,18 +320,18 @@ body{
 .stat{
     padding:40px;
     text-align:center;
-    border:1px solid rgba(255,0,0,.15);
     background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,0,0,.15);
 }
 
 .stat h2{
     font-size:55px;
-    color:#ff0000;
+    color:red;
     margin-bottom:10px;
 }
 
 .stat p{
-    color:#777;
+    color:#666;
     letter-spacing:3px;
 }
 
@@ -351,7 +348,7 @@ footer{
 }
 
 /* ========================= */
-/* GLITCH OVERLAY */
+/* GLITCH FLASH */
 /* ========================= */
 
 .glitch{
@@ -370,16 +367,20 @@ footer{
 
 @media(max-width:900px){
 
-.main-title{
+.title{
     font-size:70px;
 }
 
-.lore{
+.grid{
     grid-template-columns:1fr;
 }
 
 .section-title{
     font-size:38px;
+}
+
+.buttons{
+    flex-direction:column;
 }
 
 }
@@ -399,39 +400,67 @@ footer{
 
 <section class="hero">
 
-    <div class="hero-content">
+<div class="hero-content">
 
-        <div class="small-text">
-            THE WORLD NEVER SLEEPS
-        </div>
+<div class="small">
+THE WORLD NEVER SLEEPS
+</div>
 
-        <h1 class="main-title">
-            EVERDUSK
-        </h1>
+<h1 class="title">
+EVERDUSK
+</h1>
 
-        <p class="desc">
-            Beneath the frozen ruins of Everdusk,
-            something ancient still watches.
-            Structures shift overnight.
-            Signals disappear below bedrock.
-            Nobody remembers when the red moon arrived.
-        </p>
+<p class="desc">
+Beneath the frozen ruins of Everdusk,
+something ancient still watches.
+Structures shift overnight.
+Signals disappear below bedrock.
+Nobody remembers when the red moon arrived.
+</p>
 
-        <div class="buttons">
-            <a href="#" class="btn">ENTER THE VOID</a>
-            <a href="#" class="btn">WATCH ARCHIVES</a>
-            <a href="#" class="btn">JOIN DISCORD</a>
-        </div>
+<div class="buttons">
 
-        <div class="ip-box">
-            SERVER IP:<br>
-            everdusk.xyz<br><br>
+<a href="https://everdusk.xyz" class="btn" target="_blank">
+ENTER THE VOID
+</a>
 
-            JAVA IP:<br>
-            java.everdusk.xyz
-        </div>
+<a href="https://www.youtube.com/@Everduskofficial" class="btn" target="_blank">
+WATCH ARCHIVES
+</a>
 
-    </div>
+<a href="https://discord.gg/5Xdkuq7h9h" class="btn" target="_blank">
+JOIN EVERDUSK
+</a>
+
+<a href="https://vexsound.base44.app/" class="btn" target="_blank">
+VEXSOUND
+</a>
+
+<a href="https://discord.com/invite/dseKG8dpWv" class="btn" target="_blank">
+PULSE NETWORK
+</a>
+
+</div>
+
+<div class="ip-box">
+
+SERVER IP:<br>
+
+<span onclick="copyIP('everdusk.xyz')">
+everdusk.xyz
+</span>
+
+<br><br>
+
+JAVA IP:<br>
+
+<span onclick="copyIP('java.everdusk.xyz')">
+java.everdusk.xyz
+</span>
+
+</div>
+
+</div>
 
 </section>
 
@@ -439,19 +468,27 @@ footer{
 
 <section class="feed">
 
-    <h2 class="feed-title">
-        LIVE WORLD EVENTS
-    </h2>
+<h2>LIVE WORLD EVENTS</h2>
 
-    <div id="feedContainer">
+<div id="feed">
 
-        <div class="feed-item">[03:12] SOMETHING MOVED IN SECTOR-7</div>
-        <div class="feed-item">[03:17] SIGNAL LOST</div>
-        <div class="feed-item">[03:22] UNKNOWN PLAYER JOINED</div>
-        <div class="feed-item">[03:29] ENTITY DETECTED BELOW BEDROCK</div>
-        <div class="feed-item">[03:31] DISTORTION LEVEL RISING</div>
+<div class="feed-item">
+[03:12] SOMETHING MOVED IN SECTOR-7
+</div>
 
-    </div>
+<div class="feed-item">
+[03:17] SIGNAL LOST
+</div>
+
+<div class="feed-item">
+[03:22] UNKNOWN PLAYER JOINED
+</div>
+
+<div class="feed-item">
+[03:29] ENTITY DETECTED BELOW BEDROCK
+</div>
+
+</div>
 
 </section>
 
@@ -459,35 +496,33 @@ footer{
 
 <section class="section">
 
-    <h2 class="section-title">
-        THE LORE
-    </h2>
+<h2 class="section-title">
+THE LORE
+</h2>
 
-    <div class="lore">
+<div class="grid">
 
-        <div class="card">
-            <h3>THE BELOW</h3>
-            <p>
-                Deep beneath the world,
-                tunnels continue endlessly.
-                Nobody reaches the end.
-                Players report whispers through proximity chat
-                where nobody exists.
-            </p>
-        </div>
+<div class="card">
+<h3>THE BELOW</h3>
+<p>
+Deep beneath the world,
+tunnels continue endlessly.
+Nobody reaches the end.
+Players report whispers from empty caves.
+</p>
+</div>
 
-        <div class="card">
-            <h3>THE RED MOON</h3>
-            <p>
-                Every seventh night,
-                the sky changes.
-                Creatures become hostile.
-                Structures mutate.
-                Some players never return.
-            </p>
-        </div>
+<div class="card">
+<h3>THE RED MOON</h3>
+<p>
+Every seventh night,
+the sky changes.
+Creatures become hostile.
+Some players never return.
+</p>
+</div>
 
-    </div>
+</div>
 
 </section>
 
@@ -495,80 +530,106 @@ footer{
 
 <section class="section">
 
-    <h2 class="section-title">
-        WORLD STATUS
-    </h2>
+<h2 class="section-title">
+WORLD STATUS
+</h2>
 
-    <div class="stats">
+<div class="stats">
 
-        <div class="stat">
-            <h2 id="s1">0</h2>
-            <p>PLAYERS LOST</p>
-        </div>
+<div class="stat">
+<h2 id="s1">0</h2>
+<p>PLAYERS LOST</p>
+</div>
 
-        <div class="stat">
-            <h2 id="s2">0</h2>
-            <p>SIGNALS RECEIVED</p>
-        </div>
+<div class="stat">
+<h2 id="s2">0</h2>
+<p>SIGNALS RECEIVED</p>
+</div>
 
-        <div class="stat">
-            <h2 id="s3">0</h2>
-            <p>ACTIVE ENTITIES</p>
-        </div>
+<div class="stat">
+<h2 id="s3">0</h2>
+<p>ACTIVE ENTITIES</p>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 <footer>
-    © EVERDUSK — THE SIGNAL CONTINUES
+© EVERDUSK — THE SIGNAL CONTINUES
 </footer>
 
 <script>
 
 /* ========================= */
-/* CUSTOM CURSOR */
+/* CURSOR */
 /* ========================= */
 
 const cursor = document.querySelector('.cursor');
 
 document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+
+cursor.style.left = e.clientX + 'px';
+cursor.style.top = e.clientY + 'px';
+
 });
 
 /* ========================= */
-/* RANDOM FEED EVENTS */
+/* COPY IP */
 /* ========================= */
 
-const feed = document.getElementById('feedContainer');
+function copyIP(ip){
+
+navigator.clipboard.writeText(ip);
+
+const oldTitle = document.title;
+
+document.title = 'COPIED: ' + ip;
+
+setTimeout(() => {
+
+document.title = oldTitle;
+
+},1500);
+
+}
+
+/* ========================= */
+/* FEED EVENTS */
+/* ========================= */
+
+const feed = document.getElementById('feed');
 
 const messages = [
-    '[04:01] UNKNOWN FOOTSTEPS DETECTED',
-    '[04:11] SIGNAL RETURNED',
-    '[04:18] PLAYER REMOVED FROM DATABASE',
-    '[04:24] MOVEMENT BELOW VOID LAYER',
-    '[04:31] ENTITY WATCHING SPAWN',
-    '[04:44] STRUCTURE CHANGED OVERNIGHT',
-    '[04:52] RED MOON APPROACHING'
+
+'[04:01] UNKNOWN FOOTSTEPS DETECTED',
+'[04:11] SIGNAL RETURNED',
+'[04:18] PLAYER REMOVED FROM DATABASE',
+'[04:24] MOVEMENT BELOW VOID LAYER',
+'[04:31] ENTITY WATCHING SPAWN',
+'[04:44] STRUCTURE CHANGED OVERNIGHT',
+'[04:52] RED MOON APPROACHING'
+
 ];
 
 setInterval(() => {
 
-    const div = document.createElement('div');
+const div = document.createElement('div');
 
-    div.className = 'feed-item';
+div.className = 'feed-item';
 
-    div.innerText =
-        messages[Math.floor(Math.random() * messages.length)];
+div.innerText =
+messages[Math.floor(Math.random() * messages.length)];
 
-    feed.prepend(div);
+feed.prepend(div);
 
-    if(feed.children.length > 8){
-        feed.removeChild(feed.lastChild);
-    }
+if(feed.children.length > 8){
 
-}, 4000);
+feed.removeChild(feed.lastChild);
+
+}
+
+},4000);
 
 /* ========================= */
 /* COUNTERS */
@@ -576,31 +637,31 @@ setInterval(() => {
 
 function counter(id,target){
 
-    let count = 0;
+let count = 0;
 
-    const el = document.getElementById(id);
+const el = document.getElementById(id);
 
-    const speed = target / 100;
+const speed = target / 100;
 
-    const update = () => {
+function update(){
 
-        count += speed;
+count += speed;
 
-        if(count < target){
+if(count < target){
 
-            el.innerText = Math.floor(count);
+el.innerText = Math.floor(count);
 
-            requestAnimationFrame(update);
+requestAnimationFrame(update);
 
-        }else{
+}else{
 
-            el.innerText = target.toLocaleString();
+el.innerText = target.toLocaleString();
 
-        }
+}
 
-    }
+}
 
-    update();
+update();
 
 }
 
@@ -616,33 +677,33 @@ const glitch = document.querySelector('.glitch');
 
 setInterval(() => {
 
-    glitch.style.opacity = '.06';
+glitch.style.opacity = '.06';
 
-    setTimeout(() => {
+setTimeout(() => {
 
-        glitch.style.opacity = '0';
+glitch.style.opacity = '0';
 
-    },100);
+},100);
 
 },Math.random()*8000+4000);
 
 /* ========================= */
-/* RANDOM TITLE GLITCH */
+/* TITLE GLITCH */
 /* ========================= */
 
-const title = document.querySelector('.main-title');
+const title = document.querySelector('.title');
 
 setInterval(() => {
 
-    title.style.transform = 'translateX(4px)';
+title.style.transform = 'translateX(4px)';
 
-    setTimeout(() => {
-        title.style.transform = 'translateX(-4px)';
-    },70);
+setTimeout(() => {
+title.style.transform = 'translateX(-4px)';
+},70);
 
-    setTimeout(() => {
-        title.style.transform = 'translateX(0)';
-    },140);
+setTimeout(() => {
+title.style.transform = 'translateX(0)';
+},140);
 
 },3000);
 
