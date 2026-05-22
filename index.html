@@ -42,7 +42,7 @@ BACKGROUND
   inset:0;
 
   background:
-  linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.95)),
+  linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.95)),
   url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=1920&auto=format&fit=crop');
 
   background-size:cover;
@@ -56,7 +56,9 @@ BACKGROUND
 .scanlines{
   position:fixed;
   inset:0;
+
   pointer-events:none;
+
   z-index:999999;
 
   background:
@@ -71,11 +73,12 @@ BACKGROUND
 
 .bloodmoon{
   position:fixed;
+
   top:5%;
   right:8%;
 
-  width:250px;
-  height:250px;
+  width:240px;
+  height:240px;
 
   border-radius:50%;
 
@@ -95,8 +98,15 @@ BACKGROUND
 }
 
 @keyframes moonPulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.05);}
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.05);
+  }
+
 }
 
 .fog{
@@ -113,8 +123,15 @@ BACKGROUND
 }
 
 @keyframes fogMove{
-  from{transform:translateX(-2%);}
-  to{transform:translateX(2%);}
+
+  from{
+    transform:translateX(-2%);
+  }
+
+  to{
+    transform:translateX(2%);
+  }
+
 }
 
 /* =========================================================
@@ -124,7 +141,9 @@ RAIN
 .rain{
   position:fixed;
   inset:0;
+
   z-index:-1;
+
   pointer-events:none;
 }
 
@@ -144,8 +163,15 @@ RAIN
 }
 
 @keyframes rain{
-  from{transform:translateY(-150px);}
-  to{transform:translateY(120vh);}
+
+  from{
+    transform:translateY(-150px);
+  }
+
+  to{
+    transform:translateY(120vh);
+  }
+
 }
 
 /* =========================================================
@@ -161,6 +187,7 @@ CURSOR
   background:red;
 
   position:fixed;
+
   top:0;
   left:0;
 
@@ -219,6 +246,7 @@ INTRO
 .glitch{
   font-size:7rem;
   font-weight:900;
+
   letter-spacing:10px;
 
   text-shadow:
@@ -263,15 +291,18 @@ INTRO
 
   color:white;
 
-  font-size:1rem;
   letter-spacing:4px;
 
   transition:.4s;
 }
 
 .enterBtn:hover{
+
   transform:scale(1.05);
-  box-shadow:0 0 25px red;
+
+  box-shadow:
+  0 0 25px red;
+
 }
 
 /* =========================================================
@@ -295,6 +326,7 @@ CUTSCENE
   z-index:9999999;
 
   opacity:0;
+
   pointer-events:none;
 
   transition:1s;
@@ -307,20 +339,23 @@ CUTSCENE
 
 .cutsceneText{
   font-size:4rem;
+
   color:red;
+
+  letter-spacing:8px;
 
   text-shadow:
   0 0 20px red,
   0 0 60px red;
-
-  letter-spacing:8px;
 
   animation:glitch 1s infinite;
 }
 
 .cutsceneSub{
   margin-top:30px;
+
   color:#ccc;
+
   letter-spacing:4px;
 }
 
@@ -342,9 +377,19 @@ CUTSCENE
 }
 
 @keyframes screenFlash{
-  0%{opacity:0;}
-  50%{opacity:.35;}
-  100%{opacity:0;}
+
+  0%{
+    opacity:0;
+  }
+
+  50%{
+    opacity:.35;
+  }
+
+  100%{
+    opacity:0;
+  }
+
 }
 
 /* =========================================================
@@ -352,56 +397,122 @@ NAVBAR
 ========================================================= */
 
 nav{
+
   position:fixed;
   top:0;
+  left:0;
 
   width:100%;
 
-  padding:20px 40px;
+  display:flex;
+  flex-direction:column;
+
+  gap:14px;
+
+  padding:18px 30px;
+
+  background:
+  rgba(0,0,0,.45);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:
+  1px solid rgba(255,0,0,.15);
+
+  z-index:99999;
+}
+
+.topNav{
 
   display:flex;
   justify-content:space-between;
   align-items:center;
 
-  backdrop-filter:blur(20px);
-
-  background:rgba(0,0,0,.35);
-
-  border-bottom:1px solid rgba(255,0,0,.15);
-
-  z-index:9999;
+  gap:20px;
 }
 
-.logo{
-  font-size:2rem;
-  font-weight:900;
-  letter-spacing:6px;
-  text-shadow:0 0 20px red;
-}
+.bottomNav{
 
-.navLinks{
   display:flex;
+  justify-content:center;
+  align-items:center;
+
   gap:16px;
+
   flex-wrap:wrap;
 }
 
-.navBtn{
+.logo{
+
+  font-size:2rem;
+
+  font-weight:900;
+
+  letter-spacing:5px;
+
+  text-shadow:
+  0 0 20px red;
+}
+
+.serverIps{
+
+  display:flex;
+
+  gap:14px;
+
+  flex-wrap:wrap;
+}
+
+.ipBox{
+
   padding:12px 18px;
 
-  background:rgba(255,0,0,.08);
+  background:
+  rgba(255,0,0,.08);
 
-  border:1px solid rgba(255,0,0,.3);
+  border:
+  1px solid rgba(255,0,0,.25);
 
-  color:white;
-
-  text-decoration:none;
+  border-radius:12px;
 
   transition:.3s;
 }
 
+.ipBox:hover{
+
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 0 20px rgba(255,0,0,.4);
+
+}
+
+.navBtn{
+
+  padding:12px 20px;
+
+  border-radius:12px;
+
+  background:
+  rgba(255,0,0,.08);
+
+  border:
+  1px solid rgba(255,0,0,.25);
+
+  color:white;
+
+  transition:.3s;
+
+  font-family:'Orbitron',sans-serif;
+}
+
 .navBtn:hover{
+
   transform:translateY(-4px);
-  box-shadow:0 0 20px red;
+
+  box-shadow:
+  0 0 25px rgba(255,0,0,.5);
+
 }
 
 /* =========================================================
@@ -418,11 +529,12 @@ HERO
 
   text-align:center;
 
-  padding:150px 20px;
+  padding:250px 20px 120px;
 }
 
 .hero h1{
   font-size:8rem;
+
   font-family:'Cinzel',serif;
 
   text-shadow:
@@ -443,16 +555,21 @@ HERO
 .heroButtons{
   display:flex;
   gap:20px;
+
   margin-top:40px;
+
   flex-wrap:wrap;
 }
 
 .heroBtn{
+
   padding:18px 40px;
 
-  background:rgba(255,0,0,.08);
+  background:
+  rgba(255,0,0,.08);
 
-  border:1px solid rgba(255,0,0,.35);
+  border:
+  1px solid rgba(255,0,0,.35);
 
   color:white;
 
@@ -460,8 +577,12 @@ HERO
 }
 
 .heroBtn:hover{
+
   transform:scale(1.05);
-  box-shadow:0 0 25px red;
+
+  box-shadow:
+  0 0 25px red;
+
 }
 
 /* =========================================================
@@ -470,13 +591,16 @@ PANELS
 
 .panel-toggle{
   position:fixed;
+
   right:20px;
 
   padding:12px 20px;
 
-  background:rgba(0,0,0,.7);
+  background:
+  rgba(0,0,0,.7);
 
-  border:1px solid rgba(255,0,0,.3);
+  border:
+  1px solid rgba(255,0,0,.3);
 
   color:white;
 
@@ -486,16 +610,28 @@ PANELS
 }
 
 .panel-toggle:hover{
-  box-shadow:0 0 20px red;
+
+  box-shadow:
+  0 0 20px red;
+
 }
 
-#worldToggle{top:90px;}
-#playerToggle{top:145px;}
-#terminalToggle{top:200px;}
+#worldToggle{
+  top:140px;
+}
+
+#playerToggle{
+  top:195px;
+}
+
+#terminalToggle{
+  top:250px;
+}
 
 .world-feed,
 .player-feed,
 .terminal{
+
   transition:
   transform .5s,
   opacity .5s;
@@ -504,8 +640,11 @@ PANELS
 .world-feed.closed,
 .player-feed.closed,
 .terminal.closed{
+
   transform:translateX(120%);
+
   opacity:0;
+
   pointer-events:none;
 }
 
@@ -515,14 +654,17 @@ FEEDS
 
 .world-feed{
   position:fixed;
-  top:140px;
+
+  top:200px;
   right:20px;
 
   width:340px;
 
-  background:rgba(0,0,0,.55);
+  background:
+  rgba(0,0,0,.55);
 
-  border:1px solid rgba(255,0,0,.2);
+  border:
+  1px solid rgba(255,0,0,.2);
 
   border-radius:18px;
 
@@ -533,14 +675,17 @@ FEEDS
 
 .player-feed{
   position:fixed;
-  top:420px;
+
+  top:480px;
   right:20px;
 
   width:340px;
 
-  background:rgba(0,0,0,.55);
+  background:
+  rgba(0,0,0,.55);
 
-  border:1px solid rgba(255,0,0,.2);
+  border:
+  1px solid rgba(255,0,0,.2);
 
   border-radius:18px;
 
@@ -550,9 +695,11 @@ FEEDS
 }
 
 .feed-header{
+
   padding:14px 18px;
 
-  background:rgba(255,0,0,.08);
+  background:
+  rgba(255,0,0,.08);
 
   color:#ff3b3b;
 
@@ -561,6 +708,7 @@ FEEDS
 
 .feed-messages,
 .player-messages{
+
   height:220px;
 
   overflow-y:auto;
@@ -598,6 +746,7 @@ TERMINAL
 }
 
 .terminalHeader{
+
   padding:12px;
 
   background:#120000;
@@ -606,6 +755,7 @@ TERMINAL
 }
 
 .terminalBody{
+
   height:calc(100% - 40px);
 
   overflow-y:auto;
@@ -618,7 +768,7 @@ TERMINAL
 }
 
 /* =========================================================
-SECTION
+LORE
 ========================================================= */
 
 .section{
@@ -626,13 +776,19 @@ SECTION
 }
 
 .sectionTitle{
+
   font-size:3rem;
+
   margin-bottom:60px;
-  text-shadow:0 0 20px red;
+
+  text-shadow:
+  0 0 20px red;
 }
 
 .grid{
+
   display:grid;
+
   grid-template-columns:
   repeat(auto-fit,minmax(300px,1fr));
 
@@ -640,9 +796,12 @@ SECTION
 }
 
 .card{
-  background:rgba(0,0,0,.45);
 
-  border:1px solid rgba(255,0,0,.2);
+  background:
+  rgba(0,0,0,.45);
+
+  border:
+  1px solid rgba(255,0,0,.2);
 
   padding:30px;
 
@@ -650,8 +809,32 @@ SECTION
 }
 
 .card:hover{
+
   transform:translateY(-8px);
-  box-shadow:0 0 25px rgba(255,0,0,.4);
+
+  box-shadow:
+  0 0 25px rgba(255,0,0,.4);
+
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+  .topNav{
+    flex-direction:column;
+  }
+
+  .serverIps{
+    justify-content:center;
+  }
+
+  .hero h1{
+    font-size:4rem;
+  }
+
 }
 
 </style>
@@ -676,8 +859,11 @@ SECTION
     EVERDUSK
   </div>
 
-  <button class="enterBtn" onclick="enterSite()">
+  <button class="enterBtn"
+  onclick="enterSite()">
+
     ENTER THE WORLD
+
   </button>
 
 </div>
@@ -686,53 +872,86 @@ SECTION
 
 <div class="cutscene" id="cutscene">
 
-  <div class="cutsceneText" id="cutsceneText">
+  <div class="cutsceneText"
+  id="cutsceneText">
+
     SIGNAL FOUND
+
   </div>
 
-  <div class="cutsceneSub" id="cutsceneSub">
+  <div class="cutsceneSub"
+  id="cutsceneSub">
+
     CONNECTING...
+
   </div>
 
 </div>
 
-<div class="flashScreen" id="flashScreen"></div>
+<div class="flashScreen"
+id="flashScreen"></div>
 
 <!-- NAV -->
 
 <nav>
 
-<div class="logo">
-EVERDUSK
+<div class="topNav">
+
+  <div class="logo">
+    EVERDUSK
+  </div>
+
+  <div class="serverIps">
+
+    <div class="ipBox"
+    onclick="copyEaglerIP()">
+
+      EAGLER:
+      everdusk.xyz
+
+    </div>
+
+    <div class="ipBox"
+    onclick="copyJavaIP()">
+
+      JAVA:
+      java.everdusk.xyz
+
+    </div>
+
+  </div>
+
 </div>
 
-<div class="navLinks">
+<div class="bottomNav">
 
-<a class="navBtn" onclick="copyEaglerIP()">
-EAGLER:
-everdusk.xyz
-</a>
+  <button class="navBtn"
+  onclick="openEverduskDiscord()">
 
-<a class="navBtn" onclick="copyJavaIP()">
-JAVA:
-java.everdusk.xyz
-</a>
+    EVERDUSK DISCORD
 
-<a class="navBtn" onclick="openEverduskDiscord()">
-EVERDUSK DISCORD
-</a>
+  </button>
 
-<a class="navBtn" onclick="openPulseDiscord()">
-PULSE DISCORD
-</a>
+  <button class="navBtn"
+  onclick="openPulseDiscord()">
 
-<a class="navBtn" onclick="openVex()">
-VEXSOUND
-</a>
+    PULSE DISCORD
 
-<a class="navBtn" onclick="openYoutube()">
-YOUTUBE
-</a>
+  </button>
+
+  <button class="navBtn"
+  onclick="openVex()">
+
+    VEXSOUND
+
+  </button>
+
+  <button class="navBtn"
+  onclick="openYoutube()">
+
+    YOUTUBE
+
+  </button>
 
 </div>
 
@@ -754,16 +973,25 @@ A corrupted cinematic Minecraft horror universe where signals spread through the
 
 <div class="heroButtons">
 
-<button class="heroBtn" onclick="copyJavaIP()">
+<button class="heroBtn"
+onclick="copyJavaIP()">
+
 ENTER SERVER
+
 </button>
 
-<button class="heroBtn" onclick="openSignals()">
+<button class="heroBtn"
+onclick="openSignals()">
+
 WATCH SIGNALS
+
 </button>
 
-<button class="heroBtn" onclick="openLore()">
+<button class="heroBtn"
+onclick="openLore()">
+
 LORE ARCHIVE
+
 </button>
 
 </div>
@@ -772,16 +1000,25 @@ LORE ARCHIVE
 
 <!-- PANEL BUTTONS -->
 
-<button class="panel-toggle" id="worldToggle">
+<button class="panel-toggle"
+id="worldToggle">
+
 WORLD
+
 </button>
 
-<button class="panel-toggle" id="playerToggle">
+<button class="panel-toggle"
+id="playerToggle">
+
 PLAYERS
+
 </button>
 
-<button class="panel-toggle" id="terminalToggle">
+<button class="panel-toggle"
+id="terminalToggle">
+
 TERMINAL
+
 </button>
 
 <!-- WORLD FEED -->
@@ -792,7 +1029,8 @@ TERMINAL
 LIVE WORLD EVENTS
 </div>
 
-<div class="feed-messages" id="feedMessages">
+<div class="feed-messages"
+id="feedMessages">
 
 <div>
 ⚠ ENTITY DETECTED NEAR BLACK HOLLOW
@@ -810,7 +1048,8 @@ LIVE WORLD EVENTS
 PLAYER ACTIVITY
 </div>
 
-<div class="player-messages" id="playerMessages">
+<div class="player-messages"
+id="playerMessages">
 
 <div>
 ShadowFox joined Everdusk...
@@ -822,13 +1061,15 @@ ShadowFox joined Everdusk...
 
 <!-- TERMINAL -->
 
-<div class="terminal closed" id="terminal">
+<div class="terminal closed"
+id="terminal">
 
 <div class="terminalHeader">
 EVERDUSK TERMINAL
 </div>
 
-<div class="terminalBody" id="terminalBody">
+<div class="terminalBody"
+id="terminalBody">
 
 > booting EVERDUSK systems...<br><br>
 > scanning entities...<br><br>
@@ -840,7 +1081,8 @@ EVERDUSK TERMINAL
 
 <!-- LORE -->
 
-<section class="section" id="loreSection">
+<section class="section"
+id="loreSection">
 
 <h2 class="sectionTitle">
 LORE ARCHIVE
@@ -1192,7 +1434,7 @@ function openLore(){
 }
 
 /* =========================================================
-FEEDS
+WORLD FEED
 ========================================================= */
 
 const feed =
@@ -1221,6 +1463,10 @@ setInterval(()=>{
   feed.prepend(item);
 
 },5000);
+
+/* =========================================================
+PLAYER FEED
+========================================================= */
 
 const playerFeed =
 document.getElementById("playerMessages");
@@ -1271,7 +1517,9 @@ setInterval(()=>{
   document.createElement("div");
 
   line.innerHTML =
-  logs[Math.floor(Math.random()*logs.length)];
+  logs[
+    Math.floor(Math.random()*logs.length)
+  ];
 
   terminal.appendChild(line);
 
