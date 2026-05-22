@@ -708,20 +708,30 @@ EVERDUSK
 
 <div class="navLinks">
 
-<a class="navBtn" onclick="joinServer()">
-JOIN
+<a class="navBtn" onclick="copyEaglerIP()">
+EAGLER:
+everdusk.xyz
 </a>
 
-<a class="navBtn" onclick="openSignals()">
-SIGNALS
+<a class="navBtn" onclick="copyJavaIP()">
+JAVA:
+java.everdusk.xyz
 </a>
 
-<a class="navBtn" onclick="openLore()">
-ARCHIVE
+<a class="navBtn" onclick="openEverduskDiscord()">
+EVERDUSK DISCORD
 </a>
 
-<a class="navBtn" onclick="openDiscord()">
-DISCORD
+<a class="navBtn" onclick="openPulseDiscord()">
+PULSE DISCORD
+</a>
+
+<a class="navBtn" onclick="openVex()">
+VEXSOUND
+</a>
+
+<a class="navBtn" onclick="openYoutube()">
+YOUTUBE
 </a>
 
 </div>
@@ -744,7 +754,7 @@ A corrupted cinematic Minecraft horror universe where signals spread through the
 
 <div class="heroButtons">
 
-<button class="heroBtn" onclick="joinServer()">
+<button class="heroBtn" onclick="copyJavaIP()">
 ENTER SERVER
 </button>
 
@@ -875,7 +885,7 @@ A forbidden transmission corrupting reality.
 <script>
 
 /* =========================================================
-INTRO
+ENTER SITE
 ========================================================= */
 
 function enterSite(){
@@ -999,13 +1009,38 @@ function playCutscene(title,sub,callback){
 BUTTON FUNCTIONS
 ========================================================= */
 
-function joinServer(){
+function copyEaglerIP(){
 
   playCutscene(
 
-    "ACCESSING SERVER",
+    "EAGLER NETWORK",
 
-    "OPENING EVERDUSK GATEWAY...",
+    "COPYING EAGLER SERVER IP...",
+
+    ()=>{
+
+      navigator.clipboard.writeText(
+        "everdusk.xyz"
+      );
+
+      window.open(
+        "https://eaglercraft.com/",
+        "_blank"
+      );
+
+    }
+
+  );
+
+}
+
+function copyJavaIP(){
+
+  playCutscene(
+
+    "JAVA NETWORK",
+
+    "COPYING JAVA SERVER IP...",
 
     ()=>{
 
@@ -1014,7 +1049,91 @@ function joinServer(){
       );
 
       window.open(
-        "https://eaglercraft.com/",
+        "https://minecraft.net/",
+        "_blank"
+      );
+
+    }
+
+  );
+
+}
+
+function openEverduskDiscord(){
+
+  playCutscene(
+
+    "EVERDUSK RELAY",
+
+    "CONNECTING TO EVERDUSK DISCORD...",
+
+    ()=>{
+
+      window.open(
+        "https://discord.gg/V4ASeVRsmn",
+        "_blank"
+      );
+
+    }
+
+  );
+
+}
+
+function openPulseDiscord(){
+
+  playCutscene(
+
+    "PULSE NETWORK",
+
+    "CONNECTING TO PULSE SYSTEMS...",
+
+    ()=>{
+
+      window.open(
+        "https://discord.gg/r68g9MN6bx",
+        "_blank"
+      );
+
+    }
+
+  );
+
+}
+
+function openYoutube(){
+
+  playCutscene(
+
+    "VIDEO ARCHIVES",
+
+    "OPENING TRANSMISSION CHANNEL...",
+
+    ()=>{
+
+      window.open(
+        "https://www.youtube.com/@Everduskofficial",
+        "_blank"
+      );
+
+    }
+
+  );
+
+}
+
+function openVex(){
+
+  playCutscene(
+
+    "AUDIO NETWORK",
+
+    "LOADING VEXSOUND SYSTEM...",
+
+    ()=>{
+
+      window.open(
+        "https://vexsound.base44.app/",
         "_blank"
       );
 
@@ -1042,14 +1161,6 @@ function openSignals(){
       .getElementById("terminal")
       .classList.remove("closed");
 
-      document
-      .getElementById("terminal")
-      .scrollIntoView({
-
-        behavior:"smooth"
-
-      });
-
     }
 
   );
@@ -1073,27 +1184,6 @@ function openLore(){
         behavior:"smooth"
 
       });
-
-    }
-
-  );
-
-}
-
-function openDiscord(){
-
-  playCutscene(
-
-    "LINK ESTABLISHED",
-
-    "CONNECTING TO DISCORD RELAY...",
-
-    ()=>{
-
-      window.open(
-        "https://discord.gg/YOURSERVER",
-        "_blank"
-      );
 
     }
 
