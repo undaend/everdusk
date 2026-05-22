@@ -1,182 +1,156 @@
 <!-- ====================================== -->
-<!-- ADD THIS RIGHT BEFORE </body> -->
+<!-- REPLACE YOUR CURRENT INTRO SECTION -->
+<!-- WITH THIS -->
 <!-- ====================================== -->
 
-<!-- ====================================== -->
-<!-- LIVE COMMAND TERMINAL -->
-<!-- ====================================== -->
+<div id="intro-cutscene">
 
-<section class="command-terminal">
+  <video autoplay muted loop playsinline id="introVideo">
 
-  <div class="command-top">
-
-    <span>LIVE COMMAND CONSOLE</span>
-
-  </div>
-
-  <div class="command-output" id="commandOutput">
-
-    <div>> SYSTEM READY...</div>
-
-    <div>> TYPE /help</div>
-
-  </div>
-
-  <div class="command-input-wrap">
-
-    <span>>></span>
-
-    <input
-      type="text"
-      id="commandInput"
-      placeholder="Enter command..."
-      autocomplete="off"
+    <source
+      src="https://cdn.coverr.co/videos/coverr-dark-clouds-1560084474706?download=1080p"
+      type="video/mp4"
     >
 
-  </div>
+  </video>
 
-</section>
+  <!-- DARK OVERLAY -->
 
-<!-- ====================================== -->
-<!-- COMMUNITY THEORIES -->
-<!-- ====================================== -->
+  <div class="intro-overlay">
 
-<section class="theory-section">
-
-  <h2>COMMUNITY THEORIES</h2>
-
-  <div class="theory-post-box">
-
-    <input
-      type="text"
-      id="theoryTitle"
-      placeholder="Theory title..."
+    <img
+      src="https://cdn.corenexis.com/files/c/8547675720.png"
+      class="intro-logo"
     >
 
-    <textarea
-      id="theoryText"
-      placeholder="Write your Everdusk theory..."
-    ></textarea>
+    <h1>EVERDUSK</h1>
 
-    <button id="postTheoryBtn">
+    <p>
+      RESTRICTED ACCESS TERMINAL
+    </p>
 
-      POST THEORY
+    <!-- TERMINAL -->
 
-    </button>
+    <div class="intro-terminal">
 
-  </div>
+      <div class="intro-terminal-top">
 
-  <div class="theory-feed" id="theoryFeed">
+        EVERDUSK SECURITY
 
-    <div class="theory-card">
+      </div>
 
-      <h3>THE WATCHERS ARE REAL</h3>
+      <div class="intro-terminal-body" id="introTerminal">
 
-      <p>
-        I think the corrupted signal is controlling the forests...
-      </p>
+        > CONNECTION ESTABLISHED...<br>
+        > VERIFYING USER...<br>
+        > ACCESS CODE REQUIRED...<br>
+        > ENTER CLEARANCE KEY BELOW...<br>
 
-    </div>
+      </div>
 
-  </div>
+      <!-- INPUT -->
 
-</section>
+      <div class="terminal-input-wrap">
 
-<!-- ====================================== -->
-<!-- ANALOG HORROR ARCHIVES -->
-<!-- ====================================== -->
+        <span>>></span>
 
-<section class="analog-section">
+        <input
+          type="password"
+          id="accessCode"
+          placeholder="ENTER ACCESS CODE"
+          autocomplete="off"
+        >
 
-  <h2>MINECRAFT ANALOG HORROR</h2>
+      </div>
 
-  <p>
-    Distorted Everdusk transmissions recovered from corrupted archives.
-  </p>
+      <!-- BUTTON -->
 
-  <div class="analog-grid">
+      <button id="enterBtn">
 
-    <!-- VIDEO 1 -->
+        UNLOCK EVERDUSK
 
-    <div class="analog-card">
+      </button>
 
-      <iframe
-        src="https://www.youtube.com/embed/7iFXyLah2oQ"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
+      <!-- ERROR -->
 
-      <h3>THE SIGNAL TAPES</h3>
+      <div id="accessError">
 
-    </div>
+        ACCESS DENIED
 
-    <!-- VIDEO 2 -->
-
-    <div class="analog-card">
-
-      <iframe
-        src="https://www.youtube.com/embed/WrW5mGb7ybg"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
-
-      <h3>ENTITY SIGHTINGS</h3>
-
-    </div>
-
-    <!-- VIDEO 3 -->
-
-    <div class="analog-card">
-
-      <iframe
-        src="https://www.youtube.com/embed/o_l4Ab5FRwM"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
-
-      <h3>BLACK HOLLOW FILES</h3>
+      </div>
 
     </div>
 
   </div>
 
-</section>
+</div>
 
 <!-- ====================================== -->
-<!-- ADD THIS TO YOUR CSS -->
+<!-- ADD THIS CSS -->
 <!-- ====================================== -->
 
 <style>
 
 /* ====================================== */
-/* COMMAND TERMINAL */
+/* INTRO LOGO */
 /* ====================================== */
 
-.command-terminal{
+.intro-logo{
+
+  width:160px;
+
+  margin-bottom:25px;
+
+  filter:
+  drop-shadow(0 0 30px red);
+
+  animation:logoPulse 4s infinite;
+}
+
+@keyframes logoPulse{
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.05);
+  }
+}
+
+/* ====================================== */
+/* INTRO TERMINAL */
+/* ====================================== */
+
+.intro-terminal{
 
   width:90%;
 
-  max-width:1100px;
+  max-width:700px;
 
-  margin:80px auto;
+  margin-top:40px;
 
   background:
-  rgba(0,0,0,.65);
+  rgba(0,0,0,.72);
 
   border:
-  1px solid rgba(255,0,0,.2);
+  1px solid rgba(255,0,0,.25);
 
-  border-radius:20px;
+  border-radius:22px;
 
   overflow:hidden;
 
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
 
   box-shadow:
-  0 0 40px rgba(255,0,0,.12);
+  0 0 40px rgba(255,0,0,.2);
 }
 
-.command-top{
+/* ====================================== */
+/* TOP */
+/* ====================================== */
+
+.intro-terminal-top{
 
   padding:18px 25px;
 
@@ -188,12 +162,18 @@
 
   color:#ff3b3b;
 
-  letter-spacing:2px;
+  letter-spacing:3px;
+
+  font-size:.95rem;
 }
 
-.command-output{
+/* ====================================== */
+/* BODY */
+/* ====================================== */
 
-  height:320px;
+.intro-terminal-body{
+
+  height:220px;
 
   overflow-y:auto;
 
@@ -204,15 +184,21 @@
   font-family:monospace;
 
   line-height:2;
+
+  text-align:left;
 }
 
-.command-input-wrap{
+/* ====================================== */
+/* INPUT */
+/* ====================================== */
+
+.terminal-input-wrap{
 
   display:flex;
 
   align-items:center;
 
-  gap:12px;
+  gap:14px;
 
   padding:20px;
 
@@ -220,14 +206,16 @@
   1px solid rgba(255,0,0,.12);
 }
 
-.command-input-wrap span{
+.terminal-input-wrap span{
 
   color:#ff3b3b;
 
   font-family:monospace;
+
+  font-size:1rem;
 }
 
-#commandInput{
+#accessCode{
 
   flex:1;
 
@@ -236,350 +224,249 @@
   border:
   1px solid rgba(255,0,0,.2);
 
-  border-radius:12px;
+  border-radius:14px;
 
-  padding:14px;
+  padding:16px;
 
   color:#00ff88;
 
   font-family:monospace;
 
   outline:none;
+
+  font-size:1rem;
+}
+
+#accessCode:focus{
+
+  border-color:red;
+
+  box-shadow:
+  0 0 20px rgba(255,0,0,.3);
 }
 
 /* ====================================== */
-/* THEORY SECTION */
+/* BUTTON */
 /* ====================================== */
 
-.theory-section{
+#enterBtn{
 
-  padding:100px 40px;
-}
+  width:calc(100% - 40px);
 
-.theory-section h2{
-
-  text-align:center;
-
-  color:#ff3b3b;
-
-  margin-bottom:40px;
-
-  letter-spacing:4px;
-}
-
-.theory-post-box{
-
-  width:100%;
-
-  max-width:900px;
-
-  margin:auto;
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:20px;
-}
-
-#theoryTitle,
-#theoryText{
-
-  background:
-  rgba(0,0,0,.55);
-
-  border:
-  1px solid rgba(255,0,0,.18);
-
-  border-radius:16px;
+  margin:0 20px 20px;
 
   padding:18px;
 
-  color:white;
-
-  outline:none;
-}
-
-#theoryText{
-
-  min-height:180px;
-
-  resize:vertical;
-}
-
-#postTheoryBtn{
-
-  padding:16px;
-
-  background:red;
+  background:
+  linear-gradient(
+    to right,
+    darkred,
+    red
+  );
 
   border:none;
 
-  border-radius:14px;
+  border-radius:16px;
 
   color:white;
 
+  font-size:1rem;
+
+  letter-spacing:3px;
+
   cursor:pointer;
 
-  transition:.3s;
+  transition:.35s;
 }
 
-#postTheoryBtn:hover{
+#enterBtn:hover{
 
   transform:translateY(-4px);
 
   box-shadow:
-  0 0 25px rgba(255,0,0,.35);
-}
-
-.theory-feed{
-
-  display:grid;
-
-  grid-template-columns:
-  repeat(auto-fit,minmax(320px,1fr));
-
-  gap:25px;
-
-  margin-top:50px;
-}
-
-.theory-card{
-
-  background:
-  rgba(0,0,0,.45);
-
-  border:
-  1px solid rgba(255,0,0,.12);
-
-  border-radius:18px;
-
-  padding:25px;
-
-  transition:.35s;
-}
-
-.theory-card:hover{
-
-  transform:translateY(-6px);
-
-  box-shadow:
-  0 0 35px rgba(255,0,0,.15);
-}
-
-.theory-card h3{
-
-  color:#ff3b3b;
-
-  margin-bottom:14px;
-}
-
-.theory-card p{
-
-  color:#ccc;
-
-  line-height:1.7;
+  0 0 35px rgba(255,0,0,.45);
 }
 
 /* ====================================== */
-/* ANALOG HORROR */
+/* ERROR */
 /* ====================================== */
 
-.analog-section{
+#accessError{
 
-  padding:100px 40px;
-}
+  display:none;
 
-.analog-section h2{
+  padding-bottom:20px;
 
-  text-align:center;
-
-  color:#ff3b3b;
-
-  letter-spacing:4px;
-
-  margin-bottom:15px;
-}
-
-.analog-section p{
-
-  text-align:center;
-
-  color:#aaa;
-
-  margin-bottom:50px;
-}
-
-.analog-grid{
-
-  display:grid;
-
-  grid-template-columns:
-  repeat(auto-fit,minmax(340px,1fr));
-
-  gap:30px;
-}
-
-.analog-card{
-
-  background:
-  rgba(0,0,0,.45);
-
-  border:
-  1px solid rgba(255,0,0,.12);
-
-  border-radius:20px;
-
-  overflow:hidden;
-
-  transition:.35s;
-}
-
-.analog-card:hover{
-
-  transform:translateY(-8px);
-
-  box-shadow:
-  0 0 40px rgba(255,0,0,.2);
-}
-
-.analog-card iframe{
-
-  width:100%;
-
-  height:240px;
-}
-
-.analog-card h3{
-
-  padding:20px;
-
-  color:#ff3b3b;
+  color:#ff2a2a;
 
   letter-spacing:2px;
+
+  animation:errorFlash .5s infinite alternate;
+}
+
+@keyframes errorFlash{
+
+  from{
+    opacity:.4;
+  }
+
+  to{
+    opacity:1;
+  }
+}
+
+/* ====================================== */
+/* MOBILE */
+/* ====================================== */
+
+@media(max-width:700px){
+
+  .intro-overlay h1{
+
+    font-size:3rem;
+  }
+
+  .intro-terminal-body{
+
+    height:180px;
+  }
+
 }
 
 </style>
 
 <!-- ====================================== -->
-<!-- ADD THIS TO YOUR SCRIPT -->
+<!-- REPLACE YOUR OLD INTRO SCRIPT -->
+<!-- WITH THIS -->
 <!-- ====================================== -->
 
 <script>
 
 /* ====================================== */
-/* LIVE COMMANDS */
+/* ACCESS SYSTEM */
 /* ====================================== */
 
-const commandInput =
-document.getElementById("commandInput");
+const correctCode = "438542";
 
-const commandOutput =
-document.getElementById("commandOutput");
+const enterBtn =
+document.getElementById("enterBtn");
 
-const commands = {
+const accessInput =
+document.getElementById("accessCode");
 
-  "/help":
-  "AVAILABLE COMMANDS: /help /entities /watchers /signal /archive /blackhollow",
+const accessError =
+document.getElementById("accessError");
 
-  "/entities":
-  "KNOWN ENTITIES: WATCHER-01, SHADOW CRAWLER, RED EYE",
+const introTerminal =
+document.getElementById("introTerminal");
 
-  "/watchers":
-  "THE WATCHERS ARE ALWAYS OBSERVING.",
+/* ====================================== */
+/* ENTER BUTTON */
+/* ====================================== */
 
-  "/signal":
-  "DISTORTED SIGNAL DETECTED UNDER EVERDUSK.",
+enterBtn.onclick = () => {
 
-  "/archive":
-  "ACCESSING CORRUPTED ARCHIVES...",
+  const value =
+  accessInput.value.trim();
 
-  "/blackhollow":
-  "WARNING: BLACK HOLLOW IS RESTRICTED."
+  if(value === correctCode){
+
+    introTerminal.innerHTML +=
+    "<br>> ACCESS GRANTED...<br>> WELCOME TO EVERDUSK...";
+
+    setTimeout(() => {
+
+      document
+      .getElementById("intro-cutscene")
+      .style.opacity = "0";
+
+      setTimeout(() => {
+
+        document
+        .getElementById("intro-cutscene")
+        .style.display = "none";
+
+      },1000);
+
+    },1500);
+
+  }
+
+  else{
+
+    accessError.style.display =
+    "block";
+
+    introTerminal.innerHTML +=
+    "<br>> ACCESS DENIED...";
+
+    accessInput.value = "";
+
+    document.body.style.animation =
+    "shake .3s";
+
+    setTimeout(() => {
+
+      document.body.style.animation =
+      "";
+
+    },300);
+
+  }
 
 };
 
-commandInput.addEventListener("keydown", e => {
+/* ====================================== */
+/* ENTER KEY */
+/* ====================================== */
+
+accessInput.addEventListener(
+"keydown",
+e => {
 
   if(e.key === "Enter"){
 
-    const value =
-    commandInput.value.trim();
-
-    if(value === "") return;
-
-    const userLine =
-    document.createElement("div");
-
-    userLine.innerHTML =
-    "> " + value;
-
-    commandOutput.appendChild(userLine);
-
-    const response =
-    document.createElement("div");
-
-    response.innerHTML =
-    commands[value] ||
-    "UNKNOWN COMMAND.";
-
-    commandOutput.appendChild(response);
-
-    commandOutput.scrollTop =
-    commandOutput.scrollHeight;
-
-    commandInput.value = "";
+    enterBtn.click();
 
   }
 
 });
 
 /* ====================================== */
-/* THEORY POSTS */
+/* SHAKE */
 /* ====================================== */
 
-document
-.getElementById("postTheoryBtn")
-.onclick = () => {
+const style =
+document.createElement("style");
 
-  const title =
-  document
-  .getElementById("theoryTitle")
-  .value;
+style.innerHTML = `
 
-  const text =
-  document
-  .getElementById("theoryText")
-  .value;
+@keyframes shake{
 
-  if(title === "" || text === "")
-    return;
+  0%{
+    transform:translateX(0);
+  }
 
-  const card =
-  document.createElement("div");
+  25%{
+    transform:translateX(-5px);
+  }
 
-  card.className =
-  "theory-card";
+  50%{
+    transform:translateX(5px);
+  }
 
-  card.innerHTML =
+  75%{
+    transform:translateX(-5px);
+  }
 
-  `
-  <h3>${title}</h3>
-  <p>${text}</p>
-  `;
+  100%{
+    transform:translateX(0);
+  }
 
-  document
-  .getElementById("theoryFeed")
-  .prepend(card);
+}
 
-  document
-  .getElementById("theoryTitle")
-  .value = "";
+`;
 
-  document
-  .getElementById("theoryText")
-  .value = "";
-
-};
+document.head.appendChild(style);
 
 </script>
