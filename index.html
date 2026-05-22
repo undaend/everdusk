@@ -1,253 +1,585 @@
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+<!-- ====================================== -->
+<!-- ADD THIS RIGHT BEFORE </body> -->
+<!-- ====================================== -->
 
-import IntroScreen from '../components/IntroScreen';
-import BackgroundEffects from '../components/BackgroundEffects';
-import CustomCursor from '../components/CustomCursor';
-import Navbar from '../components/Navbar';
-import HeroSection from '../components/HeroSection';
-import LiveSystems from '../components/LiveSystems';
-import EntityDatabase from '../components/EntityDatabase';
-import LoreArchive from '../components/LoreArchive';
-import StaffSection from '../components/StaffSection';
-import ServerStatus from '../components/ServerStatus';
-import Terminal from '../components/Terminal';
-import HorrorEffects from '../components/HorrorEffects';
-import TheoryForm from '../components/TheoryForm';
-import Footer from '../components/Footer';
-import DiscordWidget from '../components/DiscordWidget';
-import WorldMap from '../components/WorldMap';
-import VideoSection from '../components/VideoSection';
-import AmbientSound from '../components/AmbientSound';
+<!-- ====================================== -->
+<!-- LIVE COMMAND TERMINAL -->
+<!-- ====================================== -->
 
-/* ========================= */
-/* NEW IMPORTS */
-/* ========================= */
+<section class="command-terminal">
 
-import AnalogHorror from '../components/AnalogHorror';
-import CommunityTheories from '../components/CommunityTheories';
-import FakePlayerFeed from '../components/FakePlayerFeed';
-import CorruptedRadar from '../components/CorruptedRadar';
-import AchievementPopup from '../components/AchievementPopup';
-import XPSystem from '../components/XPSystem';
-import LiveCommandTerminal from '../components/LiveCommandTerminal';
-import JumpScareSystem from '../components/JumpScareSystem';
-import BloodMoon from '../components/BloodMoon';
-import LightningFlashes from '../components/LightningFlashes';
-import FloatingFog from '../components/FloatingFog';
-import EntityWhispers from '../components/EntityWhispers';
-import HorrorQuotes from '../components/HorrorQuotes';
-import SecretAreas from '../components/SecretAreas';
-import HoverRavens from '../components/HoverRavens';
-import GlitchOverlay from '../components/GlitchOverlay';
-import MusicVisualizer from '../components/MusicVisualizer';
-import ArchiveViewer from '../components/ArchiveViewer';
-import LoreTerminal from '../components/LoreTerminal';
-import ServerMapSection from '../components/ServerMapSection';
-import CountdownEvent from '../components/CountdownEvent';
-import CommunityGallery from '../components/CommunityGallery';
-import CorruptedEye from '../components/CorruptedEye';
-import DistortionLayer from '../components/DistortionLayer';
-import ScreenShake from '../components/ScreenShake';
-import WeatherSystem from '../components/WeatherSystem';
+  <div class="command-top">
 
-const HERO_IMG =
-'https://media.base44.com/images/public/6a0f21ff6377b22ff0b8fe64/640ae8a47_generated_704452e2.png';
+    <span>LIVE COMMAND CONSOLE</span>
 
-const LORE_IMG =
-'https://media.base44.com/images/public/6a0f21ff6377b22ff0b8fe64/aad0e6d16_generated_b3951680.png';
+  </div>
 
-export default function Home() {
+  <div class="command-output" id="commandOutput">
 
-  const [entered, setEntered] = useState(false);
+    <div>> SYSTEM READY...</div>
 
-  const [motionEnabled, setMotionEnabled] = useState(true);
+    <div>> TYPE /help</div>
 
-  if (!entered) {
+  </div>
 
-    return (
+  <div class="command-input-wrap">
 
-      <>
-        <CustomCursor />
+    <span>>></span>
 
-        <IntroScreen
-          onEnter={() => setEntered(true)}
-        />
+    <input
+      type="text"
+      id="commandInput"
+      placeholder="Enter command..."
+      autocomplete="off"
+    >
 
-        <BloodMoon />
+  </div>
 
-        <LightningFlashes />
+</section>
 
-        <FloatingFog />
+<!-- ====================================== -->
+<!-- COMMUNITY THEORIES -->
+<!-- ====================================== -->
 
-      </>
+<section class="theory-section">
 
-    );
+  <h2>COMMUNITY THEORIES</h2>
+
+  <div class="theory-post-box">
+
+    <input
+      type="text"
+      id="theoryTitle"
+      placeholder="Theory title..."
+    >
+
+    <textarea
+      id="theoryText"
+      placeholder="Write your Everdusk theory..."
+    ></textarea>
+
+    <button id="postTheoryBtn">
+
+      POST THEORY
+
+    </button>
+
+  </div>
+
+  <div class="theory-feed" id="theoryFeed">
+
+    <div class="theory-card">
+
+      <h3>THE WATCHERS ARE REAL</h3>
+
+      <p>
+        I think the corrupted signal is controlling the forests...
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ====================================== -->
+<!-- ANALOG HORROR ARCHIVES -->
+<!-- ====================================== -->
+
+<section class="analog-section">
+
+  <h2>MINECRAFT ANALOG HORROR</h2>
+
+  <p>
+    Distorted Everdusk transmissions recovered from corrupted archives.
+  </p>
+
+  <div class="analog-grid">
+
+    <!-- VIDEO 1 -->
+
+    <div class="analog-card">
+
+      <iframe
+        src="https://www.youtube.com/embed/7iFXyLah2oQ"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+
+      <h3>THE SIGNAL TAPES</h3>
+
+    </div>
+
+    <!-- VIDEO 2 -->
+
+    <div class="analog-card">
+
+      <iframe
+        src="https://www.youtube.com/embed/WrW5mGb7ybg"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+
+      <h3>ENTITY SIGHTINGS</h3>
+
+    </div>
+
+    <!-- VIDEO 3 -->
+
+    <div class="analog-card">
+
+      <iframe
+        src="https://www.youtube.com/embed/o_l4Ab5FRwM"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+
+      <h3>BLACK HOLLOW FILES</h3>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ====================================== -->
+<!-- ADD THIS TO YOUR CSS -->
+<!-- ====================================== -->
+
+<style>
+
+/* ====================================== */
+/* COMMAND TERMINAL */
+/* ====================================== */
+
+.command-terminal{
+
+  width:90%;
+
+  max-width:1100px;
+
+  margin:80px auto;
+
+  background:
+  rgba(0,0,0,.65);
+
+  border:
+  1px solid rgba(255,0,0,.2);
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  backdrop-filter:blur(10px);
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,.12);
+}
+
+.command-top{
+
+  padding:18px 25px;
+
+  background:
+  rgba(255,0,0,.08);
+
+  border-bottom:
+  1px solid rgba(255,0,0,.15);
+
+  color:#ff3b3b;
+
+  letter-spacing:2px;
+}
+
+.command-output{
+
+  height:320px;
+
+  overflow-y:auto;
+
+  padding:25px;
+
+  color:#00ff88;
+
+  font-family:monospace;
+
+  line-height:2;
+}
+
+.command-input-wrap{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:20px;
+
+  border-top:
+  1px solid rgba(255,0,0,.12);
+}
+
+.command-input-wrap span{
+
+  color:#ff3b3b;
+
+  font-family:monospace;
+}
+
+#commandInput{
+
+  flex:1;
+
+  background:black;
+
+  border:
+  1px solid rgba(255,0,0,.2);
+
+  border-radius:12px;
+
+  padding:14px;
+
+  color:#00ff88;
+
+  font-family:monospace;
+
+  outline:none;
+}
+
+/* ====================================== */
+/* THEORY SECTION */
+/* ====================================== */
+
+.theory-section{
+
+  padding:100px 40px;
+}
+
+.theory-section h2{
+
+  text-align:center;
+
+  color:#ff3b3b;
+
+  margin-bottom:40px;
+
+  letter-spacing:4px;
+}
+
+.theory-post-box{
+
+  width:100%;
+
+  max-width:900px;
+
+  margin:auto;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:20px;
+}
+
+#theoryTitle,
+#theoryText{
+
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.18);
+
+  border-radius:16px;
+
+  padding:18px;
+
+  color:white;
+
+  outline:none;
+}
+
+#theoryText{
+
+  min-height:180px;
+
+  resize:vertical;
+}
+
+#postTheoryBtn{
+
+  padding:16px;
+
+  background:red;
+
+  border:none;
+
+  border-radius:14px;
+
+  color:white;
+
+  cursor:pointer;
+
+  transition:.3s;
+}
+
+#postTheoryBtn:hover{
+
+  transform:translateY(-4px);
+
+  box-shadow:
+  0 0 25px rgba(255,0,0,.35);
+}
+
+.theory-feed{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(320px,1fr));
+
+  gap:25px;
+
+  margin-top:50px;
+}
+
+.theory-card{
+
+  background:
+  rgba(0,0,0,.45);
+
+  border:
+  1px solid rgba(255,0,0,.12);
+
+  border-radius:18px;
+
+  padding:25px;
+
+  transition:.35s;
+}
+
+.theory-card:hover{
+
+  transform:translateY(-6px);
+
+  box-shadow:
+  0 0 35px rgba(255,0,0,.15);
+}
+
+.theory-card h3{
+
+  color:#ff3b3b;
+
+  margin-bottom:14px;
+}
+
+.theory-card p{
+
+  color:#ccc;
+
+  line-height:1.7;
+}
+
+/* ====================================== */
+/* ANALOG HORROR */
+/* ====================================== */
+
+.analog-section{
+
+  padding:100px 40px;
+}
+
+.analog-section h2{
+
+  text-align:center;
+
+  color:#ff3b3b;
+
+  letter-spacing:4px;
+
+  margin-bottom:15px;
+}
+
+.analog-section p{
+
+  text-align:center;
+
+  color:#aaa;
+
+  margin-bottom:50px;
+}
+
+.analog-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(340px,1fr));
+
+  gap:30px;
+}
+
+.analog-card{
+
+  background:
+  rgba(0,0,0,.45);
+
+  border:
+  1px solid rgba(255,0,0,.12);
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  transition:.35s;
+}
+
+.analog-card:hover{
+
+  transform:translateY(-8px);
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,.2);
+}
+
+.analog-card iframe{
+
+  width:100%;
+
+  height:240px;
+}
+
+.analog-card h3{
+
+  padding:20px;
+
+  color:#ff3b3b;
+
+  letter-spacing:2px;
+}
+
+</style>
+
+<!-- ====================================== -->
+<!-- ADD THIS TO YOUR SCRIPT -->
+<!-- ====================================== -->
+
+<script>
+
+/* ====================================== */
+/* LIVE COMMANDS */
+/* ====================================== */
+
+const commandInput =
+document.getElementById("commandInput");
+
+const commandOutput =
+document.getElementById("commandOutput");
+
+const commands = {
+
+  "/help":
+  "AVAILABLE COMMANDS: /help /entities /watchers /signal /archive /blackhollow",
+
+  "/entities":
+  "KNOWN ENTITIES: WATCHER-01, SHADOW CRAWLER, RED EYE",
+
+  "/watchers":
+  "THE WATCHERS ARE ALWAYS OBSERVING.",
+
+  "/signal":
+  "DISTORTED SIGNAL DETECTED UNDER EVERDUSK.",
+
+  "/archive":
+  "ACCESSING CORRUPTED ARCHIVES...",
+
+  "/blackhollow":
+  "WARNING: BLACK HOLLOW IS RESTRICTED."
+
+};
+
+commandInput.addEventListener("keydown", e => {
+
+  if(e.key === "Enter"){
+
+    const value =
+    commandInput.value.trim();
+
+    if(value === "") return;
+
+    const userLine =
+    document.createElement("div");
+
+    userLine.innerHTML =
+    "> " + value;
+
+    commandOutput.appendChild(userLine);
+
+    const response =
+    document.createElement("div");
+
+    response.innerHTML =
+    commands[value] ||
+    "UNKNOWN COMMAND.";
+
+    commandOutput.appendChild(response);
+
+    commandOutput.scrollTop =
+    commandOutput.scrollHeight;
+
+    commandInput.value = "";
 
   }
 
-  return (
+});
 
-    <>
+/* ====================================== */
+/* THEORY POSTS */
+/* ====================================== */
 
-      {/* ========================= */}
-      {/* CORE EFFECTS */}
-      {/* ========================= */}
+document
+.getElementById("postTheoryBtn")
+.onclick = () => {
 
-      <CustomCursor />
+  const title =
+  document
+  .getElementById("theoryTitle")
+  .value;
 
-      <BackgroundEffects
-        heroImg={HERO_IMG}
-      />
+  const text =
+  document
+  .getElementById("theoryText")
+  .value;
 
-      <HorrorEffects
-        enabled={motionEnabled}
-      />
+  if(title === "" || text === "")
+    return;
 
-      <BloodMoon />
+  const card =
+  document.createElement("div");
 
-      <LightningFlashes />
+  card.className =
+  "theory-card";
 
-      <FloatingFog />
+  card.innerHTML =
 
-      <GlitchOverlay />
+  `
+  <h3>${title}</h3>
+  <p>${text}</p>
+  `;
 
-      <DistortionLayer />
+  document
+  .getElementById("theoryFeed")
+  .prepend(card);
 
-      <WeatherSystem />
+  document
+  .getElementById("theoryTitle")
+  .value = "";
 
-      <ScreenShake />
+  document
+  .getElementById("theoryText")
+  .value = "";
 
-      <EntityWhispers />
+};
 
-      <HoverRavens />
-
-      <CorruptedEye />
-
-      <JumpScareSystem />
-
-      <SecretAreas />
-
-      {/* ========================= */}
-      {/* OVERLAYS */}
-      {/* ========================= */}
-
-      <FakePlayerFeed />
-
-      <CorruptedRadar />
-
-      <AchievementPopup />
-
-      <XPSystem />
-
-      <HorrorQuotes />
-
-      <MusicVisualizer />
-
-      {/* ========================= */}
-      {/* MAIN PAGE */}
-      {/* ========================= */}
-
-      <AnimatePresence>
-
-        <motion.div
-
-          initial={{ opacity: 0 }}
-
-          animate={{ opacity: 1 }}
-
-          transition={{ duration: 1.5 }}
-
-          className="relative z-10"
-        >
-
-          {/* NAVBAR */}
-
-          <Navbar
-            motionEnabled={motionEnabled}
-            setMotionEnabled={setMotionEnabled}
-          />
-
-          {/* HERO */}
-
-          <HeroSection />
-
-          {/* LIVE */}
-
-          <LiveSystems />
-
-          <ServerStatus />
-
-          {/* VIDEOS */}
-
-          <VideoSection />
-
-          <AnalogHorror />
-
-          {/* TERMINALS */}
-
-          <Terminal />
-
-          <LiveCommandTerminal />
-
-          <LoreTerminal />
-
-          {/* ENTITIES */}
-
-          <EntityDatabase />
-
-          {/* LORE */}
-
-          <LoreArchive
-            loreImg={LORE_IMG}
-          />
-
-          <ArchiveViewer />
-
-          {/* WORLD */}
-
-          <WorldMap />
-
-          <ServerMapSection />
-
-          {/* COMMUNITY */}
-
-          <DiscordWidget />
-
-          <CommunityGallery />
-
-          <div id="theories">
-
-            <TheoryForm />
-
-          </div>
-
-          <CommunityTheories />
-
-          {/* EVENTS */}
-
-          <CountdownEvent />
-
-          {/* STAFF */}
-
-          <StaffSection />
-
-          {/* FOOTER */}
-
-          <Footer />
-
-        </motion.div>
-
-      </AnimatePresence>
-
-      {/* ========================= */}
-      {/* AUDIO */}
-      {/* ========================= */}
-
-      <AmbientSound />
-
-    </>
-
-  );
-
-}
+</script>
