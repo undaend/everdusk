@@ -1,22 +1,21 @@
-# EVERDUSK — Full Cinematic Horror Website Code
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>EVERDUSK</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
-
 <style>
+
+/* ====================================================== */
+/* RESET */
+/* ====================================================== */
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  cursor:none;
 }
 
 html{
@@ -24,282 +23,580 @@ html{
 }
 
 body{
-  background:black;
+  background:#050505;
   color:white;
+  font-family:Arial,sans-serif;
   overflow-x:hidden;
-  font-family:'Orbitron',sans-serif;
+  cursor:none;
 }
 
-.bg{
+/* ====================================================== */
+/* SCROLLBAR */
+/* ====================================================== */
+
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:black;
+}
+
+::-webkit-scrollbar-thumb{
+  background:red;
+  border-radius:20px;
+}
+
+/* ====================================================== */
+/* BACKGROUND */
+/* ====================================================== */
+
+.background{
   position:fixed;
   inset:0;
+
   background:
-  linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.95)),
-  url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=1920&auto=format&fit=crop');
+  linear-gradient(
+    rgba(0,0,0,.75),
+    rgba(0,0,0,.9)
+  ),
+  url('https://cdn.corenexis.com/files/c/3236352720.png');
+
   background-size:cover;
   background-position:center;
-  filter:brightness(.35);
-  z-index:-10;
+  background-repeat:no-repeat;
+
+  z-index:-20;
 }
 
-.scanlines{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:999999;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.03),
-    rgba(255,255,255,.03) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-}
-
-.fog{
-  position:fixed;
-  inset:0;
-  background:
-  radial-gradient(circle at 20% 50%,rgba(255,0,0,.15),transparent 40%),
-  radial-gradient(circle at 80% 60%,rgba(255,0,0,.08),transparent 40%);
-  animation:fogMove 15s infinite alternate ease-in-out;
-  z-index:-1;
-}
-
-@keyframes fogMove{
-  from{transform:translateX(-2%);}
-  to{transform:translateX(2%);}
-}
+/* ====================================================== */
+/* BLOOD MOON */
+/* ====================================================== */
 
 .bloodmoon{
   position:fixed;
-  top:5%;
-  right:8%;
-  width:240px;
-  height:240px;
+
+  top:100px;
+  right:100px;
+
+  width:180px;
+  height:180px;
+
   border-radius:50%;
-  background:radial-gradient(circle,#ff4b4b 0%,#5c0000 60%,transparent 75%);
-  box-shadow:0 0 80px rgba(255,0,0,.8),0 0 160px rgba(255,0,0,.3);
-  animation:moonPulse 6s infinite ease-in-out;
-  z-index:-2;
+
+  background:
+  radial-gradient(
+    circle,
+    #ff2a2a 0%,
+    #8b0000 60%,
+    rgba(255,0,0,.08) 100%
+  );
+
+  box-shadow:
+  0 0 80px rgba(255,0,0,.45),
+  0 0 140px rgba(255,0,0,.2);
+
+  z-index:-5;
+
+  animation:moonPulse 8s infinite alternate;
 }
 
 @keyframes moonPulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.05);}
+
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform:scale(1.08);
+  }
 }
 
-.cursor{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:red;
+/* ====================================================== */
+/* FOG */
+/* ====================================================== */
+
+.floating-fog{
   position:fixed;
-  top:0;
-  left:0;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
-  z-index:999999999;
-  box-shadow:0 0 20px red,0 0 40px red;
+  inset:0;
+
+  background:
+  radial-gradient(
+    circle at 20% 50%,
+    rgba(255,0,0,.05),
+    transparent 30%
+  ),
+  radial-gradient(
+    circle at 80% 70%,
+    rgba(255,255,255,.03),
+    transparent 30%
+  );
+
+  animation:fogMove 18s infinite alternate;
+
+  z-index:-4;
 }
 
-.cursorTrail{
-  position:fixed;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:rgba(255,0,0,.5);
-  pointer-events:none;
-  z-index:999999;
+@keyframes fogMove{
+
+  from{
+    transform:translateX(-20px);
+  }
+
+  to{
+    transform:translateX(20px);
+  }
 }
+
+/* ====================================================== */
+/* RAIN */
+/* ====================================================== */
 
 .rain{
   position:fixed;
   inset:0;
-  z-index:-1;
+
   pointer-events:none;
+
+  z-index:5;
 }
 
-.drop{
+.rain::before{
+
+  content:"";
+
   position:absolute;
-  width:1px;
-  height:120px;
-  background:linear-gradient(transparent,rgba(255,255,255,.5));
-  animation:rain linear infinite;
+
+  width:100%;
+  height:100%;
+
+  background-image:
+  repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.08) 0px,
+    rgba(255,255,255,.08) 2px,
+    transparent 10px,
+    transparent 22px
+  );
+
+  background-size:2px 120px;
+
+  animation:rainMove .5s linear infinite;
+
+  opacity:.15;
 }
 
-@keyframes rain{
-  from{transform:translateY(-150px);}
-  to{transform:translateY(120vh);}
+@keyframes rainMove{
+
+  from{
+    transform:translateY(-120px);
+  }
+
+  to{
+    transform:translateY(120px);
+  }
 }
 
-.intro{
+/* ====================================================== */
+/* LIGHTNING */
+/* ====================================================== */
+
+.lightning{
   position:fixed;
   inset:0;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:99999999;
-  transition:1.5s;
-}
 
-.intro.hide{
+  background:white;
+
   opacity:0;
+
+  z-index:99999;
+
   pointer-events:none;
+
+  animation:lightningFlash 14s infinite;
 }
 
-.glitch{
-  font-size:7rem;
-  font-weight:900;
-  letter-spacing:10px;
-  text-shadow:0 0 20px red,0 0 60px red;
-  animation:glitch 1.5s infinite;
+@keyframes lightningFlash{
+
+  0%,94%,100%{
+    opacity:0;
+  }
+
+  95%{
+    opacity:.14;
+  }
+
+  96%{
+    opacity:0;
+  }
+
+  97%{
+    opacity:.08;
+  }
+
+  98%{
+    opacity:0;
+  }
 }
 
-@keyframes glitch{
-  0%,100%{transform:translate(0);}
-  20%{transform:translate(-2px,2px);}
-  40%{transform:translate(2px,-2px);}
-  60%{transform:translate(-3px,1px);}
-  80%{transform:translate(3px,-1px);}
-}
+/* ====================================================== */
+/* SCANLINES */
+/* ====================================================== */
 
-.enterBtn,.navBtn,.heroBtn{
-  padding:16px 32px;
-  background:rgba(255,0,0,.1);
-  border:1px solid rgba(255,0,0,.35);
-  color:white;
-  transition:.3s;
-  border-radius:14px;
-}
-
-.enterBtn:hover,.navBtn:hover,.heroBtn:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 25px red;
-}
-
-nav{
+.scanlines{
   position:fixed;
+  inset:0;
+
+  background:
+  repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.02),
+    rgba(255,255,255,.02) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+
+  pointer-events:none;
+
+  z-index:999;
+}
+
+/* ====================================================== */
+/* CURSOR */
+/* ====================================================== */
+
+.cursor-glow{
+  width:18px;
+  height:18px;
+
+  border-radius:50%;
+
+  background:red;
+
+  position:fixed;
+
+  pointer-events:none;
+
+  z-index:999999;
+
+  box-shadow:
+  0 0 20px red,
+  0 0 40px red;
+
+  transform:translate(-50%,-50%);
+}
+
+/* ====================================================== */
+/* TOPBAR */
+/* ====================================================== */
+
+.topbar{
+  position:fixed;
+
   top:0;
   left:0;
-  width:100%;
-  padding:18px 30px;
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,0,0,.15);
-  z-index:99999;
-}
 
-.topNav{
+  width:100%;
+
+  padding:20px 40px;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
+
+  background:rgba(0,0,0,.35);
+
+  backdrop-filter:blur(12px);
+
+  border-bottom:
+  1px solid rgba(255,255,255,.06);
+
+  z-index:9999;
+}
+
+.logo-text{
+  color:#ff2a2a;
+  font-size:2rem;
+  letter-spacing:5px;
+}
+
+.server-box{
+  background:
+  rgba(255,255,255,.03);
+
+  padding:12px 20px;
+
+  border-radius:14px;
+
+  border:
+  1px solid rgba(255,255,255,.05);
+}
+
+.server-box strong{
+  color:#00ff88;
+}
+
+.links{
+  display:flex;
   gap:20px;
 }
 
-.bottomNav{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  flex-wrap:wrap;
-  margin-top:16px;
+.links a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
 }
 
-.logo{
-  font-size:2rem;
-  font-weight:900;
-  letter-spacing:5px;
-  text-shadow:0 0 20px red;
+.links a:hover{
+  color:#ff2a2a;
 }
 
-.serverIps{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.ipBox{
-  padding:12px 18px;
-  background:rgba(255,0,0,.08);
-  border:1px solid rgba(255,0,0,.25);
-  border-radius:12px;
-}
+/* ====================================================== */
+/* HERO */
+/* ====================================================== */
 
 .hero{
   min-height:100vh;
+
   display:flex;
+  flex-direction:column;
+
   justify-content:center;
   align-items:center;
-  flex-direction:column;
+
   text-align:center;
-  padding:250px 20px 120px;
+
+  padding:120px 20px 80px;
+}
+
+.hero img{
+  width:190px;
+
+  filter:
+  drop-shadow(0 0 25px rgba(255,0,0,.45));
+
+  animation:logoFloat 5s infinite ease-in-out;
+}
+
+@keyframes logoFloat{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
 }
 
 .hero h1{
-  font-size:8rem;
-  font-family:'Cinzel',serif;
-  text-shadow:0 0 20px red,0 0 80px red;
+  font-size:5rem;
+
+  letter-spacing:12px;
+
+  margin-top:20px;
+
+  text-shadow:
+  0 0 30px rgba(255,0,0,.45);
 }
 
 .hero p{
-  max-width:900px;
-  margin-top:30px;
-  line-height:2;
-  color:#ccc;
+  margin-top:20px;
+
+  max-width:700px;
+
+  color:#bbb;
+
+  line-height:1.8;
 }
 
-.heroButtons{
+.hero-buttons{
   display:flex;
   gap:20px;
-  margin-top:40px;
   flex-wrap:wrap;
+
+  margin-top:40px;
 }
 
-.world-feed,.player-feed,.terminal,.corruption-wrap{
-  position:fixed;
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,0,0,.2);
-  border-radius:18px;
-  overflow:hidden;
-  backdrop-filter:blur(10px);
+.hero-buttons a{
+  padding:15px 35px;
+
+  background:
+  rgba(120,0,0,.35);
+
+  border:
+  1px solid rgba(255,0,0,.25);
+
+  border-radius:14px;
+
+  color:white;
+
+  text-decoration:none;
+
+  transition:.35s;
 }
+
+.hero-buttons a:hover{
+  transform:
+  translateY(-5px);
+
+  background:red;
+
+  box-shadow:
+  0 0 30px rgba(255,0,0,.4);
+}
+
+/* ====================================================== */
+/* TERMINAL */
+/* ====================================================== */
+
+.terminal-window{
+  width:90%;
+  max-width:1100px;
+
+  height:450px;
+
+  margin:60px auto;
+
+  background:
+  rgba(0,0,0,.65);
+
+  border:
+  1px solid rgba(255,0,0,.2);
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
+
+  backdrop-filter:blur(10px);
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,.12);
+}
+
+.terminal-top{
+  height:60px;
+
+  background:
+  rgba(255,0,0,.08);
+
+  border-bottom:
+  1px solid rgba(255,0,0,.15);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 25px;
+
+  color:#ff3b3b;
+}
+
+.terminal-dots{
+  display:flex;
+  gap:10px;
+}
+
+.terminal-dots div{
+  width:12px;
+  height:12px;
+
+  border-radius:50%;
+
+  background:red;
+}
+
+.terminal-scroll{
+  flex:1;
+
+  overflow-y:auto;
+
+  padding:30px;
+
+  color:#00ff88;
+
+  font-family:monospace;
+
+  line-height:2;
+}
+
+/* ====================================================== */
+/* WORLD FEED */
+/* ====================================================== */
 
 .world-feed{
-  top:150px;
-  right:20px;
-  width:340px;
-}
+  position:fixed;
 
-.player-feed{
-  top:430px;
+  top:120px;
   right:20px;
-  width:340px;
+
+  width:320px;
+
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.2);
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  z-index:9999;
+
+  backdrop-filter:blur(10px);
 }
 
 .feed-header{
   padding:14px 18px;
-  background:rgba(255,0,0,.08);
+
+  background:
+  rgba(255,0,0,.08);
+
   color:#ff3b3b;
-  letter-spacing:2px;
 }
 
-.feed-messages,.player-messages{
-  height:220px;
+.feed-messages{
+  height:200px;
+
   overflow-y:auto;
+
   padding:16px;
+
   display:flex;
   flex-direction:column;
+
   gap:12px;
+
   color:#ccc;
 }
 
+/* ====================================================== */
+/* CORRUPTION */
+/* ====================================================== */
+
 .corruption-wrap{
+  position:fixed;
+
   top:120px;
   left:20px;
-  width:300px;
+
+  width:280px;
+
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.15);
+
+  border-radius:16px;
+
   padding:20px;
+
+  z-index:999;
 }
 
 .corruption-title{
@@ -307,502 +604,405 @@ nav{
   margin-bottom:15px;
 }
 
-.corruption-bar,.xp-bar{
+.corruption-bar{
   height:16px;
   background:#111;
   border-radius:20px;
   overflow:hidden;
 }
 
-.corruption-fill,.xp-fill{
+.corruption-fill{
   width:72%;
   height:100%;
-  background:linear-gradient(to right,darkred,red);
+
+  background:
+  linear-gradient(
+    to right,
+    darkred,
+    red
+  );
 }
 
-.terminal{
-  bottom:20px;
-  right:20px;
-  width:420px;
-  height:320px;
-  background:#050505;
-}
+/* ====================================================== */
+/* LORE */
+/* ====================================================== */
 
-.terminalHeader{
-  padding:12px;
-  background:#120000;
-  border-bottom:1px solid red;
-}
-
-.terminalBody{
-  height:calc(100% - 40px);
-  overflow-y:auto;
-  padding:15px;
-  color:#00ff66;
-  font-family:monospace;
-}
-
-.weather-status{
-  position:fixed;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,0,0,.15);
-  border-radius:20px;
-  padding:14px 28px;
-  z-index:999;
-  color:#ff3b3b;
-}
-
-.section{
-  padding:120px 8%;
-}
-
-.sectionTitle{
-  font-size:3rem;
-  margin-bottom:60px;
-  text-shadow:0 0 20px red;
-}
-
-.grid{
+.lore-books{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(280px,1fr));
+
   gap:30px;
+
+  padding:100px 40px;
 }
 
-.card{
-  background:rgba(0,0,0,.45);
-  border:1px solid rgba(255,0,0,.2);
+.lore-book{
+  background:
+  rgba(0,0,0,.55);
+
+  border:
+  1px solid rgba(255,0,0,.15);
+
+  border-radius:20px;
+
   padding:30px;
-  transition:.4s;
+
+  transition:.35s;
 }
 
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 25px rgba(255,0,0,.4);
+.lore-book:hover{
+  transform:
+  translateY(-8px);
+
+  box-shadow:
+  0 0 35px rgba(255,0,0,.2);
 }
 
-.lightning{
-  position:fixed;
-  inset:0;
-  background:white;
-  opacity:0;
-  pointer-events:none;
-  z-index:99999999;
+.lore-book h2{
+  color:#ff3b3b;
+  margin-bottom:15px;
 }
 
-.lightning.flash{
-  animation:lightningFlash .5s;
+.lore-book p{
+  color:#ccc;
+  line-height:1.7;
 }
 
-@keyframes lightningFlash{
-  0%{opacity:0;}
-  20%{opacity:.85;}
-  100%{opacity:0;}
-}
+/* ====================================================== */
+/* MOBILE */
+/* ====================================================== */
 
 @media(max-width:900px){
 
-  .hero h1{
-    font-size:4rem;
-  }
-
-  .topNav{
+  .topbar{
     flex-direction:column;
+    gap:15px;
   }
 
-  .world-feed,.player-feed,.terminal{
-    position:relative;
-    width:90%;
-    margin:20px auto;
-    right:auto;
-    top:auto;
-    bottom:auto;
+  .hero h1{
+    font-size:3rem;
+  }
+
+  .hero img{
+    width:140px;
+  }
+
+  .bloodmoon{
+    width:120px;
+    height:120px;
+    right:20px;
+  }
+
+  .world-feed{
+    display:none;
   }
 
 }
 
 </style>
 </head>
+
 <body>
 
-<div class="bg"></div>
-<div class="fog"></div>
-<div class="bloodmoon"></div>
-<div class="scanlines"></div>
-<div class="rain" id="rain"></div>
-<div class="cursor" id="cursor"></div>
-<div class="lightning" id="lightning"></div>
+<div class="background"></div>
 
-<div class="intro" id="intro">
-  <div class="glitch">EVERDUSK</div>
-  <button class="enterBtn" onclick="enterSite()">ENTER THE WORLD</button>
+<div class="bloodmoon"></div>
+
+<div class="floating-fog"></div>
+
+<div class="rain"></div>
+
+<div class="lightning"></div>
+
+<div class="scanlines"></div>
+
+<div class="cursor-glow"></div>
+
+<!-- ====================================================== -->
+<!-- WORLD FEED -->
+<!-- ====================================================== -->
+
+<div class="world-feed">
+
+  <div class="feed-header">
+    LIVE WORLD EVENTS
+  </div>
+
+  <div class="feed-messages" id="feedMessages">
+
+    <div>⚠ ENTITY DETECTED NEAR BLACK HOLLOW</div>
+
+  </div>
+
 </div>
 
-<nav>
-<div class="topNav">
-  <div class="logo">EVERDUSK</div>
+<!-- ====================================================== -->
+<!-- CORRUPTION -->
+<!-- ====================================================== -->
 
-  <div class="serverIps">
+<div class="corruption-wrap">
 
-    <div class="ipBox" onclick="copyIP('everdusk.xyz')">
-      EAGLER: everdusk.xyz
-    </div>
+  <div class="corruption-title">
+    GLOBAL CORRUPTION
+  </div>
 
-    <div class="ipBox" onclick="copyIP('java.everdusk.xyz')">
-      JAVA: java.everdusk.xyz
+  <div class="corruption-bar">
+
+    <div class="corruption-fill"></div>
+
+  </div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- TOPBAR -->
+<!-- ====================================================== -->
+
+<div class="topbar">
+
+  <div class="logo-text">
+    EVERDUSK
+  </div>
+
+  <div class="server-box">
+
+    Eagler:
+    <strong>everdusk.xyz</strong>
+
+    &nbsp;&nbsp;&nbsp;
+
+    Java:
+    <strong>java.everdusk.xyz</strong>
+
+  </div>
+
+  <div class="links">
+
+    <a href="https://discord.gg/ryvdWa7SEG" target="_blank">
+      Discord
+    </a>
+
+    <a href="https://discord.gg/dseKG8dpWv" target="_blank">
+      Pulse
+    </a>
+
+    <a href="https://vexsound.base44.app/" target="_blank">
+      VexSound
+    </a>
+
+    <a href="https://www.youtube.com/@Everduskofficial" target="_blank">
+      YouTube
+    </a>
+
+  </div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- HERO -->
+<!-- ====================================================== -->
+
+<div class="hero">
+
+  <img
+    src="https://cdn.corenexis.com/files/c/8547675720.png"
+  >
+
+  <h1>EVERDUSK</h1>
+
+  <p>
+    A cinematic Minecraft horror universe where
+    forgotten realms, corrupted entities, and endless
+    night consume everything.
+  </p>
+
+  <div class="hero-buttons">
+
+    <a href="https://discord.gg/ryvdWa7SEG">
+      JOIN DISCORD
+    </a>
+
+    <a href="https://discord.gg/dseKG8dpWv">
+      PULSE
+    </a>
+
+    <a href="https://vexsound.base44.app/">
+      VEXSOUND
+    </a>
+
+  </div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- TERMINAL -->
+<!-- ====================================================== -->
+
+<section class="terminal-window">
+
+  <div class="terminal-top">
+
+    <span>EVERDUSK TERMINAL</span>
+
+    <div class="terminal-dots">
+
+      <div></div>
+      <div></div>
+      <div></div>
+
     </div>
 
   </div>
-</div>
 
-<div class="bottomNav">
+  <div class="terminal-scroll" id="terminal">
 
-<button class="navBtn" onclick="openLink('https://discord.gg/V4ASeVRsmn')">
-EVERDUSK DISCORD
-</button>
+    <div>> CONNECTING TO EVERDUSK...</div>
+    <div>> ACCESSING CORRUPTED ARCHIVES...</div>
+    <div>> WARNING: ENTITY SIGNAL DETECTED...</div>
+    <div>> SYSTEM ONLINE...</div>
 
-<button class="navBtn" onclick="openLink('https://discord.gg/r68g9MN6bx')">
-PULSE DISCORD
-</button>
+  </div>
 
-<button class="navBtn" onclick="openLink('https://vexsound.base44.app/')">
-VEXSOUND
-</button>
-
-<button class="navBtn" onclick="openLink('https://www.youtube.com/@Everduskofficial')">
-YOUTUBE
-</button>
-
-</div>
-</nav>
-
-<section class="hero">
-<h1 class="glitch">EVERDUSK</h1>
-<p>
-A corrupted cinematic Minecraft horror universe where entities watch from the forest and signals spread through reality.
-</p>
-
-<div class="heroButtons">
-<button class="heroBtn" onclick="copyIP('java.everdusk.xyz')">ENTER SERVER</button>
-<button class="heroBtn" onclick="document.getElementById('loreSection').scrollIntoView({behavior:'smooth'})">LORE ARCHIVE</button>
-</div>
 </section>
 
-<div class="world-feed">
-<div class="feed-header">LIVE WORLD EVENTS</div>
-<div class="feed-messages" id="feedMessages">
-<div>⚠ ENTITY DETECTED NEAR BLACK HOLLOW</div>
-</div>
-</div>
+<!-- ====================================================== -->
+<!-- LORE -->
+<!-- ====================================================== -->
 
-<div class="player-feed">
-<div class="feed-header">PLAYER ACTIVITY</div>
-<div class="player-messages" id="playerMessages">
-<div>ShadowFox joined Everdusk...</div>
-</div>
-</div>
+<section class="lore-books">
 
-<div class="corruption-wrap">
-<div class="corruption-title">GLOBAL CORRUPTION</div>
-<div class="corruption-bar">
-<div class="corruption-fill" id="corruptionFill"></div>
-</div>
-<br>
-<span id="corruptionText">72%</span>
-</div>
+  <div class="lore-book">
 
-<div class="terminal" id="terminal">
-<div class="terminalHeader">EVERDUSK TERMINAL</div>
-<div class="terminalBody" id="terminalBody">
-> booting EVERDUSK systems...<br><br>
-> scanning entities...<br><br>
-> corruption spreading...<br><br>
-</div>
-</div>
+    <h2>BLACK HOLLOW</h2>
 
-<div class="weather-status" id="weatherStatus">
-WEATHER: BLOOD STORM
-</div>
+    <p>
+      A cursed realm where players vanish after midnight.
+    </p>
 
-<section class="section" id="loreSection">
-<h2 class="sectionTitle">LORE ARCHIVE</h2>
-<div class="grid">
-<div class="card">
-<h3>THE WATCHERS</h3>
-<p>Ancient entities hidden beneath the Everdusk forest.</p>
-</div>
-<div class="card">
-<h3>THE SIGNAL</h3>
-<p>A forbidden transmission corrupting reality.</p>
-</div>
-<div class="card">
-<h3>ARCHIVE 003</h3>
-<p>“Do not follow the lights beyond the trees.”</p>
-</div>
-</div>
+  </div>
+
+  <div class="lore-book">
+
+    <h2>THE WATCHERS</h2>
+
+    <p>
+      Unknown eyes seen within corrupted forests.
+    </p>
+
+  </div>
+
+  <div class="lore-book">
+
+    <h2>THE SIGNAL</h2>
+
+    <p>
+      A mysterious transmission from beneath Everdusk.
+    </p>
+
+  </div>
+
 </section>
 
 <script>
 
-function enterSite(){
-  document.getElementById('intro').classList.add('hide');
-}
+/* ====================================================== */
+/* CURSOR */
+/* ====================================================== */
 
-function openLink(url){
-  window.open(url,'_blank');
-}
+const cursor =
+document.querySelector(".cursor-glow");
 
-function copyIP(ip){
-  navigator.clipboard.writeText(ip);
-  alert('Copied: '+ip);
-}
+document.addEventListener("mousemove", e => {
 
-const cursor=document.getElementById('cursor');
+  cursor.style.left =
+  e.clientX + "px";
 
-document.addEventListener('mousemove',e=>{
-
-  cursor.style.left=e.clientX+'px';
-  cursor.style.top=e.clientY+'px';
-
-  const trail=document.createElement('div');
-  trail.className='cursorTrail';
-  trail.style.left=e.clientX+'px';
-  trail.style.top=e.clientY+'px';
-  document.body.appendChild(trail);
-
-  setTimeout(()=>{
-    trail.remove();
-  },400);
+  cursor.style.top =
+  e.clientY + "px";
 
 });
 
-const rain=document.getElementById('rain');
+/* ====================================================== */
+/* TERMINAL */
+/* ====================================================== */
 
-for(let i=0;i<250;i++){
+const terminal =
+document.getElementById("terminal");
 
-  const drop=document.createElement('div');
+const lines = [
 
-  drop.classList.add('drop');
+  "> Connecting to Everdusk nodes...",
+  "> Searching corrupted archives...",
+  "> Unknown signal detected...",
+  "> Entity movement confirmed...",
+  "> Pulse systems online...",
+  "> Accessing forbidden files...",
+  "> Distorted whispers detected...",
+  "> Network corruption spreading...",
+  "> Black Hollow gateway opened...",
+  "> VexSound synchronization complete..."
 
-  drop.style.left=Math.random()*100+'vw';
-  drop.style.animationDuration=(Math.random()*1+.5)+'s';
-  drop.style.opacity=Math.random();
-
-  rain.appendChild(drop);
-
-}
-
-const feed=document.getElementById('feedMessages');
-
-const worldEvents=[
-'⚠ Black Hollow signal amplified',
-'⚠ Unknown whispers recorded',
-'⚠ Eclipse storm approaching',
-'⚠ Red fog spreading',
-'⚠ Emergency lockdown initiated'
 ];
 
-setInterval(()=>{
+setInterval(() => {
 
-  const item=document.createElement('div');
+  const line =
+  document.createElement("div");
 
-  item.innerHTML=
-  worldEvents[Math.floor(Math.random()*worldEvents.length)];
-
-  feed.prepend(item);
-
-},5000);
-
-const playerFeed=document.getElementById('playerMessages');
-
-const playerEvents=[
-'ShadowFox joined Everdusk...',
-'VoidWalker entered Black Hollow...',
-'Unknown player disconnected...',
-'SignalHunter unlocked ARCHIVE-7...'
-];
-
-setInterval(()=>{
-
-  const item=document.createElement('div');
-
-  item.innerHTML=
-  playerEvents[Math.floor(Math.random()*playerEvents.length)];
-
-  playerFeed.prepend(item);
-
-},4000);
-
-const terminal=document.getElementById('terminalBody');
-
-const logs=[
-'> signal intercepted...',
-'> corruption increasing...',
-'> entity radar active...',
-'> archive unlocked...',
-'> whisper frequency detected...'
-];
-
-setInterval(()=>{
-
-  const line=document.createElement('div');
-
-  line.innerHTML=
-  logs[Math.floor(Math.random()*logs.length)];
+  line.innerHTML =
+  lines[
+    Math.floor(Math.random()*lines.length)
+  ];
 
   terminal.appendChild(line);
 
-  terminal.scrollTop=
+  terminal.scrollTop =
   terminal.scrollHeight;
 
 },2000);
 
-let corruption=72;
+/* ====================================================== */
+/* WORLD FEED */
+/* ====================================================== */
 
-setInterval(()=>{
+const feed =
+document.getElementById("feedMessages");
 
-  corruption += Math.floor(Math.random()*6)-2;
+const events = [
 
-  if(corruption<40)corruption=40;
-  if(corruption>100)corruption=100;
+  "⚠ Entity movement detected",
+  "⚠ Black Hollow corruption rising",
+  "⚠ Unknown whispers recorded",
+  "⚠ Eclipse storm approaching",
+  "⚠ Emergency lockdown initiated",
+  "⚠ Watchers detected in forests",
+  "⚠ Reality distortion increasing"
 
-  document.getElementById('corruptionFill').style.width=corruption+'%';
-
-  document.getElementById('corruptionText').innerHTML=corruption+'%';
-
-},6000);
-
-const weatherStates=[
-'WEATHER: BLOOD STORM',
-'WEATHER: RED FOG',
-'WEATHER: THUNDER EVENT',
-'WEATHER: ENTITY RAIN',
-'WEATHER: SIGNAL DISTORTION'
 ];
 
-setInterval(()=>{
+setInterval(() => {
 
-  document.getElementById('weatherStatus').innerHTML=
-  weatherStates[Math.floor(Math.random()*weatherStates.length)];
+  const item =
+  document.createElement("div");
 
-},12000);
+  item.innerHTML =
+  events[
+    Math.floor(Math.random()*events.length)
+  ];
 
-setInterval(()=>{
+  feed.prepend(item);
 
-  const lightning=document.getElementById('lightning');
+  if(feed.children.length > 10){
 
-  lightning.classList.add('flash');
-
-  setTimeout(()=>{
-    lightning.classList.remove('flash');
-  },500);
-
-},25000);
-
-
-
-/* =========================================================
-EXTRA HORROR SYSTEMS
-========================================================= */
-
-const creepyMessages=[
-'⚠ THE WATCHER IS NEAR',
-'⚠ UNKNOWN SIGNAL DETECTED',
-'⚠ ENTITY BREACH INCOMING',
-'⚠ BLACK HOLLOW OPENED',
-'⚠ TRANSMISSION CORRUPTED'
-];
-
-setInterval(()=>{
-
-  const popup=document.createElement('div');
-
-  popup.innerHTML=
-  creepyMessages[Math.floor(Math.random()*creepyMessages.length)];
-
-  popup.style.position='fixed';
-  popup.style.top='50%';
-  popup.style.left='50%';
-  popup.style.transform='translate(-50%,-50%)';
-  popup.style.padding='20px 40px';
-  popup.style.background='rgba(0,0,0,.85)';
-  popup.style.border='1px solid red';
-  popup.style.color='red';
-  popup.style.zIndex='99999999';
-  popup.style.letterSpacing='4px';
-  popup.style.boxShadow='0 0 40px red';
-
-  document.body.appendChild(popup);
-
-  setTimeout(()=>{
-    popup.remove();
-  },2500);
-
-},45000);
-
-/* =========================================================
-SECRET KONAMI CODE
-========================================================= */
-
-let konami=[];
-
-const secretCode=[
-'ArrowUp','ArrowUp',
-'ArrowDown','ArrowDown',
-'ArrowLeft','ArrowRight',
-'ArrowLeft','ArrowRight',
-'b','a'
-];
-
-document.addEventListener('keydown',e=>{
-
-  konami.push(e.key);
-
-  if(konami.length>secretCode.length){
-    konami.shift();
-  }
-
-  if(JSON.stringify(konami)===JSON.stringify(secretCode)){
-
-    document.body.style.filter='hue-rotate(320deg)';
-
-    alert('SECRET MODE UNLOCKED: THE VOID SEES YOU');
+    feed.removeChild(feed.lastChild);
 
   }
 
-});
-
-/* =========================================================
-FAKE BROADCASTS
-========================================================= */
-
-setInterval(()=>{
-
-  const broadcast=document.createElement('div');
-
-  broadcast.innerHTML='LIVE BROADCAST: SIGNAL STRENGTH INCREASING';
-
-  broadcast.style.position='fixed';
-  broadcast.style.bottom='120px';
-  broadcast.style.right='20px';
-  broadcast.style.padding='14px 24px';
-  broadcast.style.background='rgba(0,0,0,.8)';
-  broadcast.style.border='1px solid rgba(255,0,0,.4)';
-  broadcast.style.color='#ff3b3b';
-  broadcast.style.zIndex='999999';
-  broadcast.style.borderRadius='14px';
-
-  document.body.appendChild(broadcast);
-
-  setTimeout(()=>{
-    broadcast.remove();
-  },5000);
-
-},30000);
+},4000);
 
 </script>
+
 </body>
 </html>
-```
