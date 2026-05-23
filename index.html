@@ -12,7 +12,7 @@
 <style>
 
 /* ========================= */
-/* RESET */
+/* BASE */
 /* ========================= */
 
 *{
@@ -35,258 +35,58 @@ body{
 .bg{
     position:fixed;
     inset:0;
-
     background:
-    radial-gradient(circle at center,
-    rgba(255,0,0,.18),
-    transparent 60%),
-
-    linear-gradient(to bottom,
-    #050505,
-    #000);
-
+    radial-gradient(circle at center, rgba(255,0,0,.18), transparent 60%),
+    linear-gradient(to bottom, #050505, #000);
     z-index:-10;
 }
 
 .fog{
     position:fixed;
     inset:0;
-
     background:url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
-
     background-size:cover;
-
     opacity:.06;
-
-    animation:fogMove 50s linear infinite;
-
     filter:blur(5px);
+    animation:fogMove 50s linear infinite;
 }
 
 @keyframes fogMove{
-
-0%{
-    transform:scale(1.1) translateX(0);
-}
-
-50%{
-    transform:scale(1.2) translateX(-60px);
-}
-
-100%{
-    transform:scale(1.1) translateX(0);
-}
-
+0%{transform:scale(1.1) translateX(0);}
+50%{transform:scale(1.2) translateX(-60px);}
+100%{transform:scale(1.1) translateX(0);}
 }
 
 .scanlines{
     position:fixed;
     inset:0;
-
-    background:
-    repeating-linear-gradient(
+    background:repeating-linear-gradient(
         to bottom,
         rgba(255,255,255,.02),
         rgba(255,255,255,.02) 1px,
         transparent 1px,
         transparent 3px
     );
-
-    pointer-events:none;
-
-    z-index:999;
-}
-
-/* ========================= */
-/* GLITCH FLASH */
-/* ========================= */
-
-.glitch{
-    position:fixed;
-    inset:0;
-
-    background:red;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    mix-blend-mode:screen;
-
-    z-index:999999;
-}
-
-/* ========================= */
-/* BOOT SCREEN */
-/* ========================= */
-
-.boot-screen{
-    position:fixed;
-    inset:0;
-
-    background:black;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-
-    z-index:99999;
-
-    animation:fadeOut 2s forwards;
-    animation-delay:5s;
-}
-
-.boot-title{
-    font-size:90px;
-    font-weight:900;
-
-    text-shadow:
-        0 0 10px red,
-        0 0 40px red,
-        0 0 80px red;
-
-    animation:glitchText 2s infinite;
-}
-
-.boot-sub{
-    margin-top:20px;
-
-    color:#ff2b2b;
-
-    font-family:'IBM Plex Mono',monospace;
-
-    letter-spacing:4px;
-}
-
-.loading-bar{
-    width:400px;
-    height:4px;
-
-    background:#111;
-
-    margin-top:40px;
-
-    overflow:hidden;
-
-    position:relative;
-}
-
-.loading-fill{
-    position:absolute;
-    inset:0;
-
-    width:0%;
-
-    background:red;
-
-    box-shadow:0 0 20px red;
-
-    animation:load 4s forwards;
-}
-
-@keyframes load{
-
-from{
-    width:0%;
-}
-
-to{
-    width:100%;
-}
-
-}
-
-@keyframes fadeOut{
-
-to{
-    opacity:0;
     pointer-events:none;
 }
 
-}
-
-@keyframes glitchText{
-
-0%{
-    transform:translateX(0);
-}
-
-20%{
-    transform:translateX(-3px);
-}
-
-40%{
-    transform:translateX(3px);
-}
-
-60%{
-    transform:translateX(-2px);
-}
-
-80%{
-    transform:translateX(2px);
-}
-
-100%{
-    transform:translateX(0);
-}
-
-}
-
 /* ========================= */
-/* MAIN */
+/* TEXT */
 /* ========================= */
-
-.main{
-    height:100vh;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-}
-
-.content{
-    max-width:1200px;
-    padding:20px;
-}
-
-.small{
-    color:#ff2b2b;
-
-    letter-spacing:8px;
-
-    margin-bottom:20px;
-}
 
 .title{
-    font-size:120px;
-    font-weight:900;
-
-    line-height:1;
-
-    margin-bottom:30px;
-
-    text-shadow:
-        0 0 10px red,
-        0 0 40px red,
-        0 0 100px red;
+    font-size:110px;
+    text-align:center;
+    margin-top:120px;
+    text-shadow:0 0 30px red;
 }
 
 .desc{
+    text-align:center;
+    color:#aaa;
     max-width:700px;
-
-    margin:auto;
-
-    color:#999;
-
-    line-height:1.8;
-
-    margin-bottom:50px;
-
-    font-family:'IBM Plex Mono',monospace;
+    margin:20px auto;
+    line-height:1.6;
 }
 
 /* ========================= */
@@ -295,102 +95,46 @@ to{
 
 .buttons{
     display:flex;
-
-    gap:20px;
-
     justify-content:center;
-
+    gap:20px;
     flex-wrap:wrap;
+    margin-top:40px;
 }
 
 .btn{
-    padding:18px 40px;
-
-    color:white;
-
+    padding:15px 30px;
     border:1px solid rgba(255,0,0,.3);
-
     background:rgba(255,0,0,.08);
-
-    backdrop-filter:blur(10px);
-
-    transition:.35s;
-
-    letter-spacing:2px;
-
+    color:white;
     cursor:pointer;
-
-    font-family:'Orbitron',sans-serif;
-
-    text-decoration:none;
+    transition:.3s;
 }
 
 .btn:hover{
-    transform:translateY(-4px);
-
     background:red;
-
-    box-shadow:
-        0 0 20px red,
-        0 0 60px red;
+    box-shadow:0 0 20px red;
 }
 
 /* ========================= */
-/* MUSIC PLAYER */
+/* MUSIC */
 /* ========================= */
 
 .music-player{
     position:fixed;
-
-    bottom:30px;
-    right:30px;
-
+    bottom:20px;
+    right:20px;
     display:flex;
+    gap:10px;
     align-items:center;
-
-    gap:15px;
-
     z-index:99999;
-
-    padding:14px 18px;
-
-    background:rgba(0,0,0,.55);
-
-    border:1px solid rgba(255,0,0,.2);
-
-    backdrop-filter:blur(12px);
 }
 
 #musicToggle{
-    background:rgba(255,0,0,.08);
-
-    border:1px solid rgba(255,0,0,.25);
-
+    padding:10px 15px;
+    background:black;
+    border:1px solid red;
     color:white;
-
-    padding:10px 18px;
-
     cursor:pointer;
-
-    font-family:'Orbitron',sans-serif;
-
-    letter-spacing:2px;
-
-    transition:.3s;
-}
-
-#musicToggle:hover{
-    background:red;
-
-    box-shadow:
-        0 0 12px red,
-        0 0 30px red;
-}
-
-#volumeSlider{
-    width:120px;
-
-    accent-color:red;
 }
 
 /* ========================= */
@@ -400,455 +144,158 @@ to{
 .cutscene{
     position:fixed;
     inset:0;
-
     background:black;
-
     display:none;
-
     align-items:center;
     justify-content:center;
-
-    z-index:9999999;
-
-    overflow:hidden;
+    flex-direction:column;
+    z-index:999999;
 }
 
 .cutscene.active{
     display:flex;
 }
 
-.cutscene-bg{
-    position:absolute;
-    inset:0;
-
-    background:
-    radial-gradient(circle at center,
-    rgba(255,0,0,.18),
-    transparent 60%);
-
-    animation:pulseBg 2s infinite;
-}
-
-@keyframes pulseBg{
-
-0%{
-    opacity:.4;
-    transform:scale(1);
-}
-
-50%{
-    opacity:1;
-    transform:scale(1.05);
-}
-
-100%{
-    opacity:.4;
-    transform:scale(1);
-}
-
-}
-
-.cutscene-content{
-    position:relative;
-
-    text-align:center;
-
-    z-index:5;
-}
-
-.cutscene-warning{
-    color:#ff2b2b;
-
-    letter-spacing:10px;
-
-    margin-bottom:30px;
-
-    font-size:20px;
-
-    text-shadow:0 0 20px red;
-}
-
 .countdown{
-    font-size:220px;
-
-    font-weight:900;
-
+    font-size:200px;
     color:white;
-
-    text-shadow:
-        0 0 20px red,
-        0 0 50px red,
-        0 0 120px red;
-
-    animation:countPulse 1s infinite;
+    text-shadow:0 0 40px red;
 }
 
-@keyframes countPulse{
-
-0%{
-    transform:scale(1);
-}
-
-50%{
-    transform:scale(1.08);
-}
-
-100%{
-    transform:scale(1);
-}
-
-}
-
-.cutscene-text{
-    margin-top:30px;
-
-    color:#999;
-
-    letter-spacing:5px;
-
-    font-family:'IBM Plex Mono',monospace;
-}
-
-.cutscene::after{
-    content:'';
-
-    position:absolute;
-    inset:0;
-
-    background:
-    repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.03) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-
-    pointer-events:none;
-}
-
-/* ========================= */
-/* MOBILE */
-/* ========================= */
-
-@media(max-width:900px){
-
-.title{
-    font-size:60px;
-}
-
-.boot-title{
-    font-size:50px;
-}
-
-.buttons{
-    flex-direction:column;
-}
-
-.countdown{
-    font-size:120px;
-}
-
-.music-player{
-    left:20px;
-    right:20px;
-    bottom:20px;
-
-    flex-direction:column;
-}
-
+.text{
+    margin-top:20px;
+    color:#aaa;
 }
 
 </style>
-</head>
-<body>
 
-<!-- BACKGROUND -->
+</head>
+
+<body>
 
 <div class="bg"></div>
 <div class="fog"></div>
 <div class="scanlines"></div>
-<div class="glitch"></div>
 
-<!-- BOOT SCREEN -->
-
-<div class="boot-screen">
-
-<div class="boot-title">
-EVERDUSK
-</div>
-
-<div class="boot-sub">
-INITIALIZING VOID LINK...
-</div>
-
-<div class="loading-bar">
-<div class="loading-fill"></div>
-</div>
-
-</div>
-
-<!-- MAIN -->
-
-<section class="main">
-
-<div class="content">
-
-<div class="small">
-THE WORLD NEVER SLEEPS
-</div>
-
-<h1 class="title">
-EVERDUSK
-</h1>
+<h1 class="title">EVERDUSK</h1>
 
 <p class="desc">
-WARNING: SIGNAL INSTABILITY DETECTED.
-UNKNOWN ENTITIES HAVE BEEN TRACKED INSIDE THE ARCHIVE.
-CONTINUING MAY RESULT IN MEMORY LOSS.
+WARNING: SIGNAL INSTABILITY DETECTED. CLICK ANY BUTTON TO BEGIN TRANSFER.
 </p>
 
 <div class="buttons">
 
-<button class="btn"
-onclick="startTransfer('https://play.everdusk.xyz/wasm.html')">
-ENTER THE VOID
-</button>
-
-<button class="btn"
-onclick="startTransfer('https://www.youtube.com/@Everduskofficial')">
-WATCH ARCHIVES
-</button>
-
-<button class="btn"
-onclick="startTransfer('https://discord.gg/5Xdkuq7h9h')">
-JOIN EVERDUSK
-</button>
-
-<button class="btn"
-onclick="startTransfer('https://vexsound.base44.app/')">
-VEXSOUND
-</button>
+<button class="btn" onclick="startTransfer('https://play.everdusk.xyz/wasm.html')">ENTER VOID</button>
+<button class="btn" onclick="startTransfer('https://youtube.com')">YOUTUBE</button>
+<button class="btn" onclick="startTransfer('https://discord.com')">DISCORD</button>
+<button class="btn" onclick="startTransfer('https://vexsound.base44.app/')">VEXSOUND</button>
 
 </div>
 
-</div>
-
-</section>
-
-<!-- MUSIC PLAYER -->
+<!-- MUSIC -->
 
 <div class="music-player">
-
-<button id="musicToggle" onclick="toggleMusic()">
-▶ PLAY MUSIC
-</button>
-
-<input
-type="range"
-id="volumeSlider"
-min="0"
-max="1"
-step="0.01"
-value="0.3"
-oninput="changeVolume(this.value)">
-
+<button id="musicToggle" onclick="toggleMusic()">PLAY MUSIC</button>
 </div>
 
 <audio id="bgMusic" loop>
-<source src="https://files.catbox.moe/9l6q0q.mp3" type="audio/mpeg">
+<source src="https://cdn.pixabay.com/download/audio/2023/06/29/audio_c9b29860a0.mp3?filename=lofi-study-112191.mp3">
 </audio>
 
 <!-- CUTSCENE -->
 
 <div class="cutscene" id="cutscene">
 
-<div class="cutscene-bg"></div>
-
-<div class="cutscene-content">
-
-<div class="cutscene-warning">
-VOID TRANSFER
-</div>
-
-<div class="countdown" id="countdown">
-10
-</div>
-
-<div class="cutscene-text">
-PREPARING LINK...
-</div>
-
-</div>
+<div class="countdown" id="countdown">5</div>
+<div class="text" id="cutText">Preparing transfer...</div>
 
 </div>
 
 <script>
 
 /* ========================= */
-/* GLITCH FX */
+/* MUSIC FIX */
 /* ========================= */
 
-const glitch = document.querySelector('.glitch');
-
-setInterval(() => {
-
-    glitch.style.opacity = '.05';
-
-    setTimeout(() => {
-
-        glitch.style.opacity = '0';
-
-    },100);
-
-},5000);
-
-/* ========================= */
-/* MUSIC SYSTEM */
-/* ========================= */
-
-const music = document.getElementById('bgMusic');
-
-const musicToggle =
-document.getElementById('musicToggle');
+const music = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
 
 music.volume = 0.3;
 
-window.addEventListener('load', () => {
-
-    const playPromise = music.play();
-
-    if(playPromise !== undefined){
-
-        playPromise
-        .then(() => {
-
-            musicToggle.innerText =
-            '❚❚ PAUSE MUSIC';
-
-        })
-
-        .catch(() => {
-
-            musicToggle.innerText =
-            '▶ PLAY MUSIC';
-
-        });
-
-    }
-
-});
+document.body.addEventListener("click", () => {
+    music.play().catch(()=>{});
+}, { once:true });
 
 function toggleMusic(){
-
     if(music.paused){
-
         music.play();
-
-        musicToggle.innerText =
-        '❚❚ PAUSE MUSIC';
-
-    }else{
-
+        musicToggle.innerText = "PAUSE MUSIC";
+    } else {
         music.pause();
-
-        musicToggle.innerText =
-        '▶ PLAY MUSIC';
-
+        musicToggle.innerText = "PLAY MUSIC";
     }
-
-}
-
-function changeVolume(value){
-
-    music.volume = value;
-
 }
 
 /* ========================= */
 /* CUTSCENE SYSTEM */
 /* ========================= */
 
-const cutscene =
-document.getElementById('cutscene');
+const cutscene = document.getElementById("cutscene");
+const countdownEl = document.getElementById("countdown");
+const cutText = document.getElementById("cutText");
 
-const countdownEl =
-document.getElementById('countdown');
-
-let transferTarget = '';
+let targetURL = "";
 
 function startTransfer(url){
 
-    transferTarget = url;
+    targetURL = url;
 
-    cutscene.classList.add('active');
+    cutscene.classList.add("active");
 
-    let count = 10;
-
+    let count = 5;
     countdownEl.innerText = count;
 
-    const beep = new Audio(
-    'https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3'
-    );
+    speak(count);
 
     const interval = setInterval(() => {
 
         count--;
 
-        countdownEl.innerText = count;
-
-        beep.currentTime = 0;
-        beep.play();
+        if(count > 0){
+            countdownEl.innerText = count;
+            speak(count);
+        }
 
         if(count <= 0){
-
             clearInterval(interval);
 
-            document.body.style.background =
-            'white';
+            countdownEl.innerText = "0";
+            cutText.innerText = "TRANSFER COMPLETE";
+
+            speak("transfer complete");
 
             setTimeout(() => {
 
-                document.body.style.background =
-                'black';
+                cutscene.classList.remove("active");
 
-                cutscene.classList.remove('active');
+                window.location.href = targetURL;
 
-                window.open(
-                    transferTarget,
-                    '_blank'
-                );
-
-            },400);
-
+            }, 1200);
         }
 
-    },1000);
-
+    }, 1000);
 }
 
 /* ========================= */
-/* SCREEN DISTORTION */
+/* VOICE */
 /* ========================= */
 
-setInterval(() => {
-
-    document.body.style.filter =
-    'contrast(1.05) brightness(1.02)';
-
-    setTimeout(() => {
-
-        document.body.style.filter = 'none';
-
-    },120);
-
-},9000);
-
-/* ========================= */
-/* VERSION */
-/* ========================= */
-
-console.log('EVERDUSK CLIENT v6.0 VOID TRANSFER BUILD');
+function speak(text){
+    const msg = new SpeechSynthesisUtterance(text.toString());
+    msg.rate = 0.9;
+    msg.pitch = 0.7;
+    speechSynthesis.speak(msg);
+}
 
 </script>
 
