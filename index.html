@@ -7,115 +7,81 @@
 
 <title>EVERDUSK</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 
-/* ========================= */
-/* ORIGINAL STYLE */
-/* ========================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-    background:black;
-    overflow:hidden;
-    color:white;
-    font-family:'Orbitron',sans-serif;
+background:black;
+color:white;
+font-family:Orbitron;
+overflow:hidden;
 }
 
+/* BACKGROUND */
 .bg{
-    position:fixed;
-    inset:0;
-    background:
-    radial-gradient(circle at center, rgba(255,0,0,.18), transparent 60%),
-    linear-gradient(to bottom, #050505, #000);
-    z-index:-10;
+position:fixed;inset:0;
+background:radial-gradient(circle, rgba(255,0,0,.2), transparent 60%), #000;
 }
 
-.fog{
-    position:fixed;
-    inset:0;
-    background:url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
-    background-size:cover;
-    opacity:.06;
-    animation:fogMove 50s linear infinite;
-    filter:blur(5px);
+/* BUTTONS */
+.wrap{
+position:relative;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:20px;
+z-index:2;
 }
 
-@keyframes fogMove{
-0%{transform:scale(1.1) translateX(0);}
-50%{transform:scale(1.2) translateX(-60px);}
-100%{transform:scale(1.1) translateX(0);}
+button{
+padding:15px 30px;
+border:1px solid red;
+background:rgba(255,0,0,.1);
+color:white;
+cursor:pointer;
+transition:.3s;
 }
 
-.scanlines{
-    position:fixed;
-    inset:0;
-    background:repeating-linear-gradient(to bottom,rgba(255,255,255,.02),transparent 3px);
-    pointer-events:none;
-    z-index:999;
-}
-
-.glitch{
-    position:fixed;
-    inset:0;
-    background:red;
-    opacity:0;
-    pointer-events:none;
-    mix-blend-mode:screen;
-    z-index:999999;
+button:hover{
+transform:scale(1.1);
+background:red;
 }
 
 /* CUTSCENE */
-
 .cutscene{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:9999999;
-    flex-direction:column;
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+background:black;
+z-index:9999;
+flex-direction:column;
 }
 
 .cutscene.active{display:flex;}
 
-.countdown{
-    font-size:220px;
-    font-weight:900;
+#count{
+font-size:180px;
 }
 
-/* ========================= */
-/* JUMPSCARE LAYER */
-/* ========================= */
-
+/* JUMPSCARE */
 #scare{
-    position:fixed;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:black;
-    z-index:1000000000;
+position:fixed;
+inset:0;
+display:none;
+z-index:10000;
 }
 
 #scare img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    animation:shake .06s infinite;
-}
-
-@keyframes shake{
-0%{transform:translateX(0);}
-50%{transform:translateX(-4px);}
-100%{transform:translateX(4px);}
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 </style>
@@ -125,91 +91,65 @@ body{
 <body>
 
 <div class="bg"></div>
-<div class="fog"></div>
-<div class="scanlines"></div>
-<div class="glitch"></div>
+
+<div class="wrap">
+
+<h1>EVERDUSK</h1>
+
+<button onclick="startTransfer('https://discord.gg/A3GGsc9RM')">DISCORD</button>
+<button onclick="startTransfer('https://vexsound.base44.app/')">VEXSOUND</button>
+<button onclick="startTransfer('https://play.everdusk.xyz/wasm.html')">ENTER VOID</button>
+
+</div>
 
 <div class="cutscene" id="cutscene">
-    <div class="countdown" id="countdown">5</div>
+<div id="count">5</div>
 </div>
 
 <div id="scare"></div>
 
 <script>
 
-/* ========================= */
-/* ORIGINAL GLITCH */
-/* ========================= */
+/* ALWAYS SAFE INIT */
+window.startTransfer = function(url){
 
-setInterval(()=>{
-document.querySelector('.glitch').style.opacity=.05;
-setTimeout(()=>document.querySelector('.glitch').style.opacity=0,120);
-},4000);
+const cutscene = document.getElementById("cutscene");
+const countEl = document.getElementById("count");
+const scare = document.getElementById("scare");
 
-/* ========================= */
-/* JUMPSCARES */
-/* ========================= */
+let count = 5;
 
-const jumpscares = [
+cutscene.classList.add("active");
+
+const images = [
 "https://cdn.corenexis.com/files/c/1164486720.webp",
 "https://cdn.corenexis.com/files/c/9536946720.jpg",
 "https://cdn.corenexis.com/files/c/2912219720.webp"
 ];
 
-/* ========================= */
-/* MAIN FUNCTION (YOUR ORIGINAL LOGIC + ADD) */
-/* ========================= */
+const timer = setInterval(()=>{
 
-function startTransfer(url){
-
-let count = 5;
-
-const cutscene = document.getElementById("cutscene");
-const countdown = document.getElementById("countdown");
-const scare = document.getElementById("scare");
-
-cutscene.classList.add("active");
-
-const interval = setInterval(()=>{
-
-countdown.innerText = count;
+countEl.innerText = count;
 count--;
 
 if(count < 0){
 
-clearInterval(interval);
+clearInterval(timer);
 
-/* GLITCH BURST */
-for(let i=0;i<6;i++){
-setTimeout(()=>{
-const g = document.querySelector(".glitch");
-g.style.opacity = .7;
-setTimeout(()=>g.style.opacity=0,80);
-},i*60);
-}
-
-/* ========================= */
-/* JUMPSCARE (ADDED CLEANLY) */
-/* ========================= */
-
-const img = jumpscares[Math.floor(Math.random()*jumpscares.length)];
+/* jumpscare */
+const img = images[Math.floor(Math.random()*images.length)];
 
 scare.innerHTML = `<img src="${img}">`;
-scare.style.display = "flex";
+scare.style.display = "block";
 
-/* HOLD SCENE */
+/* open link AFTER scare */
 setTimeout(()=>{
 
 scare.style.display = "none";
-
-/* OPEN LINK */
 window.open(url,"_blank");
 
-/* RESET */
-setTimeout(()=>{
 cutscene.classList.remove("active");
-countdown.innerText="5";
-},400);
+countEl.innerText = "5";
 
 },1200);
 
@@ -217,7 +157,7 @@ countdown.innerText="5";
 
 },1000);
 
-}
+};
 
 </script>
 
