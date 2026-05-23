@@ -11,6 +11,10 @@
 
 <style>
 
+/* ========================= */
+/* BASE (UNCHANGED CORE STYLE) */
+/* ========================= */
+
 *{
     margin:0;
     padding:0;
@@ -56,15 +60,12 @@ inset:0;
 background:repeating-linear-gradient(
 to bottom,
 rgba(255,255,255,.02),
-rgba(255,255,255,.02) 1px,
-transparent 1px,
-transparent 3px
+transparent 2px
 );
 pointer-events:none;
 z-index:999;
 }
 
-/* GLITCH */
 .glitch{
 position:fixed;
 inset:0;
@@ -75,7 +76,10 @@ pointer-events:none;
 z-index:999999;
 }
 
-/* MAIN */
+/* ========================= */
+/* MAIN UI */
+/* ========================= */
+
 .main{
 height:100vh;
 display:flex;
@@ -86,101 +90,72 @@ text-align:center;
 
 .title{
 font-size:120px;
-font-weight:900;
-text-shadow:0 0 10px red,0 0 40px red,0 0 100px red;
-}
-
-.desc{
-max-width:700px;
-margin:auto;
-color:#999;
-line-height:1.8;
-margin-bottom:50px;
-font-family:'IBM Plex Mono',monospace;
-}
-
-/* BUTTONS */
-.buttons{
-display:flex;
-gap:20px;
-justify-content:center;
-flex-wrap:wrap;
+text-shadow:0 0 40px red;
 }
 
 .btn{
-padding:18px 40px;
-color:white;
-border:1px solid rgba(255,0,0,.3);
-background:rgba(255,0,0,.08);
-cursor:pointer;
-text-decoration:none;
-}
-
-.btn:hover{
-background:red;
-box-shadow:0 0 20px red,0 0 60px red;
-}
-
-/* MUSIC */
-.music-player{
-position:fixed;
-bottom:20px;
-right:20px;
-z-index:9999;
-}
-
-.music-player button{
-padding:10px 20px;
-background:rgba(255,0,0,.2);
+padding:16px 30px;
+margin:10px;
+background:rgba(255,0,0,.1);
 border:1px solid red;
 color:white;
 cursor:pointer;
 }
 
-/* CUTSCENE */
-#cutscene{
+/* ========================= */
+/* CUTSCENE (FIXED) */
+/* ========================= */
+
+.cutscene{
 position:fixed;
 inset:0;
-display:none;
-align-items:center;
-justify-content:center;
-flex-direction:column;
 background:black;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 z-index:999999;
 }
 
-#count{
+.cutscene.active{
+display:flex;
+}
+
+.countdown{
 font-size:160px;
-text-shadow:0 0 20px red;
 }
 
-#bar{
-width:300px;
-height:10px;
-border:1px solid red;
-margin-top:20px;
-position:relative;
-}
+/* ========================= */
+/* MUSIC */
+/* ========================= */
 
-#fill{
-height:100%;
-width:0%;
-background:red;
-position:absolute;
-}
-
-/* VHS */
-.vhs{
+.music{
 position:fixed;
-inset:0;
-background:repeating-linear-gradient(
-to bottom,
-rgba(255,0,0,.05),
-transparent 2px
-);
-opacity:0;
+bottom:20px;
+right:20px;
+z-index:999999;
+}
+
+.music button{
+padding:10px 14px;
+background:red;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+/* ========================= */
+/* CONSOLE (SAFE) */
+/* ========================= */
+
+#console{
+position:fixed;
+left:20px;
+bottom:20px;
+font-size:12px;
+color:#ff3b3b;
+opacity:.8;
 pointer-events:none;
-z-index:999998;
 }
 
 </style>
@@ -193,104 +168,110 @@ z-index:999998;
 <div class="fog"></div>
 <div class="scanlines"></div>
 <div class="glitch"></div>
-<div class="vhs"></div>
 
 <!-- MAIN -->
-<section class="main">
+<div class="main">
 
 <div>
-
 <h1 class="title">EVERDUSK</h1>
 
-<p class="desc">WARNING: SIGNAL INSTABILITY DETECTED</p>
-
-<div class="buttons">
-
 <button class="btn" onclick="startTransfer('https://play.everdusk.xyz/wasm.html')">
-ENTER THE VOID
+ENTER VOID
 </button>
 
-<a class="btn" href="https://www.youtube.com/@Everduskofficial" target="_blank">WATCH ARCHIVES</a>
-<a class="btn" href="https://discord.gg/5Xdkuq7h9h" target="_blank">JOIN DISCORD</a>
-<a class="btn" href="https://vexsound.base44.app/" target="_blank">VEXSOUND</a>
+<button class="btn" onclick="startTransfer('https://www.youtube.com/@Everduskofficial')">
+YOUTUBE
+</button>
+
+<button class="btn" onclick="startTransfer('https://discord.gg/5Xdkuq7h9h')">
+DISCORD
+</button>
 
 </div>
 
 </div>
 
-</section>
+<!-- CUTSCENE -->
+<div class="cutscene" id="cutscene">
+<div class="countdown" id="countdown">5</div>
+</div>
 
 <!-- MUSIC -->
-<div class="music-player">
+<div class="music">
 <button onclick="toggleMusic()">MUSIC</button>
-</div>
-
 <audio id="music" loop>
 <source src="https://files.catbox.moe/9l6q0q.mp3">
 </audio>
-
-<!-- CUTSCENE -->
-<div id="cutscene">
-<div id="count">5</div>
-<div id="bar"><div id="fill"></div></div>
 </div>
 
 <script>
 
+/* ========================= */
 /* GLITCH */
-setInterval(()=>{
-const g=document.querySelector('.glitch');
-g.style.opacity=.05;
-setTimeout(()=>g.style.opacity=0,100);
-},5000);
+/* ========================= */
 
-/* MUSIC */
-const music=document.getElementById("music");
+setInterval(()=>{
+document.querySelector(".glitch").style.opacity="0.05";
+setTimeout(()=>document.querySelector(".glitch").style.opacity="0",100);
+},4000);
+
+/* ========================= */
+/* MUSIC FIXED */
+/* ========================= */
+
+const music = document.getElementById("music");
 
 function toggleMusic(){
+if(music.paused){
 music.play();
+}else{
+music.pause();
+}
 }
 
-/* CUTSCENE */
-const cut=document.getElementById("cutscene");
-const count=document.getElementById("count");
-const fill=document.getElementById("fill");
-const vhs=document.querySelector(".vhs");
+/* ========================= */
+/* CUTSCENE SYSTEM (FIXED) */
+/* ========================= */
+
+const cutscene = document.getElementById("cutscene");
+const countdownEl = document.getElementById("countdown");
 
 function startTransfer(url){
 
-let t=5;
-cut.style.display="flex";
-vhs.style.opacity=.3;
+cutscene.classList.add("active");
 
-const interval=setInterval(()=>{
+let count = 5;
+countdownEl.innerText = count;
 
-count.innerText=t;
-fill.style.width=((5-t)/5)*100+"%";
+const interval = setInterval(()=>{
 
-document.body.style.transform=
-"translateX("+(Math.random()*6-3)+"px)";
+count--;
+countdownEl.innerText = count;
 
-setTimeout(()=>document.body.style.transform="none",80);
-
-t--;
-
-if(t<0){
+if(count <= 0){
 clearInterval(interval);
-vhs.style.opacity=0;
-cut.style.display="none";
-window.open(url,"_blank");
+
+setTimeout(()=>{
+window.location.href = url;
+},600);
+
 }
 
 },1000);
 
 }
 
-/* FX */
-setInterval(()=>{
-document.body.style.filter="contrast(1.05) brightness(1.02)";
-setTimeout(()=>document.body.style.filter="none",120);
-},9000);
+/* ========================= */
+/* FULLSCREEN SAFE */
+/* ========================= */
+
+function toggleFullscreen(){
+if(!document.fullscreenElement){
+document.documentElement.requestFullscreen();
+}else{
+document.exitFullscreen();
+}
+}
 
 </script>
 
