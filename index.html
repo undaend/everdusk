@@ -16,16 +16,16 @@
 /* ========================= */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    background:black;
-    overflow:hidden;
-    color:white;
-    font-family:'Orbitron',sans-serif;
+background:black;
+overflow:hidden;
+color:white;
+font-family:'Orbitron',sans-serif;
 }
 
 /* ========================= */
@@ -33,20 +33,22 @@ body{
 /* ========================= */
 
 .bg{
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle at center, rgba(255,0,0,.18), transparent 60%), #000;
-    z-index:-10;
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center, rgba(255,0,0,.18), transparent 60%),
+linear-gradient(to bottom, #050505, #000);
+z-index:-10;
 }
 
 .fog{
-    position:fixed;
-    inset:0;
-    background:url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
-    background-size:cover;
-    opacity:.06;
-    filter:blur(5px);
-    animation:fogMove 50s linear infinite;
+position:fixed;
+inset:0;
+background:url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
+background-size:cover;
+opacity:.06;
+filter:blur(5px);
+animation:fogMove 50s linear infinite;
 }
 
 @keyframes fogMove{
@@ -55,131 +57,116 @@ body{
 100%{transform:scale(1.1) translateX(0);}
 }
 
-/* ========================= */
-/* SCANLINES */
-/* ========================= */
-
 .scanlines{
-    position:fixed;
-    inset:0;
-    background:repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,.02),
-        transparent 3px
-    );
-    pointer-events:none;
+position:fixed;
+inset:0;
+background:repeating-linear-gradient(
+to bottom,
+rgba(255,255,255,.02),
+transparent 3px
+);
+pointer-events:none;
+z-index:999;
 }
 
 /* ========================= */
-/* MAIN */
+/* GLITCH */
 /* ========================= */
+
+.glitch{
+position:fixed;
+inset:0;
+background:red;
+opacity:0;
+mix-blend-mode:screen;
+pointer-events:none;
+z-index:999999;
+}
+
+/* ========================= */
+/* MAIN UI */
+/* ========================= */
+
+.main{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
 
 .title{
-    font-size:120px;
-    text-align:center;
-    margin-top:120px;
-    text-shadow:0 0 30px red;
-}
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-    margin-top:40px;
+font-size:110px;
+text-shadow:0 0 40px red;
 }
 
 .btn{
-    padding:18px 40px;
-    background:rgba(255,0,0,.1);
-    border:1px solid rgba(255,0,0,.3);
-    color:white;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.btn:hover{
-    background:red;
+padding:16px 30px;
+margin:10px;
+background:rgba(255,0,0,.1);
+border:1px solid red;
+color:white;
+cursor:pointer;
 }
 
 /* ========================= */
-/* MUSIC */
+/* SCAN OVERLAY */
 /* ========================= */
 
-.music-player{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    z-index:9999;
+#scan{
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:center;
+background:black;
+z-index:9999999;
 }
 
-#musicToggle{
-    padding:10px 15px;
-    background:black;
-    border:1px solid red;
-    color:white;
+#box{
+width:520px;
+padding:20px;
+border:1px solid red;
+background:rgba(0,0,0,.95);
+box-shadow:0 0 40px red;
+font-family:monospace;
+}
+
+#bar{
+width:100%;
+height:10px;
+background:#111;
+margin:10px 0;
+}
+
+#fill{
+height:100%;
+width:0%;
+background:red;
+}
+
+.log{
+font-size:12px;
+color:#ff3b3b;
+height:140px;
+overflow:hidden;
 }
 
 /* ========================= */
-/* CUTSCENE */
+/* AI TEXT */
 /* ========================= */
 
-.cutscene{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    z-index:999999;
-}
-
-.cutscene.active{
-    display:flex;
-}
-
-/* SHAKE */
-@keyframes shake{
-0%{transform:translate(0,0);}
-25%{transform:translate(-2px,2px);}
-50%{transform:translate(2px,-2px);}
-75%{transform:translate(-2px,1px);}
-100%{transform:translate(0,0);}
-}
-
-.cutscene.shake{
-    animation:shake .15s;
-}
-
-/* FLASH */
-#flash{
-    position:fixed;
-    inset:0;
-    background:red;
-    opacity:0;
-    pointer-events:none;
-    z-index:9999999;
-}
-
-/* COUNTDOWN */
-.countdown{
-    font-size:180px;
-}
-
-/* MINECRAFT BAR */
-.bar{
-    width:320px;
-    height:10px;
-    border:2px solid white;
-    margin-top:20px;
-}
-
-.fill{
-    height:100%;
-    width:100%;
-    background:red;
-    transition:width 1s linear;
+#ai{
+position:fixed;
+top:35%;
+left:50%;
+transform:translateX(-50%);
+font-size:20px;
+color:red;
+opacity:0;
+transition:.3s;
+text-shadow:0 0 20px red;
+z-index:99999999;
 }
 
 </style>
@@ -191,139 +178,132 @@ body{
 <div class="bg"></div>
 <div class="fog"></div>
 <div class="scanlines"></div>
+<div class="glitch"></div>
 
+<div class="main">
+
+<div>
 <h1 class="title">EVERDUSK</h1>
 
-<div class="buttons">
-
-<button class="btn" onclick="startTransfer('https://play.everdusk.xyz/wasm.html')">ENTER VOID</button>
-<button class="btn" onclick="startTransfer('https://youtube.com')">YOUTUBE</button>
-<button class="btn" onclick="startTransfer('https://discord.com')">DISCORD</button>
-<button class="btn" onclick="startTransfer('https://vexsound.base44.app/')">VEXSOUND</button>
-
-</div>
-
-<!-- MUSIC -->
-
-<div class="music-player">
-<button id="musicToggle" onclick="toggleMusic()">PLAY MUSIC</button>
-</div>
-
-<audio id="bgMusic" loop>
-<source src="https://cdn.pixabay.com/download/audio/2023/06/29/audio_c9b29860a0.mp3">
-</audio>
-
-<!-- CUTSCENE -->
-
-<div class="cutscene" id="cutscene">
-
-<div class="countdown" id="countdown">5</div>
-
-<div class="bar">
-<div class="fill" id="bar"></div>
+<button class="btn" onclick="startScan('https://play.everdusk.xyz/wasm.html')">
+ENTER THE VOID
+</button>
 </div>
 
 </div>
 
-<!-- FLASH -->
+<!-- SCAN UI -->
 
-<div id="flash"></div>
+<div id="scan">
+
+<div id="box">
+
+<div style="color:red;font-size:16px;">EVERDUSK SECURITY SCAN</div>
+
+<div id="status" style="color:#ff4d4d;margin-top:5px;">Initializing...</div>
+
+<div id="bar"><div id="fill"></div></div>
+
+<div class="log" id="log"></div>
+
+</div>
+
+</div>
+
+<!-- AI TEXT -->
+
+<div id="ai"></div>
 
 <script>
 
 /* ========================= */
-/* MUSIC FIX */
+/* ELEMENTS */
 /* ========================= */
 
-const music = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
+const scan = document.getElementById("scan");
+const fill = document.getElementById("fill");
+const log = document.getElementById("log");
+const ai = document.getElementById("ai");
+const statusText = document.getElementById("status");
 
-music.volume = 0.3;
+/* ========================= */
+/* AI SPEECH */
+/* ========================= */
 
-document.body.addEventListener("click", () => {
-    music.play().catch(()=>{});
-}, { once:true });
+function speak(text){
+ai.innerText = text;
+ai.style.opacity = 1;
 
-function toggleMusic(){
-    if(music.paused){
-        music.play();
-        musicToggle.innerText = "PAUSE MUSIC";
-    } else {
-        music.pause();
-        musicToggle.innerText = "PLAY MUSIC";
-    }
+setTimeout(()=>ai.style.opacity = 0,1200);
 }
 
 /* ========================= */
-/* CUTSCENE SYSTEM */
+/* LOGS */
 /* ========================= */
 
-const cutscene = document.getElementById("cutscene");
-const countdownEl = document.getElementById("countdown");
-const bar = document.getElementById("bar");
-const flash = document.getElementById("flash");
+const msgs = [
+"system integrity check...",
+"scanning memory sectors...",
+"unknown signature detected",
+"warning: anomaly rising",
+"critical instability forming",
+"ENTITY DETECTED"
+];
 
-let target = "";
+function addLog(){
+const el = document.createElement("div");
+el.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+log.appendChild(el);
 
-/* voice */
-function speak(t){
-    const msg = new SpeechSynthesisUtterance(String(t));
-    msg.rate = 0.9;
-    msg.pitch = 0.7;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(msg);
+if(log.children.length > 8){
+log.removeChild(log.firstChild);
+}
 }
 
-/* sound */
-const whoosh = new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3");
+/* ========================= */
+/* SCAN SYSTEM */
+/* ========================= */
 
-function startTransfer(url){
+function startScan(url){
 
-    target = url;
+scan.style.display = "flex";
 
-    cutscene.classList.add("active");
+let p = 0;
 
-    let count = 5;
-    bar.style.width = "100%";
+speak("Starting system scan");
 
-    speak(count);
-    whoosh.play();
+const interval = setInterval(()=>{
 
-    const interval = setInterval(() => {
+p += Math.random()*10;
 
-        /* shake */
-        cutscene.classList.add("shake");
-        setTimeout(()=>cutscene.classList.remove("shake"),150);
+fill.style.width = p + "%";
 
-        /* flash */
-        flash.style.opacity = "0.5";
-        setTimeout(()=>flash.style.opacity = "0",100);
+addLog();
 
-        count--;
+if(p > 30) speak("Analyzing system...");
+if(p > 60) speak("Suspicious activity detected");
+if(p > 85) speak("Warning level critical");
 
-        if(count > 0){
-            countdownEl.innerText = count;
-            speak(count);
-            bar.style.width = (count/5)*100 + "%";
-        }
+if(p >= 100){
 
-        if(count <= 0){
+clearInterval(interval);
 
-            clearInterval(interval);
+statusText.innerText = "Scan complete: anomalies found";
 
-            countdownEl.innerText = "0";
-            speak("transfer complete");
+speak("Scan finished");
 
-            const end = new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3");
-            end.play();
+setTimeout(()=>{
 
-            setTimeout(() => {
-                cutscene.classList.remove("active");
-                window.location.href = target;
-            }, 900);
-        }
+scan.style.display = "none";
 
-    },1000);
+window.location.href = url;
+
+},1200);
+
+}
+
+},200);
+
 }
 
 </script>
