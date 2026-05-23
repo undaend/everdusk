@@ -12,7 +12,7 @@
 <style>
 
 /* ========================= */
-/* BASE RESET */
+/* ORIGINAL STYLE */
 /* ========================= */
 
 *{
@@ -27,10 +27,6 @@ body{
     color:white;
     font-family:'Orbitron',sans-serif;
 }
-
-/* ========================= */
-/* BACKGROUND SYSTEM */
-/* ========================= */
 
 .bg{
     position:fixed;
@@ -65,10 +61,6 @@ body{
     z-index:999;
 }
 
-/* ========================= */
-/* GLITCH SYSTEM */
-/* ========================= */
-
 .glitch{
     position:fixed;
     inset:0;
@@ -79,9 +71,7 @@ body{
     z-index:999999;
 }
 
-/* ========================= */
 /* CUTSCENE */
-/* ========================= */
 
 .cutscene{
     position:fixed;
@@ -90,27 +80,15 @@ body{
     display:none;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
     z-index:9999999;
+    flex-direction:column;
 }
 
-.cutscene.active{
-    display:flex;
-}
-
-.smallText{
-    font-size:14px;
-    color:#ff3b3b;
-    letter-spacing:3px;
-    margin-bottom:10px;
-    font-family:'IBM Plex Mono', monospace;
-    opacity:.8;
-}
+.cutscene.active{display:flex;}
 
 .countdown{
     font-size:220px;
     font-weight:900;
-    text-shadow:0 0 30px red;
 }
 
 /* ========================= */
@@ -127,10 +105,6 @@ body{
     z-index:1000000000;
 }
 
-#scare.active{
-    display:flex;
-}
-
 #scare img{
     width:100%;
     height:100%;
@@ -140,8 +114,8 @@ body{
 
 @keyframes shake{
 0%{transform:translateX(0);}
-50%{transform:translateX(-5px);}
-100%{transform:translateX(5px);}
+50%{transform:translateX(-4px);}
+100%{transform:translateX(4px);}
 }
 
 </style>
@@ -156,10 +130,7 @@ body{
 <div class="glitch"></div>
 
 <div class="cutscene" id="cutscene">
-
-    <div class="smallText" id="status">SYSTEM INITIALIZING</div>
     <div class="countdown" id="countdown">5</div>
-
 </div>
 
 <div id="scare"></div>
@@ -167,13 +138,13 @@ body{
 <script>
 
 /* ========================= */
-/* GLITCH LOOP */
+/* ORIGINAL GLITCH */
 /* ========================= */
 
 setInterval(()=>{
-document.querySelector('.glitch').style.opacity=.06;
-setTimeout(()=>document.querySelector('.glitch').style.opacity=0,100);
-},3500);
+document.querySelector('.glitch').style.opacity=.05;
+setTimeout(()=>document.querySelector('.glitch').style.opacity=0,120);
+},4000);
 
 /* ========================= */
 /* JUMPSCARES */
@@ -186,19 +157,7 @@ const jumpscares = [
 ];
 
 /* ========================= */
-/* AI STATUS PHRASES */
-/* ========================= */
-
-const phases = [
-"LINK STABILIZING",
-"SIGNAL INTERFERENCE",
-"UNKNOWN ENTITY DETECTED",
-"MEMORY FRAGMENTING",
-"FINALIZATION SEQUENCE"
-];
-
-/* ========================= */
-/* MAIN FUNCTION */
+/* MAIN FUNCTION (YOUR ORIGINAL LOGIC + ADD) */
 /* ========================= */
 
 function startTransfer(url){
@@ -207,48 +166,41 @@ let count = 5;
 
 const cutscene = document.getElementById("cutscene");
 const countdown = document.getElementById("countdown");
-const status = document.getElementById("status");
 const scare = document.getElementById("scare");
 
 cutscene.classList.add("active");
 
 const interval = setInterval(()=>{
 
-/* update text */
-status.innerText = phases[5 - count] || "SYSTEM ERROR";
 countdown.innerText = count;
-
-/* glitch burst */
-if(count <= 3){
-document.querySelector('.glitch').style.opacity = 0.1;
-setTimeout(()=>document.querySelector('.glitch').style.opacity=0,80);
-}
-
-/* decrement */
 count--;
 
 if(count < 0){
 
 clearInterval(interval);
 
-/* FINAL GLITCH EXPLOSION */
-for(let i=0;i<8;i++){
+/* GLITCH BURST */
+for(let i=0;i<6;i++){
 setTimeout(()=>{
-document.querySelector('.glitch').style.opacity = 0.8;
-setTimeout(()=>document.querySelector('.glitch').style.opacity=0,60);
-},i*50);
+const g = document.querySelector(".glitch");
+g.style.opacity = .7;
+setTimeout(()=>g.style.opacity=0,80);
+},i*60);
 }
 
-/* JUMPSCARE */
+/* ========================= */
+/* JUMPSCARE (ADDED CLEANLY) */
+/* ========================= */
+
 const img = jumpscares[Math.floor(Math.random()*jumpscares.length)];
 
 scare.innerHTML = `<img src="${img}">`;
-scare.classList.add("active");
+scare.style.display = "flex";
 
 /* HOLD SCENE */
 setTimeout(()=>{
 
-scare.classList.remove("active");
+scare.style.display = "none";
 
 /* OPEN LINK */
 window.open(url,"_blank");
@@ -257,10 +209,9 @@ window.open(url,"_blank");
 setTimeout(()=>{
 cutscene.classList.remove("active");
 countdown.innerText="5";
-status.innerText="SYSTEM INITIALIZING";
-},600);
+},400);
 
-},1400);
+},1200);
 
 }
 
