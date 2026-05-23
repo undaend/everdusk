@@ -138,7 +138,7 @@ animation:wipeAnim 1.2s forwards;
 }
 
 /* ========================= */
-/* JUMPSCARE (FIXED) */
+/* JUMPSCARE FIXED */
 /* ========================= */
 
 #scare{
@@ -212,7 +212,7 @@ const images = [
 ];
 
 /* ========================= */
-/* VOICE DISTORT */
+/* VOICE DISTORTION */
 /* ========================= */
 
 function voice(text){
@@ -223,7 +223,7 @@ speechSynthesis.speak(msg);
 }
 
 /* ========================= */
-/* GLITCH BURST */
+/* GLITCH */
 /* ========================= */
 
 function glitchBurst(){
@@ -271,24 +271,31 @@ for(let i=0;i<6;i++){
 setTimeout(glitchBurst, i*60);
 }
 
-/* GUARANTEED JUMPSCARE */
+/* ========================= */
+/* GUARANTEED JUMPSCARE FIX */
+/* ========================= */
+
 const img = images[Math.floor(Math.random()*images.length)];
 
+/* STEP 1: FORCE RENDER */
 scare.innerHTML = `<img src="${img}">`;
 scare.classList.add("active");
 
-/* HOLD JUMPSCARE */
+/* STEP 2: HOLD LONG ENOUGH */
 setTimeout(()=>{
 
+/* STEP 3: REMOVE JUMPSCARE */
 scare.classList.remove("active");
 
 /* MEMORY WIPE */
 wipe.classList.add("active");
 
-/* OPEN LINK */
+/* STEP 4: OPEN LINK AFTER VISUAL START */
+setTimeout(()=>{
+
 window.open(url,"_blank");
 
-/* RESET */
+/* STEP 5: RESET */
 setTimeout(()=>{
 
 wipe.classList.remove("active");
@@ -297,9 +304,11 @@ cutscene.classList.remove("active");
 cnum.innerText = "5";
 ctext.innerText = "SYSTEM BOOT";
 
-},1200);
+},900);
 
-},700);
+},300);
+
+},1500);
 
 }
 
