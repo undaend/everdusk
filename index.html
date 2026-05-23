@@ -1,307 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EVERDUSK</title>
+<title>EVERDUSK // SYSTEM NODE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 
-/* ========================= */
-/* RESET */
-/* ========================= */
+/* =========================
+BASE SYSTEM
+========================= */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    background:black;
-    overflow:hidden;
-    color:white;
-    font-family:'Orbitron',sans-serif;
+background:black;
+overflow:hidden;
+color:white;
+font-family:'Orbitron',sans-serif;
 }
 
-/* ========================= */
-/* BACKGROUND */
-/* ========================= */
+/* =========================
+BACKGROUND LAYERS
+========================= */
 
 .bg{
-    position:fixed;
-    inset:0;
-    background:
-    radial-gradient(circle at center, rgba(255,0,0,.18), transparent 60%),
-    linear-gradient(to bottom, #050505, #000);
-    z-index:-10;
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center, rgba(255,0,0,.2), transparent 60%),
+linear-gradient(to bottom, #050505, #000);
+z-index:-10;
 }
 
 .fog{
-    position:fixed;
-    inset:0;
-    background:url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
-    background-size:cover;
-    opacity:.06;
-    animation:fogMove 50s linear infinite;
-    filter:blur(5px);
-    z-index:-9;
+position:fixed;
+inset:0;
+background:url('https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2070&auto=format&fit=crop');
+background-size:cover;
+opacity:.05;
+filter:blur(6px);
+animation:fogMove 60s linear infinite;
+z-index:-9;
 }
 
 @keyframes fogMove{
 0%{transform:scale(1.1) translateX(0);}
-50%{transform:scale(1.2) translateX(-60px);}
+50%{transform:scale(1.25) translateX(-80px);}
 100%{transform:scale(1.1) translateX(0);}
 }
 
-/* ========================= */
-/* EFFECTS */
-/* ========================= */
+/* =========================
+SYSTEM EFFECTS
+========================= */
 
 .scanlines{
-    position:fixed;
-    inset:0;
-    background:repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,.02),
-        rgba(255,255,255,.02) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-    pointer-events:none;
-    z-index:999;
+position:fixed;
+inset:0;
+background:repeating-linear-gradient(
+to bottom,
+rgba(255,255,255,.02),
+transparent 3px
+);
+pointer-events:none;
+z-index:999;
 }
 
 .glitch{
-    position:fixed;
-    inset:0;
-    background:red;
-    opacity:0;
-    pointer-events:none;
-    mix-blend-mode:screen;
-    z-index:999999;
+position:fixed;
+inset:0;
+background:red;
+opacity:0;
+mix-blend-mode:screen;
+z-index:999999;
+pointer-events:none;
 }
 
 .vhs{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:999998;
-    mix-blend-mode:overlay;
-    opacity:.18;
-    background:repeating-linear-gradient(
-        to bottom,
-        rgba(255,0,0,.05),
-        rgba(0,0,0,.05) 2px
-    );
+position:fixed;
+inset:0;
+opacity:.12;
+mix-blend-mode:overlay;
+background:repeating-linear-gradient(to bottom, rgba(255,0,0,.05), rgba(0,0,0,.05) 2px);
+animation:vhsShake .15s infinite;
+pointer-events:none;
+z-index:999998;
 }
 
-/* ========================= */
-/* AI SPEAK */
-/* ========================= */
-
-#aiSpeak{
-    position:fixed;
-    top:18%;
-    left:50%;
-    transform:translateX(-50%);
-    color:red;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:18px;
-    opacity:0;
-    z-index:99999999;
-    text-shadow:0 0 10px red;
+@keyframes vhsShake{
+0%{transform:translateX(0);}
+50%{transform:translateX(-2px);}
+100%{transform:translateX(2px);}
 }
 
-/* ========================= */
-/* JUMPSCARE */
-/* ========================= */
+/* =========================
+BOOT SEQUENCE
+========================= */
 
-#entityScare{
-    position:fixed;
-    inset:0;
-    background:black;
-    color:red;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:80px;
-    font-weight:900;
-    opacity:0;
-    pointer-events:none;
-    z-index:999999999;
-    text-shadow:0 0 40px red;
-}
-
-/* ========================= */
-/* BOOT SCREEN */
-/* ========================= */
-
-.boot-screen{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    z-index:99999;
-    animation:fadeOut 2s forwards;
-    animation-delay:5s;
+.boot{
+position:fixed;
+inset:0;
+background:black;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:99999;
+animation:bootOut 2s forwards;
+animation-delay:5s;
 }
 
 .boot-title{
-    font-size:90px;
-    font-weight:900;
-    text-shadow:0 0 10px red,0 0 40px red;
+font-size:90px;
+font-weight:900;
+text-shadow:0 0 40px red;
 }
 
-.boot-sub{
-    margin-top:20px;
-    color:#ff2b2b;
-    font-family:'IBM Plex Mono',monospace;
+.boot-bar{
+width:420px;
+height:4px;
+background:#111;
+margin-top:30px;
+overflow:hidden;
 }
 
-.loading-bar{
-    width:400px;
-    height:4px;
-    background:#111;
-    margin-top:40px;
-    overflow:hidden;
+.boot-fill{
+width:0%;
+height:100%;
+background:red;
+animation:fill 4s forwards;
 }
 
-.loading-fill{
-    width:0%;
-    height:100%;
-    background:red;
-    animation:load 4s forwards;
+@keyframes fill{to{width:100%;}}
+@keyframes bootOut{to{opacity:0;pointer-events:none;}}
+
+/* =========================
+MAIN UI
+========================= */
+
+.main{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
 }
 
-@keyframes load{from{width:0%;}to{width:100%;}}
-@keyframes fadeOut{to{opacity:0;pointer-events:none;}}
+.title{
+font-size:110px;
+text-shadow:0 0 60px red;
+}
 
-/* ========================= */
-/* CUTSCENE */
-/* ========================= */
+.buttons{
+margin-top:40px;
+display:flex;
+gap:20px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:16px 36px;
+border:1px solid rgba(255,0,0,.3);
+background:rgba(255,0,0,.08);
+color:white;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn:hover{
+background:red;
+transform:scale(1.05);
+}
+
+/* pulse */
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+.pulse{animation:pulse 1.8s infinite;}
+
+/* =========================
+CUTSCENE
+========================= */
 
 .cutscene{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:9999999;
+position:fixed;
+inset:0;
+background:black;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999999;
 }
 
 .cutscene.active{display:flex;}
 
-.countdown{
-    font-size:220px;
-    font-weight:900;
-    text-shadow:0 0 60px red;
+.ctext{
+color:red;
+font-family:'IBM Plex Mono';
+font-size:16px;
+margin-bottom:10px;
+opacity:.8;
 }
 
-/* ========================= */
-/* SYSTEM REBOOT */
-/* ========================= */
+.cnum{
+font-size:200px;
+font-weight:900;
+text-shadow:0 0 60px red;
+}
+
+/* =========================
+REBOOT
+========================= */
 
 .reboot{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    z-index:10000000;
-    color:lime;
-    font-family:'IBM Plex Mono',monospace;
+position:fixed;
+inset:0;
+background:black;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:10000000;
+color:lime;
+font-family:'IBM Plex Mono';
 }
 
 .reboot.active{display:flex;}
 
-.reboot-text{
-    font-size:26px;
-    letter-spacing:3px;
-}
-
 .reboot-bar{
-    width:420px;
-    height:4px;
-    background:#111;
-    margin-top:30px;
-    overflow:hidden;
+width:400px;
+height:4px;
+background:#111;
+margin-top:20px;
+overflow:hidden;
 }
 
 .reboot-fill{
-    width:0%;
-    height:100%;
-    background:lime;
-    animation:rebootLoad 2s forwards;
+width:0%;
+height:100%;
+background:lime;
+animation:rb 2s forwards;
 }
 
-@keyframes rebootLoad{
-from{width:0%;}
-to{width:100%;}
-}
-
-/* ========================= */
-/* MAIN */
-/* ========================= */
-
-.main{
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-}
-
-.small{
-    color:#ff2b2b;
-    letter-spacing:8px;
-    margin-bottom:20px;
-}
-
-.title{
-    font-size:120px;
-    font-weight:900;
-    text-shadow:0 0 10px red,0 0 100px red;
-}
-
-.desc{
-    max-width:700px;
-    margin:auto;
-    color:#999;
-    font-family:'IBM Plex Mono',monospace;
-    margin-bottom:40px;
-}
-
-.buttons{
-    display:flex;
-    gap:20px;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-
-.btn{
-    padding:18px 40px;
-    border:1px solid rgba(255,0,0,.3);
-    background:rgba(255,0,0,.08);
-    color:white;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.btn:hover{
-    background:red;
-    box-shadow:0 0 20px red;
-}
+@keyframes rb{to{width:100%;}}
 
 </style>
 </head>
@@ -314,163 +266,157 @@ to{width:100%;}
 <div class="glitch"></div>
 <div class="vhs"></div>
 
-<div id="aiSpeak"></div>
-<div id="entityScare"></div>
-
-<div class="boot-screen">
-    <div class="boot-title">EVERDUSK</div>
-    <div class="boot-sub">INITIALIZING VOID LINK...</div>
-    <div class="loading-bar"><div class="loading-fill"></div></div>
+<div class="boot">
+<div class="boot-title">EVERDUSK</div>
+<div class="boot-bar"><div class="boot-fill"></div></div>
 </div>
 
 <section class="main">
+
 <div>
-
-<div class="small">THE WORLD NEVER SLEEPS</div>
-<h1 class="title">EVERDUSK</h1>
-
-<p class="desc">
-WARNING: SYSTEM INSTABILITY DETECTED.
-</p>
+<div class="title">EVERDUSK</div>
 
 <div class="buttons">
 
-<button class="btn" onclick="startTransfer('https://play.everdusk.xyz/wasm.html')">ENTER VOID</button>
-<button class="btn" onclick="startTransfer('https://www.youtube.com/@Everduskofficial')">ARCHIVES</button>
-<button class="btn" onclick="startTransfer('https://discord.gg/5Xdkuq7h9h')">JOIN</button>
+<button class="btn pulse" onclick="start('https://discord.gg/A3GGsc9RM')">DISCORD</button>
+<button class="btn pulse" onclick="start('https://vexsound.base44.app/')">VEXSOUND</button>
+<button class="btn pulse" onclick="start('https://play.everdusk.xyz/wasm.html')">ENTER</button>
 
 </div>
 
 </div>
+
 </section>
 
-<div class="cutscene" id="cutscene">
-    <div class="countdown" id="countdown">5</div>
+<div class="cutscene" id="cut">
+<div class="ctext" id="ctext">SYSTEM BOOT</div>
+<div class="cnum" id="cnum">5</div>
 </div>
 
-<div class="reboot" id="reboot">
-    <div class="reboot-text">SYSTEM REBOOTING...</div>
-    <div class="reboot-bar"><div class="reboot-fill"></div></div>
+<div class="reboot" id="rb">
+<div>REBOOTING SYSTEM CORE</div>
+<div class="reboot-bar"><div class="reboot-fill"></div></div>
 </div>
 
 <script>
 
-/* ========================= */
-/* ELEMENTS */
-/* ========================= */
+/* =========================
+SYSTEM CORE
+========================= */
 
-const cutscene = document.getElementById("cutscene");
-const countdown = document.getElementById("countdown");
-const reboot = document.getElementById("reboot");
-const scare = document.getElementById("entityScare");
+const cut = document.getElementById("cut");
+const ctext = document.getElementById("ctext");
+const cnum = document.getElementById("cnum");
+const rb = document.getElementById("rb");
 const glitch = document.querySelector(".glitch");
 
-/* ========================= */
-/* AI VOICE */
-/* ========================= */
+/* =========================
+VOICE ENGINE
+========================= */
 
-function voice(text){
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.rate = 0.9;
-    msg.pitch = 0.2;
-    speechSynthesis.speak(msg);
+function voice(t){
+const msg = new SpeechSynthesisUtterance(t);
+msg.rate = 0.9;
+msg.pitch = 0.25;
+speechSynthesis.speak(msg);
 }
 
-/* ========================= */
-/* TEXT + VOICE */
-/* ========================= */
+/* =========================
+ENTITIES
+========================= */
 
-function talk(t){
-    voice(t);
+const entities = [
+"ENTITY-01 ACTIVE",
+"NULL PROCESS DETECTED",
+"BREACH VECTOR OPEN",
+"IT IS INSIDE",
+"SIGNAL CORRUPTED"
+];
+
+function scare(){
+if(Math.random() > 0.6){
+glitch.style.opacity = 0.25;
+voice("ENTITY DETECTED");
+setTimeout(()=>glitch.style.opacity=0,120);
+}
 }
 
-/* ========================= */
-/* JUMPSCARE */
-/* ========================= */
-
-const entities = ["ENTITY-07","NULL","BREACH","IT SEES YOU"];
-
-function jump(){
-    scare.innerText = entities[Math.floor(Math.random()*entities.length)];
-    scare.style.opacity = 1;
-    glitch.style.opacity = 0.3;
-
-    setTimeout(()=>{
-        scare.style.opacity = 0;
-        glitch.style.opacity = 0;
-    },150);
-}
-
-/* ========================= */
-/* HEARTBEAT */
-/* ========================= */
+/* =========================
+AUDIO
+========================= */
 
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
 function beat(){
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
+const o = ctx.createOscillator();
+const g = ctx.createGain();
 
-    o.frequency.value = 55;
-    g.gain.value = 0.08;
+o.frequency.value = 55;
+g.gain.value = 0.07;
 
-    o.connect(g);
-    g.connect(ctx.destination);
+o.connect(g);
+g.connect(ctx.destination);
 
-    o.start();
-    o.stop(ctx.currentTime + 0.1);
+o.start();
+o.stop(ctx.currentTime + 0.1);
 }
 
 document.addEventListener("click",()=>ctx.resume(),{once:true});
 
-/* ========================= */
-/* MAIN FUNCTION */
-/* ========================= */
+/* =========================
+TRANSFER SYSTEM
+========================= */
 
-function startTransfer(url){
+function start(url){
 
-    let count = 5;
-    cutscene.classList.add("active");
+let count = 5;
 
-    const i = setInterval(()=>{
+cut.classList.add("active");
 
-        beat();
+const msg = [
+"INITIALIZING",
+"STABLE LINK",
+"ENTITY DETECTED",
+"MEMORY BREAK",
+"FINAL SEQUENCE"
+];
 
-        if(Math.random() > 0.6) jump();
+const i = setInterval(()=>{
 
-        countdown.innerText = count;
+beat();
+scare();
 
-        if(count === 3) talk("ENTITY APPROACHING");
-        if(count === 2) talk("MEMORY COLLAPSE");
-        if(count === 1) talk("FINAL SEQUENCE");
+ctext.innerText = msg[5-count];
+cnum.innerText = count;
 
-        count--;
+voice(msg[5-count]);
 
-        if(count < 0){
-            clearInterval(i);
+count--;
 
-            talk("REBOOT INITIATED");
+if(count < 0){
 
-            // open link
-            window.open(url,"_blank");
+clearInterval(i);
 
-            // show reboot screen
-            reboot.classList.add("active");
+window.open(url,"_blank");
 
-            setTimeout(()=>{
+rb.classList.add("active");
 
-                reboot.classList.remove("active");
-                cutscene.classList.remove("active");
+ctext.innerText = "REBOOTING CORE";
 
-                countdown.innerText = "5";
+setTimeout(()=>{
 
-                scare.style.opacity = 0;
-                glitch.style.opacity = 0;
+rb.classList.remove("active");
+cut.classList.remove("active");
 
-            }, 2200);
-        }
+cnum.innerText = "5";
+ctext.innerText = "SYSTEM BOOT";
 
-    },1000);
+},2200);
+
+}
+
+},1000);
+
 }
 
 </script>
