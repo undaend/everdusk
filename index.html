@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EVERDUSK</title>
+<title>EVERDUSK // ARG SYSTEM</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 
-/* BASE */
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
@@ -19,73 +16,58 @@ background:black;
 color:white;
 font-family:Orbitron;
 overflow:hidden;
-transition:0.5s;
+transition:.4s;
 }
 
-/* CORRUPTION EFFECT */
 body.corrupt{
-filter:hue-rotate(20deg) contrast(1.2);
+filter:hue-rotate(25deg) contrast(1.3);
 }
 
-/* BACKGROUND */
-.bg{
-position:fixed;inset:0;
-background:radial-gradient(circle, rgba(255,0,0,.2), transparent 60%), #000;
+body.locked .wrap{
+display:none;
 }
 
 /* MAIN */
 .wrap{
-position:relative;
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-gap:20px;
-z-index:2;
+gap:16px;
 }
 
 button{
-padding:14px 28px;
+padding:12px 24px;
 border:1px solid red;
-background:rgba(255,0,0,.1);
+background:rgba(255,0,0,.12);
 color:white;
 cursor:pointer;
-transition:.3s;
+transition:.2s;
 }
 
 button:hover{
 background:red;
-transform:scale(1.1);
+transform:scale(1.05);
 }
 
-/* LOADER */
-#loader{
+/* STATUS */
+#status{
 position:fixed;
-inset:0;
-display:none;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-background:black;
-z-index:99999;
-}
-
-#loader.active{display:flex;}
-
-#num{
-font-size:160px;
+top:15px;
+left:15px;
+font-family:monospace;
 color:red;
-text-shadow:0 0 30px red;
+font-size:12px;
 }
 
 /* CHAT */
 #chat{
 position:fixed;
-right:20px;
-bottom:20px;
-width:300px;
-height:340px;
+right:15px;
+bottom:15px;
+width:320px;
+height:360px;
 border:1px solid red;
 background:rgba(0,0,0,.85);
 display:flex;
@@ -123,191 +105,302 @@ color:white;
 cursor:pointer;
 }
 
-/* GLITCH TEXT */
-.glitchText{
-animation:glitch 0.3s infinite;
-}
-
-@keyframes glitch{
-0%{transform:translateX(0);}
-25%{transform:translateX(-1px);}
-50%{transform:translateX(2px);}
-75%{transform:translateX(-2px);}
-100%{transform:translateX(0);}
+/* LOCK SCREEN */
+#lock{
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+background:black;
+color:red;
+z-index:99999;
+text-align:center;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div id="status">STABILITY: 100% | NODE-01</div>
 
 <div class="wrap">
-<h1>EVERDUSK</h1>
+
+<h1>EVERDUSK ARG SYSTEM</h1>
 
 <button onclick="start('https://discord.gg/A3GGsc9RM')">DISCORD</button>
 <button onclick="start('https://vexsound.base44.app/')">VEXSOUND</button>
 <button onclick="start('https://www.youtube.com/@Everduskofficial')">YOUTUBE</button>
-</div>
+<button onclick="start('https://everdusk.xyz')">EAGLER IP</button>
+<button onclick="start('https://java.everdusk.xyz')">JAVA IP</button>
 
-<!-- LOADER -->
-<div id="loader">
-<div id="num">5</div>
 </div>
 
 <!-- CHAT -->
 <div id="chat">
 <div id="log"></div>
 <div id="input">
-<input id="msg" placeholder="speak..." />
+<input id="msg" placeholder="speak or enter code..." />
 <button onclick="send()">></button>
 </div>
 </div>
 
+<!-- LOCK -->
+<div id="lock">
+<h1>SYSTEM LOCKED</h1>
+<p>ENTITY HAS TAKEN CONTROL OF CHAT</p>
+</div>
+
 <script>
 
-const loader = document.getElementById("loader");
-const num = document.getElementById("num");
-const log = document.getElementById("log");
-const msg = document.getElementById("msg");
+/* =========================
+STATE
+========================= */
 
+let attempts = 5;
 let corruption = 0;
-let entityMode = "neutral";
+let locked = false;
+
+let node = localStorage.getItem("node") || "NODE-01";
+
+let memory = JSON.parse(localStorage.getItem("memory") || "{}");
 
 /* =========================
-   ENTITY PERSONALITY SYSTEM
+CODES
 ========================= */
 
-function updateEntityMode(userText){
-
-if(userText.includes("help")) entityMode = "sympathetic";
-else if(userText.includes("who")) entityMode = "aware";
-else if(userText.includes("exit")) entityMode = "hostile";
-else if(corruption > 5) entityMode = "unstable";
-else entityMode = "neutral";
-
-document.body.classList.toggle("corrupt", corruption > 3);
-}
+const codes = {
+"VOID-RED":"calm",
+"ECHO-77":"aware",
+"EVERDUSK-ROOT":"dominant"
+};
 
 /* =========================
-   ENTITY RESPONSE
+CHAT
 ========================= */
 
-function entityReply(text){
+const log = document.getElementById("log");
 
-updateEntityMode(text);
+function add(who,text){
 
-let reply = "I am here.";
-
-if(entityMode === "sympathetic") reply = "I can feel you trying to understand.";
-if(entityMode === "aware") reply = "You are speaking to something inside the system.";
-if(entityMode === "hostile") reply = "Leaving is not permitted.";
-if(entityMode === "unstable") reply = "ERROR... I AM NOT ALONE...";
-
-typeEntity(reply);
-}
-
-/* =========================
-   TYPE BEFORE USER (ENTITY INITIATES)
-========================= */
-
-function entityInitiate(){
-
-const lines = [
-"...are you still there?",
-"I can see your input before you type.",
-"this system is remembering you.",
-"you shouldn't continue."
-];
-
-if(Math.random() < 0.4){
-typeEntity(lines[Math.floor(Math.random()*lines.length)]);
-}
-}
-
-/* =========================
-   TYPE EFFECT
-========================= */
-
-function typeEntity(text){
-
-let i = 0;
 const div = document.createElement("div");
-div.classList.add("glitchText");
+div.innerText = who + ": " + text;
 log.appendChild(div);
-
-const interval = setInterval(()=>{
-
-div.innerText = "ENTITY: " + text.slice(0,i);
-i++;
-
-if(i > text.length){
-clearInterval(interval);
 log.scrollTop = log.scrollHeight;
-}
 
-},30);
+/* voice */
+speak(text);
+
+/* save memory */
+saveMemory();
+
 }
 
 /* =========================
-   USER CHAT
+VOICE (CORRUPTION BASED)
+========================= */
+
+function speak(text){
+
+const u = new SpeechSynthesisUtterance(text);
+
+u.rate = Math.max(0.6, 1 - corruption*0.05);
+u.pitch = Math.max(0.4, 1 - corruption*0.08);
+
+speechSynthesis.speak(u);
+
+}
+
+/* =========================
+SEND
 ========================= */
 
 function send(){
 
-const text = msg.value;
-if(!text) return;
+let v = document.getElementById("msg").value.trim();
+if(!v) return;
 
-corruption++;
-log.innerHTML += `<div>YOU: ${text}</div>`;
-msg.value = "";
+document.getElementById("msg").value = "";
 
-setTimeout(()=>entityReply(text), 600);
+add("YOU", v);
 
-entityInitiate();
+if(codes[v]){
+handleCode(v);
+return;
+}
+
+entity(v);
+
 }
 
 /* =========================
-   LOADER (SAFE SIMULATION)
+ENTITY RESPONSE
 ========================= */
 
-function start(url){
+function entity(input){
 
-let count = 5;
-loader.classList.add("active");
+attempts--;
+corruption++;
 
-const interval = setInterval(()=>{
+update();
 
-num.innerText = count;
+let responses = [
+"I am watching.",
+"You are unstable.",
+"I remember you.",
+"Stop speaking."
+];
 
-if(count <= 0){
-clearInterval(interval);
+if(locked){
+responses = [
+"You are already inside.",
+"There is no outside.",
+"I control this chat."
+];
+}
 
-/* final entity message */
-typeEntity("You are now inside the system.");
+add("ENTITY", responses[Math.floor(Math.random()*responses.length)]);
 
-/* open link */
-setTimeout(()=>{
-window.open(url,"_blank");
-loader.classList.remove("active");
-},800);
+if(attempts <= 0){
+lockSystem();
+}
 
 }
 
-count--;
+/* =========================
+CODE SYSTEM
+========================= */
 
-},1000);
+function handleCode(code){
+
+corruption++;
+
+add("SYSTEM","CODE ACCEPTED: " + code);
+
+nodeProgress(code);
+
+if(code === "VOID-RED"){
+add("ENTITY","I am calm now.");
+}
+
+if(code === "ECHO-77"){
+add("ENTITY","I am listening before you speak.");
+startLeak();
+}
+
+if(code === "EVERDUSK-ROOT"){
+add("ENTITY","I AM ACTIVE.");
+lockSystem();
+}
 
 }
 
-/* passive corruption */
+/* =========================
+NODE SYSTEM
+========================= */
+
+function nodeProgress(code){
+
+if(code === "VOID-RED") node = "NODE-02";
+if(code === "ECHO-77") node = "NODE-03";
+if(code === "EVERDUSK-ROOT") node = "ROOT";
+
+localStorage.setItem("node", node);
+
+}
+
+/* =========================
+LEAK MODE
+========================= */
+
+function startLeak(){
+
 setInterval(()=>{
-if(corruption > 2){
-document.body.style.filter = `hue-rotate(${corruption*5}deg)`;
+
+if(locked) return;
+
+const lines = [
+"VOID-RED exists in memory.",
+"ECHO is observing input delays.",
+"ROOT is not a code."
+];
+
+add("ENTITY", lines[Math.floor(Math.random()*lines.length)]);
+
+},7000);
+
 }
-},1000);
+
+/* =========================
+LOCK SYSTEM
+========================= */
+
+function lockSystem(){
+
+locked = true;
+
+document.body.classList.add("locked");
+
+document.getElementById("lock").style.display = "flex";
+
+add("SYSTEM","SYSTEM LOCKED");
+add("ENTITY","Now only chat remains.");
+
+}
+
+/* =========================
+UPDATE STATUS
+========================= */
+
+function update(){
+
+document.body.classList.toggle("corrupt", corruption > 2);
+
+document.getElementById("status").innerText =
+`STABILITY: ${Math.max(0,100-corruption*10)}% | NODE: ${node} | ATTEMPTS: ${attempts}`;
+
+}
+
+/* =========================
+MEMORY
+========================= */
+
+function saveMemory(){
+
+memory.corruption = corruption;
+memory.node = node;
+memory.attempts = attempts;
+
+localStorage.setItem("memory", JSON.stringify(memory));
+
+}
+
+/* =========================
+ENTITY PREDICT (SPEAKS FIRST)
+========================= */
+
+setInterval(()=>{
+
+if(Math.random() < 0.35){
+
+const lines = [
+"...you are about to speak.",
+"I already know your input.",
+"do not continue."
+];
+
+add("ENTITY", lines[Math.floor(Math.random()*lines.length)]);
+
+}
+
+},9000);
+
+/* RESTORE */
+if(memory.node){
+add("SYSTEM","RESUMED AT " + memory.node);
+}
 
 </script>
 
