@@ -20,7 +20,7 @@ html,body{
 width:100%;
 height:100%;
 overflow:hidden;
-background:#050505;
+background:#020202;
 font-family:monospace;
 color:#ff4b4b;
 }
@@ -56,7 +56,7 @@ transparent 1px,
 transparent 4px
 );
 
-opacity:.25;
+opacity:.2;
 z-index:999999;
 }
 
@@ -72,18 +72,18 @@ overflow:hidden;
 }
 
 /* =====================================================
-SIDEBAR APPS
+SIDEBAR
 ===================================================== */
 
 .sidebar{
 position:absolute;
-left:0;
 top:0;
+left:0;
 bottom:0;
 
 width:110px;
 
-background:rgba(10,0,0,.9);
+background:rgba(10,0,0,.95);
 
 border-right:1px solid rgba(255,0,0,.25);
 
@@ -95,21 +95,21 @@ padding-top:20px;
 
 gap:18px;
 
-z-index:9999;
+z-index:99999;
 
 backdrop-filter:blur(10px);
 }
 
 /* =====================================================
-APP ICONS
+APPS
 ===================================================== */
 
 .app{
 width:85px;
 text-align:center;
 cursor:pointer;
-transition:.25s;
 user-select:none;
+transition:.25s;
 }
 
 .app:hover{
@@ -139,7 +139,7 @@ rgba(255,0,0,.15),
 rgba(0,0,0,.7)
 );
 
-border:1px solid rgba(255,0,0,.45);
+border:1px solid rgba(255,0,0,.4);
 
 box-shadow:
 0 0 20px rgba(255,0,0,.12),
@@ -179,7 +179,7 @@ position:absolute;
 
 background:#050505;
 
-border:1px solid rgba(255,0,0,.5);
+border:1px solid rgba(255,0,0,.4);
 
 box-shadow:
 0 0 30px rgba(255,0,0,.15);
@@ -189,11 +189,11 @@ overflow:hidden;
 resize:both;
 
 min-width:320px;
-min-height:220px;
+min-height:240px;
 }
 
 /* =====================================================
-WINDOW HEADER
+HEADER
 ===================================================== */
 
 .window-header{
@@ -201,7 +201,7 @@ height:40px;
 
 background:#0a0a0a;
 
-border-bottom:1px solid rgba(255,0,0,.3);
+border-bottom:1px solid rgba(255,0,0,.25);
 
 display:flex;
 align-items:center;
@@ -218,7 +218,46 @@ user-select:none;
 }
 
 /* =====================================================
-WINDOW CONTENT
+WINDOW BUTTONS
+===================================================== */
+
+.window-buttons{
+margin-left:auto;
+display:flex;
+gap:10px;
+}
+
+.window-close{
+width:24px;
+height:24px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:#220000;
+
+border:1px solid rgba(255,0,0,.5);
+
+cursor:pointer;
+
+font-size:12px;
+
+transition:.25s;
+}
+
+.window-close:hover{
+
+background:red;
+color:white;
+
+box-shadow:
+0 0 15px red;
+
+}
+
+/* =====================================================
+CONTENT
 ===================================================== */
 
 .window-content{
@@ -278,7 +317,7 @@ cursor:pointer;
 }
 
 /* =====================================================
-CAMERA
+CAM
 ===================================================== */
 
 .camera-feed{
@@ -299,10 +338,6 @@ grayscale(.8)
 contrast(1.2)
 brightness(.7);
 }
-
-/* =====================================================
-CAMERA OVERLAYS
-===================================================== */
 
 .scan{
 position:absolute;
@@ -379,6 +414,47 @@ font-size:11px;
 }
 
 /* =====================================================
+FILE LINKS
+===================================================== */
+
+.file-link{
+
+display:block;
+
+padding:12px;
+
+margin-bottom:10px;
+
+background:#090909;
+
+border:1px solid rgba(255,0,0,.25);
+
+color:#ff7a7a;
+
+text-decoration:none;
+
+transition:.25s;
+
+font-family:'Orbitron',sans-serif;
+
+letter-spacing:2px;
+
+}
+
+.file-link:hover{
+
+background:#180000;
+
+border-color:red;
+
+color:white;
+
+box-shadow:
+0 0 20px rgba(255,0,0,.35);
+
+}
+
+/* =====================================================
 TASKBAR
 ===================================================== */
 
@@ -414,29 +490,6 @@ font-size:12px;
 color:#ff7a7a;
 }
 
-/* =====================================================
-MOBILE
-===================================================== */
-
-@media(max-width:900px){
-
-.sidebar{
-width:100%;
-height:90px;
-flex-direction:row;
-bottom:0;
-top:auto;
-overflow-x:auto;
-padding:10px;
-}
-
-.window{
-width:95% !important;
-left:2.5% !important;
-}
-
-}
-
 </style>
 </head>
 <body>
@@ -450,7 +503,18 @@ SIDEBAR
 <div class="sidebar">
 
 <div class="app"
-onclick="window.open('https://discord.gg/5Xdkuq7h9h','_blank')">
+onclick="openWeb('https://play.everdusk.xyz','PLAY')">
+
+<div class="app-icon">🎮</div>
+
+<div class="app-name">
+PLAY
+</div>
+
+</div>
+
+<div class="app"
+onclick="openWeb('https://discord.gg/5Xdkuq7h9h','EVERDUSK')">
 
 <div class="app-icon">☠</div>
 
@@ -461,7 +525,7 @@ EVERDUSK
 </div>
 
 <div class="app"
-onclick="window.open('https://discord.com/invite/dseKG8dpWv','_blank')">
+onclick="openWeb('https://discord.com/invite/dseKG8dpWv','PULSE')">
 
 <div class="app-icon">⌘</div>
 
@@ -472,7 +536,7 @@ PULSE
 </div>
 
 <div class="app"
-onclick="window.open('https://vexsound.base44.app/','_blank')">
+onclick="openWeb('https://vexsound.base44.app/','VEXSOUND')">
 
 <div class="app-icon">♫</div>
 
@@ -483,7 +547,7 @@ VEXSOUND
 </div>
 
 <div class="app"
-onclick="window.open('https://www.youtube.com/@Everduskofficial','_blank')">
+onclick="openWeb('https://www.youtube.com/@Everduskofficial','YOUTUBE')">
 
 <div class="app-icon">▶</div>
 
@@ -518,10 +582,11 @@ ARCHIVE
 </div>
 
 <!-- =====================================================
-CAMERA WINDOW
+CAM WINDOW
 ===================================================== -->
 
 <div class="window"
+
 id="cameraWindow"
 
 style="
@@ -532,14 +597,27 @@ left:140px;
 ">
 
 <div class="window-header">
+
 LIVE CAMERA
+
+<div class="window-buttons">
+
+<div class="window-close"
+onclick="closeWindow('cameraWindow')">
+✕
 </div>
 
-<div class="window-content" style="padding:0;">
+</div>
+
+</div>
+
+<div class="window-content"
+style="padding:0;">
 
 <div class="camera-feed">
 
-<video id="cam"
+<video
+id="cam"
 autoplay
 muted
 playsinline></video>
@@ -578,10 +656,22 @@ right:40px;
 ">
 
 <div class="window-header">
+
 ENTITY CHAT
+
+<div class="window-buttons">
+
+<div class="window-close"
+onclick="closeWindow('chatWindow')">
+✕
+</div>
+
+</div>
+
 </div>
 
 <div class="window-content"
+
 style="
 display:flex;
 flex-direction:column;
@@ -617,33 +707,52 @@ id="filesWindow"
 
 style="
 width:420px;
-height:300px;
+height:320px;
 top:180px;
 left:240px;
 display:none;
 ">
 
 <div class="window-header">
+
 INFECTED FILES
+
+<div class="window-buttons">
+
+<div class="window-close"
+onclick="closeWindow('filesWindow')">
+✕
+</div>
+
+</div>
+
 </div>
 
 <div class="window-content">
 
-<div class="message">
-archive_01.corrupted
-</div>
-
-<div class="message">
+<a class="file-link"
+href="https://discord.gg/5Xdkuq7h9h"
+target="_blank">
 watcher_log.txt
-</div>
+</a>
 
-<div class="message">
+<a class="file-link"
+href="https://vexsound.base44.app/"
+target="_blank">
 entity_signal.mp4
-</div>
+</a>
 
-<div class="message">
-do_not_open.exe
-</div>
+<a class="file-link"
+href="https://www.youtube.com/@Everduskofficial"
+target="_blank">
+archive_recording.mov
+</a>
+
+<a class="file-link"
+href="https://discord.com/invite/dseKG8dpWv"
+target="_blank">
+pulse_network.exe
+</a>
 
 </div>
 
@@ -659,33 +768,106 @@ id="archiveWindow"
 
 style="
 width:420px;
-height:300px;
+height:320px;
 top:220px;
 left:320px;
 display:none;
 ">
 
 <div class="window-header">
+
 SCP ARCHIVE
+
+<div class="window-buttons">
+
+<div class="window-close"
+onclick="closeWindow('archiveWindow')">
+✕
+</div>
+
+</div>
+
 </div>
 
 <div class="window-content">
 
-<div class="message">
-SUBJECT: WATCHER
+<a class="file-link"
+href="https://discord.gg/5Xdkuq7h9h"
+target="_blank">
+SCP-VOID-001
+</a>
+
+<a class="file-link"
+href="https://www.youtube.com/@Everduskofficial"
+target="_blank">
+ENTITY FOOTAGE
+</a>
+
+<a class="file-link"
+href="https://vexsound.base44.app/"
+target="_blank">
+AUDIO ARCHIVE
+</a>
+
+<a class="file-link"
+href="https://discord.com/invite/dseKG8dpWv"
+target="_blank">
+PULSE DATABASE
+</a>
+
 </div>
 
-<div class="message">
-STATUS: ACTIVE
 </div>
 
-<div class="message">
-THREAT LEVEL: HIGH
+<!-- =====================================================
+BROWSER WINDOW
+===================================================== -->
+
+<div class="window"
+
+id="browserWindow"
+
+style="
+width:900px;
+height:600px;
+top:60px;
+left:180px;
+display:none;
+">
+
+<div class="window-header">
+
+<span id="browserTitle">
+WEB APP
+</span>
+
+<div class="window-buttons">
+
+<div class="window-close"
+onclick="closeWindow('browserWindow')">
+✕
 </div>
 
-<div class="message">
-Containment failed.
 </div>
+
+</div>
+
+<div class="window-content"
+
+style="
+padding:0;
+overflow:hidden;
+">
+
+<iframe
+id="browserFrame"
+
+style="
+width:100%;
+height:100%;
+border:none;
+background:black;
+"></iframe>
 
 </div>
 
@@ -753,7 +935,7 @@ speechSynthesis.speak(u);
 }
 
 /* =====================================================
-ENTITY RESPONSES
+ENTITY
 ===================================================== */
 
 function entityReply(msg){
@@ -833,21 +1015,29 @@ async function startCamera(){
 try{
 
 const stream =
-await navigator.mediaDevices
-.getUserMedia({
+await navigator.mediaDevices.getUserMedia({
 video:true,
 audio:true
 });
 
-document
-.getElementById('cam')
-.srcObject = stream;
+const video =
+document.getElementById('cam');
+
+video.srcObject = stream;
+
+video.play();
+
+addMessage(
+"SYSTEM: CAMERA CONNECTED"
+);
 
 }catch(err){
 
 addMessage(
 "SYSTEM: CAMERA ACCESS DENIED"
 );
+
+console.error(err);
 
 }
 
@@ -910,6 +1100,36 @@ document
 
 }
 
+function closeWindow(id){
+
+document
+.getElementById(id)
+.style.display = 'none';
+
+}
+
+/* =====================================================
+WEB APPS
+===================================================== */
+
+function openWeb(url,title){
+
+const frame =
+document.getElementById('browserFrame');
+
+const browser =
+document.getElementById('browserWindow');
+
+document.getElementById(
+'browserTitle'
+).innerText = title;
+
+frame.src = url;
+
+browser.style.display = 'block';
+
+}
+
 /* =====================================================
 DRAGGING
 ===================================================== */
@@ -963,7 +1183,13 @@ dragging = false;
 START
 ===================================================== */
 
-document.body.addEventListener('click',()=>{
+window.addEventListener('load',()=>{
+
+setTimeout(()=>{
+
+alert(
+'CLICK OK TO INITIALIZE EVERDUSK SYSTEM'
+);
 
 startCamera();
 
@@ -973,7 +1199,9 @@ talk(
 "everdusk system online"
 );
 
-},{once:true});
+},1000);
+
+});
 
 addMessage(
 "SYSTEM: EVERDUSK ONLINE"
