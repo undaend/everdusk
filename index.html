@@ -35,7 +35,7 @@ position:fixed;
 inset:0;
 background:
 radial-gradient(circle at center,
-rgba(255,0,0,.12),
+rgba(255,0,0,.14),
 transparent 60%),
 black;
 z-index:-5;
@@ -53,8 +53,8 @@ transparent 1px,
 transparent 4px
 );
 pointer-events:none;
-z-index:999999;
-opacity:.4;
+z-index:99999;
+opacity:.35;
 }
 
 .glitch{
@@ -92,7 +92,7 @@ pointer-events:none;
 }
 
 .boot-title{
-font-size:80px;
+font-size:85px;
 font-family:'Orbitron',sans-serif;
 text-shadow:
 0 0 20px red,
@@ -216,10 +216,22 @@ height:100%;
 
 #log{
 flex:1;
-overflow:auto;
+overflow-y:auto;
+overflow-x:hidden;
 padding:20px;
 line-height:1.8;
 font-size:14px;
+scroll-behavior:smooth;
+}
+
+#log::-webkit-scrollbar{
+width:0px;
+background:transparent;
+}
+
+#log{
+-ms-overflow-style:none;
+scrollbar-width:none;
 }
 
 .mainlog{
@@ -381,6 +393,35 @@ transform:translate(-50%,-50%) scale(1);
 }
 
 /* =========================================================
+POPUP
+========================================================= */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:black;
+border:1px solid red;
+padding:30px;
+z-index:999999;
+display:none;
+width:500px;
+max-width:90%;
+box-shadow:0 0 30px red;
+}
+
+.popup h2{
+margin-bottom:20px;
+font-family:'Orbitron',sans-serif;
+}
+
+.popup button{
+margin-top:20px;
+width:100%;
+}
+
+/* =========================================================
 MOBILE
 ========================================================= */
 
@@ -402,11 +443,9 @@ height:140px;
 }
 
 @keyframes flicker{
-
 0%{opacity:1;}
 50%{opacity:.6;}
 100%{opacity:1;}
-
 }
 
 </style>
@@ -449,7 +488,7 @@ EVERDUSK // SCP ARCHIVE
 </div>
 
 <div class="status" id="status">
-SYSTEM ONLINE
+PHASE 1 — OBSERVING
 </div>
 
 </div>
@@ -484,12 +523,12 @@ ENTITY DATABASE
 ARCHIVES
 </button>
 
-<button class="side-btn" onclick="fakeCommand('/purge')">
-PURGE SYSTEM
+<button class="side-btn" onclick="fakeCommand('/containment')">
+CONTAINMENT
 </button>
 
-<button class="side-btn" onclick="fakeCommand('/status')">
-STATUS
+<button class="side-btn" onclick="fakeCommand('/purge')">
+PURGE SYSTEM
 </button>
 
 </div>
@@ -576,10 +615,28 @@ muted>
 </video>
 
 <div class="scan"></div>
-
 <div class="grid"></div>
-
 <div class="target"></div>
+
+</div>
+
+<!-- =========================================================
+POPUP
+========================================================= -->
+
+<div class="popup" id="popup">
+
+<h2 id="popupTitle">
+ARCHIVE
+</h2>
+
+<div id="popupContent">
+REDACTED FILE
+</div>
+
+<button onclick="closePopup()">
+CLOSE
+</button>
 
 </div>
 
@@ -595,11 +652,13 @@ document.getElementById("log");
 const status =
 document.getElementById("status");
 
-let currentRole = "guest";
-
 let speakingNow = false;
 
 let corruption = 0;
+
+let phase = 1;
+
+let currentRole = "guest";
 
 /* =========================================================
 ADD LOG
@@ -635,7 +694,6 @@ new SpeechSynthesisUtterance(text);
 
 u.rate = 0.9;
 u.pitch = 0.55;
-u.volume = 1;
 
 u.onend = ()=>{
 
@@ -648,28 +706,28 @@ speechSynthesis.speak(u);
 }
 
 /* =========================================================
-BOOT LOGS
+PHASE SYSTEM
 ========================================================= */
 
-setTimeout(()=>{
-add("RECOVERING LOST ARCHIVES...","system");
-},500);
+function updatePhase(){
 
-setTimeout(()=>{
-add("SIGNAL FOUND","system");
-},1500);
+if(corruption >= 20) phase = 2;
+if(corruption >= 50) phase = 3;
+if(corruption >= 80) phase = 4;
 
-setTimeout(()=>{
-add("ENTITY CONTAINMENT FAILURE","warning");
-},2500);
+const phases = {
 
-setTimeout(()=>{
-add("SCP GATEWAY ACTIVE","warning");
-},3500);
+1:"PHASE 1 — OBSERVING",
+2:"PHASE 2 — LEARNING",
+3:"PHASE 3 — SPREADING",
+4:"PHASE 4 — SENTIENT"
 
-setTimeout(()=>{
-add("SYSTEM ONLINE","system");
-},4500);
+};
+
+status.innerText =
+phases[phase];
+
+}
 
 /* =========================================================
 ACCESS CODES
@@ -680,9 +738,6 @@ function checkCodes(msg){
 if(msg === "220055"){
 
 currentRole = "owner";
-
-status.innerText =
-"OWNER ACCESS";
 
 add(
 "OWNER ACCESS GRANTED",
@@ -701,9 +756,6 @@ if(msg === "771999"){
 
 currentRole = "observer";
 
-status.innerText =
-"OBSERVER ACCESS";
-
 add(
 "OBSERVER MODE ENABLED",
 "warning"
@@ -720,9 +772,6 @@ return true;
 if(msg === "441188"){
 
 currentRole = "archivist";
-
-status.innerText =
-"ARCHIVIST ACCESS";
 
 add(
 "ARCHIVE ACCESS ENABLED",
@@ -756,21 +805,47 @@ let response = "";
 if(msg === "/scan"){
 
 response =
-"scanning nearby signals";
+"multiple unknown signals detected";
 
 }
 
 else if(msg === "/entities"){
 
+showPopup(
+"ENTITY DATABASE",
+`
+WATCHER — observing users<br><br>
+ARCHIVIST — stores corrupted files<br><br>
+MIMIC — repeats user behavior<br><br>
+PARASITE — spreads corruption
+`
+);
+
 response =
-"5 active entities detected";
+"entity database opened";
 
 }
 
 else if(msg === "/archives"){
 
+showPopup(
+"ARCHIVE FILE",
+`
+FILE 771<br><br>
+LAST SIGNAL RECEIVED BELOW BEDROCK<br><br>
+STATUS: MISSING
+`
+);
+
 response =
-"opening corrupted archives";
+"opening archives";
+
+}
+
+else if(msg === "/containment"){
+
+response =
+"containment failure detected";
 
 }
 
@@ -778,13 +853,6 @@ else if(msg === "/purge"){
 
 response =
 "purge denied";
-
-}
-
-else if(msg === "/status"){
-
-response =
-"system corruption at " + corruption + " percent";
 
 }
 
@@ -804,13 +872,6 @@ response =
 
 }
 
-else if(msg.includes("void")){
-
-response =
-"the void is expanding";
-
-}
-
 else if(msg.includes("help")){
 
 response =
@@ -826,15 +887,15 @@ const random = [
 
 "something moved below bedrock",
 
-"the archive remembers you",
-
 "containment is failing",
 
-"your message was recorded",
+"the archive remembers",
 
-"unknown entities detected",
+"your voice was recorded",
 
-"i can hear the void"
+"unknown movement detected",
+
+"the watcher is nearby"
 
 ];
 
@@ -847,26 +908,12 @@ Math.random()*random.length
 
 }
 
-/* ROLE MODIFIERS */
+/* PHASE MODIFIERS */
 
-if(currentRole === "owner"){
-
-response =
-"[OWNER] " + response;
-
-}
-
-if(currentRole === "observer"){
+if(phase === 4){
 
 response =
-"[OBSERVER] " + response;
-
-}
-
-if(currentRole === "archivist"){
-
-response =
-"[ARCHIVE] " + response;
+response.toUpperCase();
 
 }
 
@@ -888,9 +935,11 @@ talk(response);
 corruption +=
 Math.floor(Math.random()*4);
 
-if(corruption > 100){
+updatePhase();
 
-corruption = 100;
+/* FINAL CORRUPTION */
+
+if(corruption >= 100){
 
 document.body.innerHTML = `
 
@@ -907,7 +956,7 @@ text-align:center;
 ">
 
 <h1 style="
-font-size:70px;
+font-size:80px;
 margin-bottom:20px;
 text-shadow:0 0 20px red;
 ">
@@ -915,7 +964,7 @@ CONNECTION LOST
 </h1>
 
 <p>
-THE ARCHIVE HAS BEEN CONSUMED
+THE ARCHIVE HAS BECOME SENTIENT
 </p>
 
 </div>
@@ -923,11 +972,6 @@ THE ARCHIVE HAS BEEN CONSUMED
 `;
 
 }
-
-/* STATUS */
-
-status.innerText =
-"CORRUPTION: " + corruption + "%";
 
 }
 
@@ -958,15 +1002,28 @@ if(!msg) return;
 
 input.value = "";
 
+/* HIDE COMMANDS */
+
+const hiddenCommand =
+msg.startsWith("/");
+
+if(!hiddenCommand){
+
 add(
 "USER: " + msg,
 "mainlog"
 );
 
+}
+
+/* CODES */
+
 const unlocked =
 checkCodes(msg);
 
 if(unlocked) return;
+
+/* REPLY */
 
 entityReply(msg);
 
@@ -986,7 +1043,31 @@ send();
 }
 
 /* =========================================================
-CAMERA
+POPUP
+========================================================= */
+
+function showPopup(title,content){
+
+document.getElementById("popup")
+.style.display = "block";
+
+document.getElementById("popupTitle")
+.innerHTML = title;
+
+document.getElementById("popupContent")
+.innerHTML = content;
+
+}
+
+function closePopup(){
+
+document.getElementById("popup")
+.style.display = "none";
+
+}
+
+/* =========================================================
+CAMERA + MIC
 ========================================================= */
 
 async function startCamera(){
@@ -996,7 +1077,8 @@ try{
 const stream =
 await navigator.mediaDevices
 .getUserMedia({
-video:true
+video:true,
+audio:true
 });
 
 const cam =
@@ -1014,14 +1096,19 @@ add(
 "warning"
 );
 
+add(
+"AUDIO CHANNEL LINKED",
+"warning"
+);
+
 talk(
-"camera online"
+"camera and microphone online"
 );
 
 }catch(err){
 
 add(
-"CAMERA ACCESS DENIED",
+"DEVICE ACCESS DENIED",
 "warning"
 );
 
@@ -1075,6 +1162,69 @@ document.addEventListener("mouseup",()=>{
 dragging = false;
 
 });
+
+/* =========================================================
+VOICE AI
+========================================================= */
+
+function startVoiceAI(){
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+add(
+"VOICE SYSTEM UNSUPPORTED",
+"warning"
+);
+
+return;
+
+}
+
+const recognition =
+new SpeechRecognition();
+
+recognition.continuous = true;
+
+recognition.interimResults = false;
+
+recognition.lang = "en-US";
+
+recognition.onresult = (event)=>{
+
+const text =
+event.results[
+event.results.length - 1
+][0].transcript;
+
+if(!text) return;
+
+add(
+"VOICE: " + text,
+"mainlog"
+);
+
+entityReply(text);
+
+};
+
+recognition.onend = ()=>{
+
+recognition.start();
+
+};
+
+recognition.start();
+
+add(
+"VOICE CHANNEL ACTIVE",
+"warning"
+);
+
+}
 
 /* =========================================================
 FAKE IP SYSTEM
@@ -1138,19 +1288,6 @@ THREAT LEVEL: ${threat}
 
 `;
 
-if(threat === "CRITICAL"){
-
-add(
-"WARNING: UNKNOWN ENTITY LOCKED TO SIGNAL",
-"warning"
-);
-
-talk(
-"signal triangulation complete"
-);
-
-}
-
 },20000);
 
 /* =========================================================
@@ -1186,9 +1323,7 @@ const warnings = [
 
 "audio distortion detected",
 
-"something entered channel 4",
-
-"archive instability detected"
+"something entered channel 4"
 
 ];
 
@@ -1216,11 +1351,11 @@ FAKE USERS
 
 const fakeUsers = [
 
-"USER_771",
-"SUBJECT_44",
-"ARCHIVE_NODE",
+"SUBJECT_441",
 "VOID_WALKER",
-"UNKNOWN_CLIENT"
+"ARCHIVE_NODE",
+"CLIENT_771",
+"UNKNOWN_SIGNAL"
 
 ];
 
@@ -1235,15 +1370,15 @@ Math.random()*fakeUsers.length
 
 const texts = [
 
-"did you hear that",
+"it followed me here",
 
-"something is behind me",
+"do not trust the watcher",
 
-"the server is alive",
+"i heard whispering",
 
-"i saw the watcher",
+"the archive is alive",
 
-"do not trust the archive"
+"something is inside the signal"
 
 ];
 
@@ -1278,6 +1413,12 @@ setTimeout(()=>{
 startCamera();
 
 },7000);
+
+setTimeout(()=>{
+
+startVoiceAI();
+
+},9000);
 
 </script>
 
