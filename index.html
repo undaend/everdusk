@@ -170,44 +170,145 @@ background:#ff4444;
 }
 
 /* =========================================================
-CAM
+ADVANCED CAMERA HUD
 ========================================================= */
 
 .cam-wrapper{
+
 position:fixed;
 bottom:20px;
 right:20px;
+
 width:260px;
 height:180px;
+
 display:none;
+
 border:1px solid red;
+
 overflow:hidden;
+
 z-index:9999;
+
 background:black;
+
+cursor:move;
+
+user-select:none;
+
+resize:both;
+
+min-width:180px;
+min-height:120px;
+
+max-width:600px;
+max-height:400px;
+
+box-shadow:
+0 0 20px rgba(255,0,0,.5);
+
 }
 
 video{
 width:100%;
 height:100%;
 object-fit:cover;
+
 filter:
 contrast(1.3)
 brightness(.7)
 grayscale(.4);
 }
 
+/* STATIC */
+
+.static{
+
+position:absolute;
+inset:0;
+
+background:
+url("https://i.imgur.com/8KrmA.jpg");
+
+opacity:.08;
+
+mix-blend-mode:screen;
+
+pointer-events:none;
+
+animation:staticMove .2s infinite;
+
+}
+
+@keyframes staticMove{
+
+0%{
+transform:translate(0,0);
+}
+
+50%{
+transform:translate(-2px,1px);
+}
+
+100%{
+transform:translate(2px,-1px);
+}
+
+}
+
+/* SCAN */
+
+.scan{
+
+position:absolute;
+left:0;
+
+width:100%;
+height:4px;
+
+background:red;
+
+box-shadow:
+0 0 20px red;
+
+animation:scanMove 4s linear infinite;
+
+opacity:.7;
+
+}
+
+@keyframes scanMove{
+
+0%{
+top:-10%;
+}
+
+100%{
+top:110%;
+}
+
+}
+
 /* TARGET */
 
 .target{
+
 position:absolute;
+
 width:60px;
 height:60px;
+
 border:2px solid red;
+
 top:50%;
 left:50%;
+
 transform:translate(-50%,-50%);
+
 box-shadow:0 0 20px red;
+
 animation:pulse 2s infinite;
+
 }
 
 @keyframes pulse{
@@ -229,6 +330,134 @@ opacity:1;
 
 }
 
+/* DETECTION BOX */
+
+.detect-box{
+
+position:absolute;
+
+border:2px solid red;
+
+width:90px;
+height:90px;
+
+top:40%;
+left:35%;
+
+box-shadow:
+0 0 20px red;
+
+animation:detectPulse 2s infinite;
+
+}
+
+@keyframes detectPulse{
+
+0%{
+transform:scale(1);
+opacity:1;
+}
+
+50%{
+transform:scale(1.05);
+opacity:.5;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* THERMAL */
+
+.thermal video{
+
+filter:
+hue-rotate(-40deg)
+contrast(2)
+brightness(1.2)
+saturate(3);
+
+}
+
+/* HUD */
+
+.hud{
+
+position:absolute;
+top:10px;
+left:10px;
+
+font-size:11px;
+
+color:red;
+
+line-height:1.6;
+
+text-shadow:0 0 10px red;
+
+}
+
+/* CAMERA BUTTONS */
+
+.cam-controls{
+
+position:absolute;
+top:5px;
+right:5px;
+
+display:flex;
+gap:5px;
+
+z-index:99999;
+
+}
+
+.cam-btn{
+
+width:24px;
+height:24px;
+
+border:none;
+
+background:red;
+color:white;
+
+cursor:pointer;
+
+font-size:12px;
+
+}
+
+/* MOTION */
+
+.motion-alert{
+
+position:absolute;
+
+bottom:5px;
+left:5px;
+
+font-size:11px;
+
+color:red;
+
+text-shadow:0 0 10px red;
+
+animation:flicker 1s infinite;
+
+}
+
+@keyframes flicker{
+
+0%{opacity:1;}
+50%{opacity:.4;}
+100%{opacity:1;}
+
+}
+
 /* =========================================================
 JUMPSCARE
 ========================================================= */
@@ -244,20 +473,6 @@ font-size:120px;
 color:red;
 z-index:9999999;
 text-shadow:0 0 40px red;
-}
-
-/* =========================================================
-HUD
-========================================================= */
-
-.hud{
-position:absolute;
-top:10px;
-left:10px;
-font-size:11px;
-color:red;
-line-height:1.6;
-text-shadow:0 0 10px red;
 }
 
 /* =========================================================
@@ -363,10 +578,26 @@ SEND
 </div>
 
 <!-- =========================================================
-CAM
+CAMERA
 ========================================================= -->
 
 <div class="cam-wrapper" id="camWrap">
+
+<div class="cam-controls">
+
+<button
+class="cam-btn"
+onclick="toggleMinimize()">
+—
+</button>
+
+<button
+class="cam-btn"
+onclick="toggleThermal()">
+T
+</button>
+
+</div>
 
 <video
 id="cam"
@@ -374,6 +605,12 @@ autoplay
 playsinline
 muted>
 </video>
+
+<div class="static"></div>
+
+<div class="scan"></div>
+
+<div class="detect-box" id="detectBox"></div>
 
 <div class="target"></div>
 
@@ -383,6 +620,12 @@ SIGNAL ACTIVE<br>
 ENTITY TRACKING<br>
 SUBJECT LOCKED
 
+</div>
+
+<div
+class="motion-alert"
+id="motionAlert">
+MOTION STABLE
 </div>
 
 </div>
@@ -427,25 +670,9 @@ pitch:0.4,
 
 responses:{
 
-hello:[
-"you finally answered",
-"the signal grows stronger",
-"i was waiting for you"
-],
-
-help:[
-"nobody can help you now",
-"the archive is corrupted"
-],
-
-who:[
-"i existed before the server",
-"i remember everything"
-],
-
 default:[
 "i am watching",
-"the world remembers",
+"the signal grows stronger",
 "your voice was stored"
 ]
 
@@ -460,35 +687,9 @@ pitch:0.7,
 
 responses:{
 
-hello:[
-"welcome back creator",
-"systems online"
-],
-
-help:[
-"i obey your commands",
-"what do you require"
-],
-
-who:[
-"i protect the everdusk world"
-],
-
-background:[
-"multiple hidden sectors exist below the void"
-],
-
-version:[
-"running EVERDUSK build 7.4 unstable"
-],
-
-server:[
-"primary ip is everdusk.xyz",
-"java node connected to java.everdusk.xyz"
-],
-
 default:[
 "command accepted creator",
+"systems online",
 "i am listening"
 ]
 
@@ -585,7 +786,7 @@ ${currentPersona.toUpperCase()}`;
 }
 
 /* =========================================================
-EVOLVE
+WORLD EVOLUTION
 ========================================================= */
 
 function evolveWorld(){
@@ -623,7 +824,7 @@ terminateSite();
 }
 
 /* =========================================================
-ACCESS CODES
+ACCESS
 ========================================================= */
 
 function checkAccessCode(msg){
@@ -669,117 +870,16 @@ updateStatus();
 }
 
 /* =========================================================
-OWNER COMMANDS
+RESPOND
 ========================================================= */
 
-const ownerCommands = {
-
-"/scan":"camera scan started",
-"/purge":"archive purge initiated",
-"/lockdown":"world lockdown enabled",
-"/collapse":"corruption spike detected",
-"/observer":"observer protocol online"
-
-};
-
-function runOwnerCommand(msg){
-
-if(!ownerUnlocked) return false;
-
-if(ownerCommands[msg]){
-
-const response =
-ownerCommands[msg];
-
-add(
-"OVERSEER CMD: " + msg,
-"warning"
-);
-
-setTimeout(()=>{
-
-add(
-"SYSTEM: " + response,
-"corrupted"
-);
-
-talk(
-response,
-"owner"
-);
-
-},1500);
-
-return true;
-
-}
-
-return false;
-
-}
-
-/* =========================================================
-ENTITY RESPONSE
-========================================================= */
-
-function entityRespond(msg){
-
-msg = msg.toLowerCase();
+function entityRespond(){
 
 const persona =
 personas[currentPersona];
 
-let pool =
+const pool =
 persona.responses.default;
-
-if(msg.includes("hello") ||
-msg.includes("hi")){
-
-pool =
-persona.responses.hello ||
-persona.responses.default;
-
-}
-
-else if(msg.includes("help")){
-
-pool =
-persona.responses.help ||
-persona.responses.default;
-
-}
-
-else if(msg.includes("who")){
-
-pool =
-persona.responses.who ||
-persona.responses.default;
-
-}
-
-else if(msg.includes("background")){
-
-pool =
-persona.responses.background ||
-persona.responses.default;
-
-}
-
-else if(msg.includes("version")){
-
-pool =
-persona.responses.version ||
-persona.responses.default;
-
-}
-
-else if(msg.includes("ip")){
-
-pool =
-persona.responses.server ||
-persona.responses.default;
-
-}
 
 const response =
 pool[
@@ -860,22 +960,13 @@ FAKE ENTITY VISION
 const scanDescriptions = [
 
 "movement detected behind subject",
-
 "subject appears nervous",
-
 "eye movement unstable",
-
 "multiple shadows detected",
-
 "signal distortion around subject",
-
 "audio stress markers detected",
-
 "unknown silhouette nearby",
-
-"subject heartbeat elevated",
-
-"low light facial outline detected"
+"subject heartbeat elevated"
 
 ];
 
@@ -939,7 +1030,7 @@ add(
 "main"
 );
 
-entityRespond(text);
+entityRespond();
 
 };
 
@@ -981,17 +1072,209 @@ add(
 
 checkAccessCode(msg);
 
-if(runOwnerCommand(msg)){
-
-return;
-
-}
-
-entityRespond(msg);
+entityRespond();
 
 evolveWorld();
 
 }
+
+/* =========================================================
+MOVEABLE CAMERA
+========================================================= */
+
+const camWindow =
+document.getElementById("camWrap");
+
+let dragging = false;
+
+let offsetX = 0;
+let offsetY = 0;
+
+camWindow.addEventListener("mousedown",(e)=>{
+
+dragging = true;
+
+offsetX =
+e.clientX -
+camWindow.offsetLeft;
+
+offsetY =
+e.clientY -
+camWindow.offsetTop;
+
+camWindow.style.transition =
+"none";
+
+});
+
+document.addEventListener("mousemove",(e)=>{
+
+if(!dragging) return;
+
+camWindow.style.left =
+(e.clientX - offsetX) + "px";
+
+camWindow.style.top =
+(e.clientY - offsetY) + "px";
+
+camWindow.style.right = "auto";
+camWindow.style.bottom = "auto";
+
+});
+
+document.addEventListener("mouseup",()=>{
+
+dragging = false;
+
+});
+
+/* =========================================================
+MINIMIZE
+========================================================= */
+
+let minimized = false;
+
+function toggleMinimize(){
+
+const cam =
+document.getElementById("camWrap");
+
+if(!minimized){
+
+cam.style.height = "40px";
+cam.style.overflow = "hidden";
+
+minimized = true;
+
+}else{
+
+cam.style.height = "180px";
+
+minimized = false;
+
+}
+
+}
+
+/* =========================================================
+THERMAL
+========================================================= */
+
+let thermal = false;
+
+function toggleThermal(){
+
+const cam =
+document.getElementById("camWrap");
+
+thermal = !thermal;
+
+if(thermal){
+
+cam.classList.add("thermal");
+
+}else{
+
+cam.classList.remove("thermal");
+
+}
+
+}
+
+/* =========================================================
+MOTION TRACKING
+========================================================= */
+
+const detectBox =
+document.getElementById("detectBox");
+
+const motionAlert =
+document.getElementById("motionAlert");
+
+setInterval(()=>{
+
+const x =
+Math.random() * 60;
+
+const y =
+Math.random() * 60;
+
+detectBox.style.left =
+x + "%";
+
+detectBox.style.top =
+y + "%";
+
+const detected =
+Math.random() < 0.5;
+
+if(detected){
+
+motionAlert.innerText =
+"MOTION DETECTED";
+
+motionAlert.style.color =
+"#ff0000";
+
+}else{
+
+motionAlert.innerText =
+"MOTION STABLE";
+
+motionAlert.style.color =
+"#ff6666";
+
+}
+
+},2500);
+
+/* =========================================================
+FACE LOCK
+========================================================= */
+
+setInterval(()=>{
+
+if(Math.random() < 0.4){
+
+add(
+"ENTITY SCAN: facial structure locked",
+"observer"
+);
+
+talk(
+"facial lock confirmed",
+"observer"
+);
+
+}
+
+},45000);
+
+/* =========================================================
+CAMERA GLITCH
+========================================================= */
+
+setInterval(()=>{
+
+const cam =
+document.getElementById("camWrap");
+
+cam.style.transform =
+`
+translate(
+${Math.random()*4-2}px,
+${Math.random()*4-2}px
+)
+`;
+
+setTimeout(()=>{
+
+cam.style.transform =
+"translate(0,0)";
+
+},120);
+
+},7000);
 
 /* =========================================================
 WARNINGS
@@ -1000,14 +1283,9 @@ WARNINGS
 const warnings = [
 
 "disconnect before awakening",
-
 "it learns your voice",
-
 "close the camera now",
-
-"someone else is inside",
-
-"it remembers your face"
+"someone else is inside"
 
 ];
 
@@ -1037,69 +1315,6 @@ setInterval(()=>{
 entityWarning();
 
 },1200000);
-
-/* =========================================================
-FAKE USERS
-========================================================= */
-
-const fakeUsers = [
-
-"voidwalker",
-"veil",
-"observer_09",
-"archivist",
-"unknown"
-
-];
-
-const fakeLines = [
-
-"did you hear that",
-
-"it answered my real name",
-
-"my screen started flickering",
-
-"why is it getting louder"
-
-];
-
-function fakeUserVoice(){
-
-if(speakingNow) return;
-
-const user =
-fakeUsers[Math.floor(
-Math.random()*fakeUsers.length
-)];
-
-const line =
-fakeLines[Math.floor(
-Math.random()*fakeLines.length
-)];
-
-add(
-user.toUpperCase() +
-": " + line,
-"observer"
-);
-
-talk(
-line,
-"observer"
-);
-
-}
-
-setInterval(()=>{
-
-if(Math.random() < 0.5){
-
-fakeUserVoice();
-
-}
-
-},900000);
 
 /* =========================================================
 JUMPSCARE
