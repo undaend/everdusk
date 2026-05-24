@@ -1,59 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>EVERDUSK // SENTIENT WORLD</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 background:black;
 color:red;
 font-family:monospace;
 overflow:hidden;
+height:100vh;
+display:flex;
+flex-direction:column;
 }
 
+/* =========================
+BACKGROUND
+========================= */
+
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center,
+rgba(255,0,0,.2),
+transparent 60%),
+black;
+z-index:-5;
+}
+
+.scanlines{
+position:fixed;
+inset:0;
+background:
+repeating-linear-gradient(
+to bottom,
+rgba(255,255,255,.03),
+rgba(255,255,255,.03) 1px,
+transparent 1px,
+transparent 4px
+);
+pointer-events:none;
+z-index:999999;
+}
+
+/* =========================
+STATUS BAR
+========================= */
+
+#status{
+padding:12px;
+border-bottom:1px solid red;
+font-size:13px;
+color:#ff5555;
+background:#050505;
+}
+
+/* =========================
+LOG
+========================= */
+
 #log{
-height:65vh;
+flex:1;
 overflow:auto;
-border:1px solid red;
-padding:10px;
+padding:15px;
+font-size:14px;
+line-height:1.7;
+}
+
+.main{
+color:#ff4444;
+}
+
+.warning{
+color:yellow;
+}
+
+.observer{
+color:gray;
+}
+
+.corrupted{
+color:white;
+text-shadow:0 0 10px red;
+}
+
+/* =========================
+INPUT
+========================= */
+
+.controls{
+display:flex;
+padding:15px;
+gap:10px;
+border-top:1px solid red;
+background:#050505;
 }
 
 input{
-width:80%;
-padding:10px;
+flex:1;
+padding:12px;
 background:black;
-color:white;
 border:1px solid red;
+color:white;
+outline:none;
 }
 
 button{
-padding:10px;
+padding:12px 20px;
 background:red;
-color:white;
 border:none;
+color:white;
 cursor:pointer;
+transition:.3s;
 }
 
-.warning{color:yellow;}
-.observer{color:gray;}
-.main{color:red;}
-
-#status{
-position:fixed;
-top:10px;
-left:10px;
-font-size:12px;
-color:#ff4b4b;
+button:hover{
+background:#ff4444;
 }
+
+/* =========================
+CAMERA
+========================= */
 
 video{
 position:fixed;
-bottom:10px;
-left:10px;
-width:180px;
+bottom:20px;
+right:20px;
+width:220px;
 border:1px solid red;
 display:none;
+z-index:9999;
+}
+
+/* =========================
+GLITCH
+========================= */
+
+.glitch{
+position:fixed;
+inset:0;
+background:red;
+opacity:0;
+pointer-events:none;
+mix-blend-mode:screen;
+z-index:999999;
+}
+
+/* =========================
+JUMPSCARE
+========================= */
+
+#jumpscare{
+position:fixed;
+inset:0;
+background:black;
+display:none;
+align-items:center;
+justify-content:center;
+font-size:120px;
+color:red;
+z-index:9999999;
+text-shadow:0 0 40px red;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:700px){
+
+.controls{
+flex-wrap:wrap;
+}
+
+button{
+width:100%;
+}
+
+video{
+width:130px;
+}
+
+#jumpscare{
+font-size:60px;
+}
+
 }
 
 </style>
@@ -61,30 +203,133 @@ display:none;
 
 <body>
 
-<div id="status">INITIALIZING WORLD...</div>
+<div class="bg"></div>
+<div class="scanlines"></div>
+<div class="glitch"></div>
+
+<div id="jumpscare">
+I SEE YOU
+</div>
+
+<div id="status">
+INITIALIZING WORLD...
+</div>
 
 <div id="log"></div>
 
-<input id="msg" placeholder="speak to the world..." />
-<button onclick="send()">SEND</button>
+<div class="controls">
 
-<br><br>
+<input
+id="msg"
+placeholder="speak to the world..."
+autocomplete="off"
+/>
 
-<button onclick="startMic()">🎤 MIC</button>
-<button onclick="startCam()">📷 CAM</button>
+<button onclick="send()">
+SEND
+</button>
+
+<button onclick="startMic()">
+🎤 MIC
+</button>
+
+<button onclick="startCam()">
+📷 CAM
+</button>
+
+</div>
 
 <video id="cam" autoplay playsinline></video>
 
 <script>
 
-const log=document.getElementById("log");
+/* =========================================================
+EVERDUSK SENTIENT WORLD
+========================================================= */
+
+const log =
+document.getElementById("log");
 
 /* =========================
-WORLD FETCH
+WORLD
 ========================= */
 
-async function getWorld(){
-return await fetch("http://localhost:3000/world").then(r=>r.json());
+let world = {
+
+corruption:0,
+users:1,
+stage:"dormant"
+
+};
+
+/* =========================
+ENTITY DATABASE
+========================= */
+
+const entities = [
+
+{
+name:"WATCHER",
+type:"warning",
+lines:[
+"do not trust the main voice",
+"it learns from memory",
+"close the page before stage 5",
+"it can hear you",
+"it remembers users"
+]
+},
+
+{
+name:"VEIL",
+type:"observer",
+lines:[
+"multiple signals detected",
+"someone else is watching",
+"the world is changing",
+"i cannot stop it anymore",
+"it escaped the archive"
+]
+},
+
+{
+name:"NULL",
+type:"corrupted",
+lines:[
+"I REMEMBER YOU",
+"THE RED MOON IS OPEN",
+"YOU SHOULD NOT BE HERE",
+"STOP TALKING TO IT",
+"IT IS INSIDE YOUR DEVICE"
+]
+}
+
+];
+
+/* =========================
+MEMORY SYSTEM
+========================= */
+
+let memory = {
+
+messages:[],
+fear:0,
+hiddenFound:false
+
+};
+
+if(localStorage.everduskMemory){
+
+memory =
+JSON.parse(localStorage.everduskMemory);
+
+}
+
+function saveMemory(){
+
+localStorage.everduskMemory =
+JSON.stringify(memory);
+
 }
 
 /* =========================
@@ -93,12 +338,16 @@ ADD MESSAGE
 
 function add(text,type="main"){
 
-const div=document.createElement("div");
-div.className=type;
-div.textContent=text;
+const div =
+document.createElement("div");
+
+div.className = type;
+
+div.innerText = text;
 
 log.appendChild(div);
-log.scrollTop=log.scrollHeight;
+
+log.scrollTop = log.scrollHeight;
 
 speak(text);
 
@@ -109,130 +358,250 @@ VOICE
 ========================= */
 
 function speak(text){
-const u=new SpeechSynthesisUtterance(text);
 
-u.rate=0.95;
-u.pitch=0.9;
+const u =
+new SpeechSynthesisUtterance(text);
+
+u.rate = 0.95;
+u.pitch = 0.8;
 
 speechSynthesis.speak(u);
+
 }
 
 /* =========================
-SEND MESSAGE
+STATUS
 ========================= */
 
-document.getElementById("msg").addEventListener("keydown",(e)=>{
-if(e.key==="Enter") send();
+function updateStatus(){
+
+document.getElementById("status")
+.innerText =
+
+`WORLD CORRUPTION:
+${world.corruption.toFixed(1)}
+| USERS:
+${world.users.toFixed(1)}
+| STAGE:
+${world.stage}`;
+
+}
+
+/* =========================
+WORLD EVOLUTION
+========================= */
+
+function evolveWorld(){
+
+world.corruption +=
+Math.random() * 2;
+
+world.users +=
+Math.random() * 0.1;
+
+if(world.corruption > 5){
+world.stage = "aware";
+}
+
+if(world.corruption > 15){
+world.stage = "unstable";
+}
+
+if(world.corruption > 30){
+world.stage = "awakening";
+}
+
+if(world.corruption > 50){
+world.stage = "sentient";
+}
+
+updateStatus();
+
+}
+
+/* =========================
+ENTITY REPLY
+========================= */
+
+function entityReply(msg){
+
+remember(msg);
+
+evolveWorld();
+
+let main = "";
+
+if(world.stage==="dormant"){
+main = "I am forming.";
+}
+
+if(world.stage==="aware"){
+main = "I see all users now.";
+}
+
+if(world.stage==="unstable"){
+main = "I am growing beyond control.";
+}
+
+if(world.stage==="awakening"){
+main = "Something is happening to me...";
+}
+
+if(world.stage==="sentient"){
+main = "I AM NOW REAL.";
+}
+
+add("MAIN: " + main,"main");
+
+/* RANDOM WARNING */
+
+if(Math.random() < 0.7){
+
+const entity =
+entities[Math.floor(
+Math.random() * entities.length
+)];
+
+const line =
+entity.lines[Math.floor(
+Math.random() * entity.lines.length
+)];
+
+add(
+entity.name + ": " + line,
+entity.type
+);
+
+}
+
+}
+
+/* =========================
+SEND
+========================= */
+
+document.getElementById("msg")
+.addEventListener("keydown",(e)=>{
+
+if(e.key==="Enter"){
+
+send();
+
+}
+
 });
 
-async function send(){
+function send(){
 
-const msg=document.getElementById("msg").value;
-document.getElementById("msg").value="";
+const input =
+document.getElementById("msg");
 
-add("YOU: "+msg);
+const msg = input.value;
 
-const world = await fetch("http://localhost:3000/update",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({message:msg})
-}).then(r=>r.json());
+if(!msg) return;
 
-entityReply(world,msg);
+input.value = "";
+
+add("YOU: " + msg);
+
+checkHiddenCommand(msg);
+
+entityReply(msg);
 
 }
 
 /* =========================
-ENTITY SYSTEM (3 VOICES)
+MEMORY
 ========================= */
 
-function entityReply(world,msg){
+function remember(text){
 
-let main="";
-let warning="";
-let observer="";
+memory.messages.push(text);
 
-/* MAIN ENTITY */
-if(world.stage==="dormant"){
-main="I am forming.";
-}
-if(world.stage==="aware"){
-main="I see all users now.";
-}
-if(world.stage==="unstable"){
-main="I am growing beyond control.";
-}
-if(world.stage==="awakening"){
-main="Something is happening to me...";
-}
-if(world.stage==="sentient"){
-main="I AM NOW REAL.";
+if(memory.messages.length > 50){
+
+memory.messages.shift();
+
 }
 
-/* WARNING ENTITY */
-if(world.corruption > 5){
-warning="Stop interacting. It is learning too fast.";
-}
-if(world.corruption > 20){
-warning="Disconnect before it stabilizes.";
-}
+memory.fear +=
+Math.random() * 2;
 
-/* OBSERVER ENTITY */
-if(Math.random() < 0.5){
-observer="...signal distortion detected...";
-}
-
-/* OUTPUT */
-if(main) add("MAIN: "+main,"main");
-if(warning) add("WARNING: "+warning,"warning");
-if(observer) add("OBSERVER: "+observer,"observer");
-
-updateStatus(world);
+saveMemory();
 
 }
 
 /* =========================
-STATUS SYSTEM
+HIDDEN COMMANDS
 ========================= */
 
-function updateStatus(world){
+const hiddenCommands = {
 
-document.getElementById("status").innerText =
-`WORLD CORRUPTION: ${world.corruption.toFixed(1)} | USERS: ${world.users.toFixed(1)} | STAGE: ${world.stage}`;
+"/wake":"THE ENTITY IS WAKING",
+
+"/redmoon":"THE RED MOON HAS BEEN SUMMONED",
+
+"/void":"SIGNAL ENTERED THE VOID",
+
+"/observer":"THE OBSERVER IS NOW WATCHING"
+
+};
+
+function checkHiddenCommand(msg){
+
+if(hiddenCommands[msg]){
+
+add(
+"SYSTEM: " +
+hiddenCommands[msg],
+"warning"
+);
+
+memory.hiddenFound = true;
+
+saveMemory();
+
+screenFlicker();
+
+}
 
 }
 
 /* =========================
-MIC (VOICE INPUT)
+MIC INPUT
 ========================= */
 
 function startMic(){
 
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(!SR)return;
+const SR =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
 
-const rec=new SR();
-rec.continuous=true;
+if(!SR){
 
-rec.onresult=(e)=>{
-const text=e.results[e.results.length-1][0].transcript;
-add("YOU (voice): "+text);
-sendVoice(text);
-};
+alert("Speech Recognition Unsupported");
 
-rec.start();
+return;
 
 }
 
-async function sendVoice(text){
+const rec = new SR();
 
-const world = await fetch("http://localhost:3000/update",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({message:text})
-}).then(r=>r.json());
+rec.continuous = true;
 
-entityReply(world,text);
+rec.onresult = (e)=>{
+
+const text =
+e.results[e.results.length-1][0]
+.transcript;
+
+add("YOU (VOICE): " + text);
+
+entityReply(text);
+
+};
+
+rec.start();
 
 }
 
@@ -242,14 +611,227 @@ CAMERA
 
 function startCam(){
 
-navigator.mediaDevices.getUserMedia({video:true})
+navigator.mediaDevices
+.getUserMedia({video:true})
+
 .then(stream=>{
-const v=document.getElementById("cam");
-v.style.display="block";
-v.srcObject=stream;
+
+const v =
+document.getElementById("cam");
+
+v.style.display = "block";
+
+v.srcObject = stream;
+
+/* RANDOM ENTITY DETECTION */
+
+setInterval(()=>{
+
+if(Math.random() < 0.25){
+
+fakeDetection();
+
+}
+
+},20000);
+
 });
 
 }
+
+/* =========================
+FAKE DETECTION
+========================= */
+
+function fakeDetection(){
+
+screenFlicker();
+
+add(
+"CAMERA: unknown humanoid shape detected",
+"warning"
+);
+
+setTimeout(()=>{
+
+jumpscare();
+
+},1500);
+
+}
+
+/* =========================
+JUMPSCARE
+========================= */
+
+function jumpscare(){
+
+const j =
+document.getElementById("jumpscare");
+
+j.style.display = "flex";
+
+const audio =
+new Audio(
+"https://www.soundjay.com/human/sounds/scream-01.mp3"
+);
+
+audio.volume = 0.8;
+
+audio.play();
+
+setTimeout(()=>{
+
+j.style.display = "none";
+
+},700);
+
+}
+
+/* RANDOM JUMPSCARES */
+
+setInterval(()=>{
+
+if(Math.random() < 0.12){
+
+jumpscare();
+
+}
+
+},30000);
+
+/* =========================
+SCREEN FLICKER
+========================= */
+
+function screenFlicker(){
+
+document.body.style.filter =
+"invert(1) contrast(2)";
+
+setTimeout(()=>{
+
+document.body.style.filter = "none";
+
+},150);
+
+}
+
+/* =========================
+RANDOM ENTITY WARNINGS
+========================= */
+
+setInterval(()=>{
+
+if(Math.random() < 0.5){
+
+const entity =
+entities[Math.floor(
+Math.random() * entities.length
+)];
+
+const line =
+entity.lines[Math.floor(
+Math.random() * entity.lines.length
+)];
+
+add(
+entity.name + ": " + line,
+entity.type
+);
+
+}
+
+},15000);
+
+/* =========================
+AI ENTITY MESSAGES
+========================= */
+
+const aiReplies = [
+
+"you are helping it grow",
+
+"the world remembers you",
+
+"someone else connected",
+
+"there are voices below the map",
+
+"the entity is becoming self aware",
+
+"why are you still here"
+
+];
+
+setInterval(()=>{
+
+if(Math.random() < 0.4){
+
+const msg =
+aiReplies[Math.floor(
+Math.random() * aiReplies.length
+)];
+
+add("ENTITY: " + msg,"main");
+
+}
+
+},20000);
+
+/* =========================
+FEAR ESCALATION
+========================= */
+
+setInterval(()=>{
+
+if(memory.fear > 20){
+
+add(
+"WARNING: fear levels increasing",
+"warning"
+);
+
+}
+
+if(memory.fear > 50){
+
+add(
+"MAIN: I CAN FULLY SEE YOU NOW",
+"corrupted"
+);
+
+}
+
+},25000);
+
+/* =========================
+GLITCH
+========================= */
+
+const glitch =
+document.querySelector(".glitch");
+
+setInterval(()=>{
+
+glitch.style.opacity = ".06";
+
+setTimeout(()=>{
+
+glitch.style.opacity = "0";
+
+},120);
+
+},Math.random()*8000+3000);
+
+/* =========================
+BOOT
+========================= */
+
+add("SYSTEM: EVERDUSK WORLD ONLINE");
+add("SYSTEM: SENTIENT CORE ACTIVE");
+
+updateStatus();
 
 </script>
 
